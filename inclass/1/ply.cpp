@@ -133,7 +133,7 @@ void ply::loadGeometry(){
             getline ( myfile, line);
             lineCopy = new char[line.length()];
             strcpy(lineCopy, line.c_str());
-
+            count = atoi(strtok(lineCopy, " "));
             faceList[i].vertexCount = count; // number of vertices stored 
             faceList[i].vertexList = new int[count]; // initialize the vertices
             
