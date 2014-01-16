@@ -47,11 +47,11 @@ void ply::loadGeometry(){
 
     ifstream myfile (filePath.c_str()); // load the file
     if ( myfile.is_open()) { // if the file is accessable
-        properties = -1; // set the properties because there are extras labeled
-
+        properties = -2; // set the properties because there are extras labeled
+        
         string line;
         char * token_pointer; 
-        char * lineCopy; 
+        char * lineCopy = new char[80]; 
         int count;
         bool reading_header = true;
         // loop for reading the header 
@@ -59,10 +59,8 @@ void ply::loadGeometry(){
 
             // get the first token in the line, this will determine which
             // action to take. 
-            lineCopy = new char [line.length()];
             strcpy(lineCopy, line.c_str());
             token_pointer = strtok(lineCopy, " ");
-
             // case when the element label is spotted:
             if (strcmp(token_pointer, "element") == 0){
                 token_pointer = strtok(NULL, " ");
@@ -94,34 +92,33 @@ void ply::loadGeometry(){
         for (int i = 0; i < vertexCount; i++){
 
             getline ( myfile, line); 
-            lineCopy = new char[line.length()];
             strcpy(lineCopy, line.c_str());
             
             // depending on how many properties there are set that number of 
             // elements (x, y, z, confidence, intensity, r, g, b) (max 7) with
             // the input given
-            if ( properties >= 1){
+            if ( properties >= 0){
                 vertexList[i].x = atof(strtok(lineCopy, " "));
             }
-            if ( properties >= 2){
+            if ( properties >= 1){
                 vertexList[i].y = atof(strtok(NULL, " "));
             }
-            if (properties >= 3){
+            if (properties >= 2){
                 vertexList[i].z = atof(strtok(NULL, " "));
             }
-            if (properties >= 4){
+            if (properties >= 3){
                 vertexList[i].confidence = atof(strtok(NULL, " "));
             }
-            if (properties >= 5){
+            if (properties >= 4){
                 vertexList[i].intensity = atof(strtok(NULL, " "));
             }
-            if (properties >= 6){
+            if (properties >= 5){
                 vertexList[i].r = atof(strtok(NULL, " "));
             }
-            if (properties >= 7) {
+            if (properties >= 6) {
                 vertexList[i].g = atof(strtok(NULL, " "));
             }
-            if (properties >= 8) {
+            if (properties >= 7) {
                 vertexList[i].b = atof(strtok(NULL, " "));
             }
         } 
@@ -131,7 +128,7 @@ void ply::loadGeometry(){
         for (int i = 0; i < faceCount; i++){
 
             getline ( myfile, line);
-            lineCopy = new char[line.length()];
+
             strcpy(lineCopy, line.c_str());
             count = atoi(strtok(lineCopy, " "));
             faceList[i].vertexCount = count; // number of vertices stored 
@@ -143,14 +140,13 @@ void ply::loadGeometry(){
                 faceList[i].vertexList[j] = atoi(strtok(NULL, " "));
             }
         }
-
+        delete(lineCopy);
     }
     // if the path is invalid, report then exit.
     else {
         cout << "cannot open file " << myfile << "\n";
         exit(1);
     }
-
     myfile.close();
 };
 
