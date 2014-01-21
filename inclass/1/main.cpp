@@ -20,7 +20,7 @@ int	 rotY = 0;
 int  scale = 100;
 
 GLUI_EditText* filenameTextField = NULL;
-string filenamePath = "./data/bunny.ply";
+string filenamePath = "./data/happy.ply";
 
 /****************************************/
 /*         PLY Object                   */

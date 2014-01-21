@@ -2,10 +2,8 @@
   File Name: ply.cpp
   Description: a file to load and display an image represented in 
         .ply file format.
-  Author: Sophie Panuthos   
+  Author: Sophie Panuthos, Paul Nixon   
 
-  Purpose:
-  Examples:
 */
 
 #include <iostream>
