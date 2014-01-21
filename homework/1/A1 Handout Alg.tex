@@ -1,0 +1,95 @@
+\documentclass[10pt,twocolumn]{article}
+\usepackage[margin=0.75in]{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\setlength{\columnsep}{1cm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage[usenames]{color}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{framed}
+
+\definecolor{light-gray}{gray}{0.45}
+\titleformat{\section}
+{\color{black}\normalfont\huge\bfseries}
+{\color{black}\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\color{light-gray}\normalfont\Large\bfseries}
+{\color{light-gray}\thesubsection}{1em}{}
+
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{\Huge{\bf Algorithm 1: Brush}}
+\author{Comp175: Introduction to Computer Graphics -- Fall 201}
+\date{Due:  {\bf Monday September 12th} at 11:59pm}                                           % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+
+\begin{verbatim}
+Your Name: __________________________________
+
+
+Your CS Login: ______________________________\end{verbatim}
+
+\section{Instructions}
+Complete this assignment by yourself without any help from anyone or anything except acurrent Comp175 TA, the lecture notes, official textbook, and the professor. You may use a
+calculator or computer algebra system. All your answers should be given in simplest form.When a numerical answer is required, provide a reduced fraction (i.e. 1/3) or at least threedecimal places (i.e. 0.333). Show all work; write your answers on this sheet.\\
+
+This assignment is worth 10\% of your final grade for Brush.
+
+\section{Blending}You will blend the color of the brush with the color on the canvas using the mask mentionedin the handout. Although the image on your canvas will be colored, for this exercise assumethat your image is grayscale and has only one channel, called intensity, which ranges infloating point from 0 (totally black) to 1 (totally white).\\
+
+What is the value of the final intensity $F$ on the canvas, given the original color intensity ofthe canvas $C \in [0,1]$, the value of the mask at that point $M \in [0,1]$, the current brushintensity ($B$), and the current ``alpha'' value $\alpha \in [0,1]$? Think of the $\alpha$ as the flow rate of the virtual paint your brush is putting down on the canvas. Hint: consider when $\alpha = 0$ and 1.
+
+\begin{framed}
+[2 points]\\
+
+$F =$
+\end{framed}
+
+\section{Mouse interaction}Given a click point $(x, y)$, canvas dimensions $(w, h)$ where $w =$ width and $h =$ height, and amask radius $R$, you will need to figure out what area to iterate over in your drawing loop. Ifthe following represents the core of your drawing loop, fill in the blanks shown in the C++code below: (Remember that the mask will always have an odd width and height; a radius of1 is a mask of width 3, a radius of 2 is a mask of width 5, etcetera).
+
+\begin{framed}
+\begin{verbatim}/** given: w, h, R, x, y. You can use 
+    MIN(j,k), MAX(j,k), or if statements 
+    in the blank space if it makes your 
+    job easier. **/
+    
+int rowstart = _____________;  /* 1pt */
+int rowend   = _____________;  /* 1pt */
+int colstart = _____________;  /* 1pt */
+int colend   = _____________;  /* 1pt */
+int row;int col;for (row=rowstart; row<rowend;row++) {   for (col=colstart; col<colend; col++){     // do stuff to the image at (row, col)   } 
+}
+\end{verbatim}
+\end{framed}
+
+\section{Image Data}
+On a modern microprocessor, the cache allows for especially efficient access to contiguousmemory locations; that is, it is faster to access memory in sequential order than to jumparound a lot. As stated in the assignment handout, the data for brush is stored in row-majororder. For an image canvas (the normal {\tt canvas2d} explained in the assignment handout, notthe monochromatic canvas from the first problem) with dimensions $width = 256$ and$height = 256$, answer the following questions for 1 point each.
+
+\begin{framed}
+\begin{enumerate}
+\item What is the pixel index of a pixel at $row=12$ and $col=201$? (Where the first pixel is at row 0, column 0)
+\begin{verbatim}____________________________________\end{verbatim}\item What is the $row$ and $col$ of the pixel at pixel index 12345?
+\begin{verbatim}____________________________________\end{verbatim}\item How many bytes separate the beginning of one pixel from the beginning of the next horizontally adjacent pixel in memory? (That is, two pixels that are to the left or right of each other on the screen)
+\begin{verbatim}____________________________________\end{verbatim}\item How many bytes separate the beginning of one pixel from the beginning of the next vertically adjacent pixel in memory? (That is, two pixels that are above or below each other on the screen)
+\begin{verbatim}____________________________________\end{verbatim}
+\end{enumerate}
+\end{framed}
+
+\section{How to Submit}
+
+Hand in a PDF version of your solutions using the following command:
+\begin{center}
+ {\tt provide comp175 a1-alg}
+ \end{center}
+
+If you prefer to submit a paper copy, you may hand in the assignment yourself to Jordan's mailbox outside the Halligan front office no later than 7pm on the due date. Do not ask a friend to hand in your assignment for you. Late hand-ins are not accepted under any circumstances.
+\end{document}  
