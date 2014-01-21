@@ -11,11 +11,12 @@
 ****************************************************************************/
 
 #include <string.h>
-//#include <GL/glui.h>
+#include <GL/glui.h>
 #include <GL/glut.h>
 #include <GL/glu.h>
-#include "/h/nixon/175/glui-2.36/src/include/GL/glui.h"
-
+//#include "/h/nixon/175/glui-2.36/src/include/GL/glui.h"
+///g++ example2.cpp -L/h/nixon/175/glui-2.36/src/lib -lglui -lglut -lGLU -lGL
+///g++ example2.cpp -lglui -lglut -lGLU -lGL
 
 float xy_aspect;
 int   last_x, last_y;
