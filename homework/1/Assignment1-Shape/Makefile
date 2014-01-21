@@ -1,6 +1,6 @@
 CC = g++
 SRC = Assignment1.cpp
-LIBS = -lGL -lGLU -lglut -lglui
+LIBS = -L/comp/175/public_html/labs/lib -lGL -lGLU -lglut -lglui
 EXEC = Assignment1
 
 all:

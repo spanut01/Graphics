@@ -12,7 +12,8 @@ No callbacks are used.
 ****************************************************************************/
 
 //#include <string.h>
-#include <GL/glui.h>
+//#include <GL/glui.h>
+#include </comp/175/public_html/labs/include/GL/glui.h>
 #include "Shape.h"
 #include "Cube.h"
 #include "Cylinder.h"

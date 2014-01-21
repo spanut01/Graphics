@@ -1,7 +1,8 @@
 #ifndef SHAPE_H
 #define SHAPE_H
 
-#include <GL/glui.h>
+//#include <GL/glui.h>
+#include </comp/175/public_html/labs/include/GL/glui.h>
 #include "Algebra.h"
 
 
@@ -28,9 +29,14 @@ protected:
 	};
 
 	void normalizeNormal (Vector& v) {
-		v.normalize();
-		glNormal3dv(v.unpack());
-	};
+    v.normalize();
+    glNormal3dv(v.unpack());
+  };
+
+void normalizeNormal (Vector v) {
+    v.normalize();
+    glNormal3dv(v.unpack());
+  };
 
 
 	int m_segmentsX, m_segmentsY;
