@@ -1,11 +1,11 @@
-/*  =================== File Information =================
+/*
   File Name: ply.cpp
-  Description:
-  Author: (You)
+  Description: a file to load and display an image represented in 
+        .ply file format.
+  Author: Sophie Panuthos, Paul Nixon   
 
-  Purpose:
-  Examples:
-  ===================================================== */
+*/
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -14,15 +14,11 @@
 #include </comp/175/public_html/labs/include/GL/glui.h>
 #include "ply.h"
 #include "geometry.h"
+#include "entity.h"
 #include <cmath>
 
 using namespace std;
 
-/*  ===============================================
-      Desc: Default constructor for a ply object
-      Precondition:
-      Postcondition:
-    =============================================== */ 
 ply::ply(string _filePath){
 	filePath = _filePath;
 	vertexList = NULL;
@@ -32,41 +28,19 @@ ply::ply(string _filePath){
 	loadGeometry();
 }
 
-/*  ===============================================
-      Desc: Destructor for a ply object
-      Precondition: Memory has been already allocated
-      Postcondition:  
-      =============================================== */ 
-ply::~ply(){
-  // Delete the allocated arrays
-	delete[] vertexList;
-	delete[] faceList;
-  // Set pointers to NULL
-  vertexList = NULL;
-  faceList = NULL;
+void ply::reload(string _filePath){
+	filePath = _filePath;
+	// reclaim memory allocated
+	delete vertexList;
+	delete faceList;
+	loadGeometry();
 }
 
-/*  ===============================================
-      Desc: reloads the geometry for a 3D object
-      Precondition:
-      Postcondition:
-    =============================================== */ 
-void ply::reload(string _filePath){
-  filePath = _filePath;
-  // reclaim memory allocated in each array
-  delete[] vertexList;
-  delete[] faceList;
-  // Set pointers to array
-  vertexList = NULL;
-  faceList = NULL;
-  // Call our function again to load new vertex and face information.
-  loadGeometry();
+// Destructor
+ply::~ply(){
+	delete vertexList;
+	delete faceList;
 }
-/*  ===============================================
-      Desc: You get to implement this
-      Precondition:
-      Postcondition:  
-      =============================================== */ 
 
 void ply::loadGeometry(){
 
@@ -184,30 +158,21 @@ void ply::normalize(){
     float max = 0.0;
     int i; 
 
-    //loop through each vertex in the given image
     for (i = 0; i < vertexCount; i++){
         
-        // obtain the total for each property of the vertex
         avrg_x += vertexList[i].x;
         avrg_y += vertexList[i].y;
         avrg_z += vertexList[i].z;
 
-        // obtain the max dimension to find the furthest point from 0,0
         if (max < abs(vertexList[i].x)) max = abs(vertexList[i].x);
         if (max < abs(vertexList[i].y)) max = abs(vertexList[i].y);
         if (max < abs(vertexList[i].z)) max = abs(vertexList[i].z);
     }
 
-    // compute the average for each property
     avrg_x = avrg_x / vertexCount;
     avrg_y = avrg_y / vertexCount;
     avrg_z = avrg_z / vertexCount;
     
-    // *******multiply the max by 2.5 to shrink the image to fit it into the 
-    // given window dimensions. *******
-    max = max * 2.5; 
-
-    // center and scale each vertex 
     for (i = 0; i < vertexCount; i++){
         vertexList[i].x = (vertexList[i].x - avrg_x) / max;
         vertexList[i].y = (vertexList[i].y - avrg_y) / max;
@@ -215,26 +180,17 @@ void ply::normalize(){
     }
 };
 
-
-/*  ===============================================
-      Desc: Draws a filled 3D object
-      Precondition:
-      Postcondition:
-      Error Condition: If we haven't allocated memory for our
-      faceList or vertexList then do not attempt to render.
-    =============================================== */  
 void ply::render(){
     	if(vertexList==NULL || faceList==NULL){
     		    return;
     	}
   		
       glPushMatrix();
-            //glTranslatef(getXPosition(),getYPosition(),getZPosition());
-            //glScalef(getXScale(),getYScale(),getZScale());
+            glTranslatef(getXPosition(),getYPosition(),getZPosition());
+            glScalef(getXScale(),getYScale(),getZScale());
             // For each of our faces
         		for(int i = 0; i < faceCount; i++)
         		{
-                  // All of our faces are actually triangles for PLY files
             			glBegin(GL_TRIANGLES);
             			// Get the vertex list from the face list
             			for(int j = 0; j < faceList[i].vertexCount; j++){
@@ -247,20 +203,13 @@ void ply::render(){
       glPopMatrix();
 }
 
-    /*  ===============================================
-      Desc: Draws the wireframe(edges) of a 3D object.
-            We could alternatively use 'glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);'
-
-      Precondition:
-      Postcondition:
-    =============================================== */ 
 void ply::renderWireFrame(){
       if(vertexList==NULL || faceList==NULL){
             return;
       }
       glPushMatrix();
-            //glTranslatef(getXPosition(),getYPosition(),getZPosition());
-            //glScalef(getXScale(),getYScale(),getZScale());
+            glTranslatef(getXPosition(),getYPosition(),getZPosition());
+            glScalef(getXScale(),getYScale(),getZScale());
             // For each of our faces
             for(int i = 0; i < faceCount; i++)
             {
@@ -276,14 +225,6 @@ void ply::renderWireFrame(){
       glPopMatrix();
 }
 
-
-/*  ===============================================
-      Desc: Prints some statistics about the file you have read in
-      This is useful for debugging information to see if we parse our file correctly.
-
-      Precondition:
-      Postcondition:  
-    =============================================== */ 
 void ply::printAttributes(){
       cout << "==== ply Mesh Attributes=====" << endl;
       cout << "vertex count:" << vertexCount << endl;
@@ -291,12 +232,7 @@ void ply::printAttributes(){
       cout << "properties:" << properties << endl;
 }
 
-/*  ===============================================
-      Desc: Iterate through our array and print out each vertex.
 
-      Precondition:
-      Postcondition:  
-    =============================================== */ 
 void ply::printVertexList(){
   	if(vertexList==NULL){
   		  return;
@@ -307,12 +243,6 @@ void ply::printVertexList(){
   	}
 }
 
-/*  ===============================================
-      Desc: Iterate through our array and print out each face.
-
-      Precondition:
-      Postcondition:  
-    =============================================== */ 
 void ply::printFaceList(){
 	if(faceList==NULL){
 		return;

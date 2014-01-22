@@ -1,9 +1,11 @@
-/****************************************************************************
+/*  =================== File Information =================
+	File Name: main.cpp
+	Description:
+	Author: Michael Shah
 
-Last Modified: 12/23/13
-
-
-****************************************************************************/
+	Purpose: Driver for 3D program to load .ply models 
+	Usage:	
+	===================================================== */
 
 #include <string.h>
 #include <iostream>
@@ -19,8 +21,11 @@ int  filled = 1;
 int	 rotY = 0;
 int  scale = 100;
 
+/* This is a textbox that we can edit, we
+	use it to 
+*/
 GLUI_EditText* filenameTextField = NULL;
-string filenamePath = "./data/happy.ply";
+string filenamePath = "./data/bunny.ply";
 
 /****************************************/
 /*         PLY Object                   */
@@ -44,18 +49,29 @@ void myGlutIdle(void)
 
 /**************************************** myGlutReshape() *************/
 
+/*
+	We configure our window so that it correctly displays our objects
+	in the correct perspective.
+*/
 void myGlutReshape(int x, int y)
 {
 	float xy_aspect;
-
 	xy_aspect = (float)x / (float)y;
+
+	//
 	glViewport(0, 0, x, y);
-
+	// Determine if we are modifying the camera(GL_PROJECITON) matrix(which is our viewing volume)
+	// Otherwise we could modify the object transormations in our world with GL_MODELVIEW
 	glMatrixMode(GL_PROJECTION);
+	// Reset the Projection matrix to an identity matrix
 	glLoadIdentity();
+	// The frustrum defines the perspective matrix and produces a perspective projection.
+	// It works by multiplying the current matrix(in this case, our matrix is the GL_PROJECTION)
+	// and multiplies it.
 	glFrustum(-xy_aspect*.08, xy_aspect*.08, -.08, .08, .1, 15.0);
-	glTranslatef(0, 0, 0);
-
+	// Since we are in projection mode, here we are setting the camera to the origin (0,0,0)
+	glTranslatef(0, 0, -0.5);
+	// Call our display function.
 	glutPostRedisplay();
 }
 
@@ -63,34 +79,41 @@ void myGlutReshape(int x, int y)
 
 void myGlutDisplay(void)
 {
-	static float rotationX = 0.0, rotationY = 0.0;
-
+	// Essentially set the background color of the 3D scene.
 	glClearColor(.9f, .9f, .9f, 1.0f);
+	// Clear the buffer of colors in each bit plane.
+	// bit plane - A set of bits that are on or off (Think of a black and white image)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	// Set the mode so we are modifying our objects.
 	glMatrixMode(GL_MODELVIEW);
+	// Load the identify matrix which gives us a base for our object transformations
+	// (i.e. this is the default state)
 	glLoadIdentity();
 
+	// Push a series of transformations onto current MatrixMode stack
 	glPushMatrix();
-		glTranslatef(0.0, -0.125, -0.75);
-		//drawing the axes
+		//glTranslatef(0.0, -0.125, -0.75);
+		//drawing the axes - Set drawing mode to lines
 		glBegin(GL_LINES);
-		glColor3f(1.0, 0.0, 0.0);
-		glVertex3f(0, 0, 0); glVertex3f(1.0, 0, 0);
-		glColor3f(0.0, 1.0, 0.0);
-		glVertex3f(0, 0, 0); glVertex3f(0.0, 1.0, 0);
-		glColor3f(0.0, 0.0, 1.0);
-		glVertex3f(0, 0, 0); glVertex3f(0, 0, 1.0);
+			glColor3f(1.0, 0.0, 0.0);
+			glVertex3f(0, 0, 0); glVertex3f(1.0, 0, 0);
+			glColor3f(0.0, 1.0, 0.0);
+			glVertex3f(0, 0, 0); glVertex3f(0.0, 1.0, 0);
+			glColor3f(0.0, 0.0, 1.0);
+			glVertex3f(0, 0, 0); glVertex3f(0, 0, 1.0);
 		glEnd();
 	glPopMatrix();
+	// Pop all of these operations off of our model_view stack, thus getting us back
+	// to the default state.
 
 			
 	glPushMatrix();
-			glScalef(scale / 50.0, scale / 50.0, scale / 50.0);
-			glTranslatef(0.0, -0.125, -0.25);
-			glRotatef(rotY, 0.0, 1.0, 0.0);
+		glScalef(scale / 50.0, scale / 50.0, scale / 50.0);
+		//glTranslatef(0.0, -0.125, -0.25);
+		glRotatef(rotY, 0.0, 1.0, 0.0);
 
 		if (filled) {
+			glEnable(GL_LIGHTING);
 			glEnable(GL_POLYGON_OFFSET_FILL);
 			glColor3f(0.5, 0.5, 0.5);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -98,32 +121,43 @@ void myGlutDisplay(void)
 		}
 		
 		if (wireframe) {
+			glDisable(GL_LIGHTING);
 			glDisable(GL_POLYGON_OFFSET_FILL);
 			glColor3f(0.0, 0.0, 0.0);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 			myPLY->render();
-			glPopMatrix();
+			//glPopMatrix();
 		}
 	glPopMatrix();
 
 	glutSwapBuffers();
 }
 
+/*  ==========================================
+	Clean up all dynamically allocated memory
+	========================================== */
 void onExit()
 {
 	delete myPLY;
 }
 
-
+/*   ==========================================
+	 Callback function
+	 A callback function is a function that is triggered
+	 by some operating system event (like clicking a button)
+	 and then running this function when an action has occurred.
+  	 ========================================== */
 void callback_load(int id) {
 	
 	if (filenameTextField == NULL) {
 		return;
 	}
-	cout << "loading: " << filenameTextField->get_text() << endl;
+	// 
+	cout << "Loading new ply file from: " << filenameTextField->get_text() << endl;
+	// Reload our model
 	myPLY->reload(filenameTextField->get_text());
+	// Print out the attributes
 	myPLY->printAttributes();
-
 }
 
 
@@ -151,16 +185,22 @@ int main(int argc, char* argv[])
 	/*       Set up OpenGL lighting         */
 	/****************************************/
 
+	glClearColor(0.38, 0.38, 0.38, 0.0);
 	glShadeModel(GL_SMOOTH);
+
+	GLfloat light_pos0[] = { 0.0f, 0.0f, 1.0f, 0.0f };
+	GLfloat diffuse[] = { 0.5f, 0.5f, 0.5f, 0.0f };
+	GLfloat ambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_pos0);
 
 	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 	glEnable(GL_COLOR_MATERIAL);
-	
-	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, 1);
 
-	static float one[] = { 1, 1, 1, 1 };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, one);
-
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 
 	/****************************************/
 	/*          Enable z-buferring          */

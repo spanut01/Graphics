@@ -45,7 +45,7 @@ class ply : public entity{
 		=============================================== */  
 		void render();
 		void renderWireFrame();
-
+        void normalize();
 		/*	===============================================
 			Desc: Draws the 3D object
 				
