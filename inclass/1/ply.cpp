@@ -191,7 +191,7 @@ void ply::loadGeometry(){
         exit(1);
     }
     myfile.close();
-    //scaleAndCenter();
+    scaleAndCenter();
 };
 
 /*  ===============================================
@@ -227,7 +227,6 @@ void ply::scaleAndCenter() {
  
     // *******multiply the max by 2.5 to shrink the image to fit it into the 
     // given window dimensions. *******
-//    max = max * 2.5; 
 
     // center and scale each vertex 
     for (i = 0; i < vertexCount; i++){
