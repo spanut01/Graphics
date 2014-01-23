@@ -11,10 +11,10 @@
 #include <fstream>
 #include <stdio.h>
 #include <cstdlib>
-#include </comp/175/public_html/labs/include/GL/glui.h>
+#include <GL/glui.h>
 #include "ply.h"
 #include "geometry.h"
-#include <cmath>
+
 
 using namespace std;
 
@@ -24,12 +24,12 @@ using namespace std;
       Postcondition:
     =============================================== */ 
 ply::ply(string _filePath){
-	filePath = _filePath;
-	vertexList = NULL;
-	faceList = NULL;
-	properties = 0;	
-	// Call helper function to load geometry
-	loadGeometry();
+        filePath = _filePath;
+        vertexList = NULL;
+        faceList = NULL;
+        properties = 0; 
+        // Call helper function to load geometry
+        loadGeometry();
 }
 
 /*  ===============================================
@@ -39,8 +39,13 @@ ply::ply(string _filePath){
       =============================================== */ 
 ply::~ply(){
   // Delete the allocated arrays
-	delete[] vertexList;
-	delete[] faceList;
+        delete[] vertexList;
+
+        for (int i = 0; i < faceCount; i++) {
+                delete [] faceList[i].vertexList;
+        }
+
+        delete[] faceList;
   // Set pointers to NULL
   vertexList = NULL;
   faceList = NULL;
@@ -55,6 +60,9 @@ void ply::reload(string _filePath){
   filePath = _filePath;
   // reclaim memory allocated in each array
   delete[] vertexList;
+  for (int i = 0; i < faceCount; i++) {
+          delete[] faceList[i].vertexList;
+  }
   delete[] faceList;
   // Set pointers to array
   vertexList = NULL;
@@ -67,8 +75,17 @@ void ply::reload(string _filePath){
       Precondition:
       Postcondition:  
       =============================================== */ 
-
 void ply::loadGeometry(){
+
+  /* You will implement this section of code
+        1. Parse the header
+        2.) Update any private or helper variables in the ply.h private section
+        3.) allocate memory for the vertexList 
+            3a.) Populate vertices
+        4.) allocate memory for the faceList
+            4a.) Populate faceList
+  */
+
 
     ifstream myfile (filePath.c_str()); // load the file
     if ( myfile.is_open()) { // if the file is accessable
@@ -173,11 +190,15 @@ void ply::loadGeometry(){
         exit(1);
     }
     myfile.close();
-    normalize();
+    scaleAndCenter();
 };
 
-void ply::normalize(){
-
+/*  ===============================================
+Desc: Moves all the geometry so that the object is centered at 0, 0, 0 and scaled to be between 0.5 and -0.5
+Precondition: after all the vetices and faces have been loaded in
+Postcondition:
+=============================================== */
+void ply::scaleAndCenter() {
     float avrg_x;
     float avrg_y;
     float avrg_z;
@@ -213,8 +234,7 @@ void ply::normalize(){
         vertexList[i].y = (vertexList[i].y - avrg_y) / max;
         vertexList[i].z = (vertexList[i].z - avrg_z) / max;
     }
-};
-
+}
 
 /*  ===============================================
       Desc: Draws a filled 3D object
@@ -224,58 +244,56 @@ void ply::normalize(){
       faceList or vertexList then do not attempt to render.
     =============================================== */  
 void ply::render(){
-    	if(vertexList==NULL || faceList==NULL){
-    		    return;
-    	}
-  		
-      glPushMatrix();
-            //glTranslatef(getXPosition(),getYPosition(),getZPosition());
-            //glScalef(getXScale(),getYScale(),getZScale());
-            // For each of our faces
-        		for(int i = 0; i < faceCount; i++)
-        		{
-                  // All of our faces are actually triangles for PLY files
-            			glBegin(GL_TRIANGLES);
-            			// Get the vertex list from the face list
-            			for(int j = 0; j < faceList[i].vertexCount; j++){
-              				// Get each vertices x,y,z and draw them
-              				int index = faceList[i].vertexList[j];
-              				glVertex3f(vertexList[index].x,vertexList[index].y,vertexList[index].z);
-            			}
-            			glEnd();
-        		}
-      glPopMatrix();
-}
+    if(vertexList==NULL || faceList==NULL){
+                return;
+    }
 
-    /*  ===============================================
-      Desc: Draws the wireframe(edges) of a 3D object.
-            We could alternatively use 'glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);'
+        float x1, y1, z1;
+        float x2, y2, z2;
+        float x3, y3, z3;
 
-      Precondition:
-      Postcondition:
-    =============================================== */ 
-void ply::renderWireFrame(){
-      if(vertexList==NULL || faceList==NULL){
-            return;
-      }
-      glPushMatrix();
-            //glTranslatef(getXPosition(),getYPosition(),getZPosition());
-            //glScalef(getXScale(),getYScale(),getZScale());
-            // For each of our faces
-            for(int i = 0; i < faceCount; i++)
-            {
-                  glBegin(GL_LINES);
-                  // Get the vertex list from the face list
-                  for(int j = 0; j < faceList[i].vertexCount; j++){
-                      // Get each vertices x,y,z and draw them
-                      int index = faceList[i].vertexList[j];
-                      glVertex3f(vertexList[index].x,vertexList[index].y,vertexList[index].z);
-                  }
-                  glEnd();
+        z1 = z2 = z3 = 0;
+        x1 = -0.5;
+        x2 = 0.5;
+        x3 = 0;
+        y1 = -0.5;
+        y2 = -0.5;
+        y3 = 0.5;
+
+        glBegin(GL_TRIANGLES);
+        setNormal(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        glVertex3f(x1, y1, z1);
+        glVertex3f(x2, y2, z2);
+        glVertex3f(x3, y3, z3);
+        glEnd();
+
+        return;
+                
+        glPushMatrix();
+    //glTranslatef(getXPosition(),getYPosition(),getZPosition());
+    //glScalef(getXScale(),getYScale(),getZScale());
+    // For each of our faces
+        for(int i = 0; i < faceCount; i++) {
+            // All of our faces are actually triangles for PLY files
+                        glBegin(GL_TRIANGLES);
+                        // Get the vertex list from the face list
+                        int index0 = faceList[i].vertexList[0];
+                        int index1 = faceList[i].vertexList[1];
+                        int index2 = faceList[i].vertexList[2];
+
+                        setNormal(vertexList[index0].x, vertexList[index0].y, vertexList[index0].z,
+                                          vertexList[index1].x, vertexList[index1].y, vertexList[index1].z,
+                                          vertexList[index2].x, vertexList[index2].y, vertexList[index2].z);
+
+            for(int j = 0; j < faceList[i].vertexCount; j++){
+                                // Get each vertices x,y,z and draw them
+                int index = faceList[i].vertexList[j];
+                glVertex3f(vertexList[index].x,vertexList[index].y,vertexList[index].z);
             }
-      glPopMatrix();
+            glEnd();
+        }
+        glPopMatrix();
 }
-
 
 /*  ===============================================
       Desc: Prints some statistics about the file you have read in
@@ -287,7 +305,7 @@ void ply::renderWireFrame(){
 void ply::printAttributes(){
       cout << "==== ply Mesh Attributes=====" << endl;
       cout << "vertex count:" << vertexCount << endl;
-      cout << "face count:" << faceCount << endl;	
+      cout << "face count:" << faceCount << endl;       
       cout << "properties:" << properties << endl;
 }
 
@@ -298,13 +316,13 @@ void ply::printAttributes(){
       Postcondition:  
     =============================================== */ 
 void ply::printVertexList(){
-  	if(vertexList==NULL){
-  		  return;
-  	}else{
-    		for(int i = 0; i < vertexCount; i++){
-    			   cout << vertexList[i].x << "," << vertexList[i].y << "," << vertexList[i].z << endl;
-    		}
-  	}
+        if(vertexList==NULL){
+                  return;
+        }else{
+                for(int i = 0; i < vertexCount; i++){
+                           cout << vertexList[i].x << "," << vertexList[i].y << "," << vertexList[i].z << endl;
+                }
+        }
 }
 
 /*  ===============================================
@@ -314,17 +332,51 @@ void ply::printVertexList(){
       Postcondition:  
     =============================================== */ 
 void ply::printFaceList(){
-	if(faceList==NULL){
-		return;
-	}else{
-		// For each of our faces
-		for(int i = 0; i < faceCount; i++){
-			// Get the vertices that make up each face from the face list
-			for(int j = 0; j < faceList[i].vertexCount; j++){
-				// Print out the vertex
-				int index = faceList[i].vertexList[j];
-				cout << vertexList[index].x << "," << vertexList[index].y << "," << vertexList[index].z << endl;
-			}
-		}
-	}
+        if(faceList==NULL){
+                return;
+        }else{
+                // For each of our faces
+                for(int i = 0; i < faceCount; i++){
+                        // Get the vertices that make up each face from the face list
+                        for(int j = 0; j < faceList[i].vertexCount; j++){
+                                // Print out the vertex
+                                int index = faceList[i].vertexList[j];
+                                cout << vertexList[index].x << "," << vertexList[index].y << "," << vertexList[index].z << endl;
+                        }
+                }
+        }
+}
+
+void ply::setNormal(float x1, float y1, float z1,
+                                        float x2, float y2, float z2,
+                                        float x3, float y3, float z3) {
+        
+        float v1x, v1y, v1z;
+        float v2x, v2y, v2z;
+        float cx, cy, cz;
+
+        //find vector between x2 and x1
+        v1x = x1 - x2;
+        v1y = y1 - y2;
+        v1z = z1 - z2;
+
+        //find vector between x3 and x2
+        v2x = x2 - x3;
+        v2y = y2 - y3;
+        v2z = z2 - z3;
+
+        //cross product v1xv2
+
+        cx = v1y * v2z - v1z * v2y;
+        cy = v1z * v2x - v1x * v2z;
+        cz = v1x * v2y - v1y * v2x;
+
+        //normalize
+
+        float length = sqrt(cx * cx + cy * cy + cz * cz);
+        cx = cx / length;
+        cy = cy / length;
+        cz = cz / length;       
+
+        glNormal3f(cx, cy, cz);
 }
