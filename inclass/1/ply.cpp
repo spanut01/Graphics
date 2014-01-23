@@ -200,9 +200,9 @@ Precondition: after all the vetices and faces have been loaded in
 Postcondition:
 =============================================== */
 void ply::scaleAndCenter() {
-    float avrg_x;
-    float avrg_y;
-    float avrg_z;
+    float avrg_x = 0.0;
+    float avrg_y = 0.0;
+    float avrg_z = 0.0;
     float max = 0.0;
     int i; 
 
@@ -219,15 +219,15 @@ void ply::scaleAndCenter() {
         if (max < fabs(vertexList[i].y)) max = fabs(vertexList[i].y);
         if (max < fabs(vertexList[i].z)) max = fabs(vertexList[i].z);
     }
-
     // compute the average for each property
     avrg_x = avrg_x / vertexCount;
     avrg_y = avrg_y / vertexCount;
     avrg_z = avrg_z / vertexCount;
-    
+    printf("max : %f \naverages: \n x: %f \n y: %f \n z: %f \n" , max, avrg_x, avrg_y, avrg_z);
+ 
     // *******multiply the max by 2.5 to shrink the image to fit it into the 
     // given window dimensions. *******
-    max = max * 2.5; 
+//    max = max * 2.5; 
 
     // center and scale each vertex 
     for (i = 0; i < vertexCount; i++){
@@ -249,7 +249,7 @@ void ply::render(){
                 return;
     }
 
-        float x1, y1, z1;
+/*        float x1, y1, z1;
         float x2, y2, z2;
         float x3, y3, z3;
 
@@ -267,9 +267,7 @@ void ply::render(){
         glVertex3f(x2, y2, z2);
         glVertex3f(x3, y3, z3);
         glEnd();
-
-        return;
-                
+*/
         glPushMatrix();
     //glTranslatef(getXPosition(),getYPosition(),getZPosition());
     //glScalef(getXScale(),getYScale(),getZScale());
