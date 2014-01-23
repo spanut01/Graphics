@@ -11,9 +11,10 @@
 #include <fstream>
 #include <stdio.h>
 #include <cstdlib>
-#include <GL/glui.h>
+#include </comp/175/public_html/labs/include/GL/glui.h>
 #include "ply.h"
 #include "geometry.h"
+#include <math.h>
 
 
 using namespace std;
@@ -214,9 +215,9 @@ void ply::scaleAndCenter() {
         avrg_z += vertexList[i].z;
 
         // obtain the max dimension to find the furthest point from 0,0
-        if (max < abs(vertexList[i].x)) max = abs(vertexList[i].x);
-        if (max < abs(vertexList[i].y)) max = abs(vertexList[i].y);
-        if (max < abs(vertexList[i].z)) max = abs(vertexList[i].z);
+        if (max < fabs(vertexList[i].x)) max = fabs(vertexList[i].x);
+        if (max < fabs(vertexList[i].y)) max = fabs(vertexList[i].y);
+        if (max < fabs(vertexList[i].z)) max = fabs(vertexList[i].z);
     }
 
     // compute the average for each property
