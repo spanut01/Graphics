@@ -191,7 +191,7 @@ void ply::loadGeometry(){
         exit(1);
     }
     myfile.close();
-    scaleAndCenter();
+    //scaleAndCenter();
 };
 
 /*  ===============================================
