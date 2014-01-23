@@ -223,7 +223,6 @@ void ply::scaleAndCenter() {
     avrg_x = avrg_x / vertexCount;
     avrg_y = avrg_y / vertexCount;
     avrg_z = avrg_z / vertexCount;
-    printf("max : %f \naverages: \n x: %f \n y: %f \n z: %f \n" , max, avrg_x, avrg_y, avrg_z);
  
     // *******multiply the max by 2.5 to shrink the image to fit it into the 
     // given window dimensions. *******
