@@ -14,7 +14,5 @@ public:
 	void drawNormal() {
 	};
 
-
-private:
-
+};
 #endif
