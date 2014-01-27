@@ -11,7 +11,7 @@ public:
 	void draw() {
       glPushMatrix();
       glBegin(GL_TRIANGLES);
-      int i,j,k;
+      int i,j;
       
       for(i=0; i<m_segmentsX; i++){
           for(j=0; j<m_segmentsY; j++){
@@ -85,7 +85,7 @@ public:
 	void drawNormal() {
       glPushMatrix();
       glBegin(GL_LINES);
-      int i,j,k;
+      int i,j;
       
       for(i=0; i<m_segmentsX; i++){
           for(j=0; j<m_segmentsY; j++){
@@ -98,7 +98,6 @@ public:
               glVertex3f(-0.5f+(i+1)*(1.0f/m_segmentsX), -0.5f+j*(1.0f/m_segmentsY), 0.6f);
               
               //back face (-z)
-              glNormal3f(0.0f, 0.0f, -1.0f);
               glVertex3f(-0.5f+(i+1)*(1.0f/m_segmentsX), -0.5f+j*(1.0f/m_segmentsY), -0.5f);
               glVertex3f(-0.5f+(i+1)*(1.0f/m_segmentsX), -0.5f+j*(1.0f/m_segmentsY), -0.6f);
               glVertex3f(-0.5f+i*(1.0f/m_segmentsX), -0.5f+(j+1)*(1.0f/m_segmentsY), -0.5f);
@@ -107,7 +106,6 @@ public:
               glVertex3f(-0.5f+i*(1.0f/m_segmentsX), -0.5f+j*(1.0f/m_segmentsY), -0.6f);
               
               //right (+x) face
-              glNormal3f(1.0f, 0.0f, 0.0f);
               glVertex3f(0.5f, -0.5f+j*(1.0f/m_segmentsY), -0.5f+i*(1.0f/m_segmentsX));
               glVertex3f(0.6f, -0.5f+j*(1.0f/m_segmentsY), -0.5f+i*(1.0f/m_segmentsX));
               glVertex3f(0.5f, -0.5f+(j+1)*(1.0f/m_segmentsY), -0.5f+i*(1.0f/m_segmentsX));
@@ -116,7 +114,6 @@ public:
               glVertex3f(0.6f, -0.5f+j*(1.0f/m_segmentsY), -0.5f+(i+1)*(1.0f/m_segmentsX));
               
               //left (-x) face
-              glNormal3f(-1.0f, 0.0f, 0.0f);
               glVertex3f(-0.5f, -0.5f+j*(1.0f/m_segmentsY), -0.5f+i*(1.0f/m_segmentsX));
               glVertex3f(-0.6f, -0.5f+j*(1.0f/m_segmentsY), -0.5f+i*(1.0f/m_segmentsX));
               glVertex3f(-0.5f, -0.5f+(j+1)*(1.0f/m_segmentsY), -0.5f+i*(1.0f/m_segmentsX));
@@ -125,7 +122,6 @@ public:
               glVertex3f(-0.6f, -0.5f+j*(1.0f/m_segmentsY), -0.5f+(i+1)*(1.0f/m_segmentsX));
               
               //top (+y) face
-              glNormal3f(0.0f, 1.0f, 0.0f);
               glVertex3f(-0.5f+j*(1.0f/m_segmentsY), 0.5f, -0.5f+i*(1.0f/m_segmentsX));
               glVertex3f(-0.5f+j*(1.0f/m_segmentsY), 0.6f, -0.5f+i*(1.0f/m_segmentsX));
               glVertex3f(-0.5f+(j+1)*(1.0f/m_segmentsY), 0.5f, -0.5f+i*(1.0f/m_segmentsX));
@@ -134,7 +130,6 @@ public:
               glVertex3f(-0.5f+j*(1.0f/m_segmentsY), 0.6f, -0.5f+(i+1)*(1.0f/m_segmentsX));
               
               //bottom (-y) face
-              glNormal3f(0.0f, -1.0f, 0.0f);
               glVertex3f(-0.5f+j*(1.0f/m_segmentsY), -0.5f, -0.5f+i*(1.0f/m_segmentsX));
               glVertex3f(-0.5f+j*(1.0f/m_segmentsY), -0.6f, -0.5f+i*(1.0f/m_segmentsX));
               glVertex3f(-0.5f+(j+1)*(1.0f/m_segmentsY), -0.5f, -0.5f+i*(1.0f/m_segmentsX));
