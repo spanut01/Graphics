@@ -10,13 +10,13 @@ void Sphere::drawTriangles(){
         
         for (j = 0; j < m_segmentsY; j++){
 
-            glNormal3f(0.5f*sinf(j)*cosf(i), 0.5f*cosf(j), 0.5f*sinf(j)*sinf(i));
+            glNormal3f(sinf(j)*cosf(i), cosf(j), sinf(j)*sinf(i));
 
             glVertex3f(0.5f*sinf(y*j)*cosf(i*x), 0.5f*cosf(y*j), 0.5f*sinf(y*j)*sinf(i*x));
             glVertex3f(0.5f*sinf(y*(j+1))*cosf(i*x), 0.5f*cosf(y*(j+1)), 0.5f*sinf(y*(j+1))*sinf(i*x));
             glVertex3f(0.5f*sinf(y*j)*cosf((i+1)*x), 0.5f*cosf(y*j), 0.5f*sinf(y*j)*sinf((i+1)*x));
   
-            glNormal3f(0.5*sinf(j)*cosf(i), 0.5f*cosf(j), 0.5f*sinf(j)*sinf(i));
+            glNormal3f(sinf(j)*cosf(i), cosf(j), sinf(j)*sinf(i));
 
             glVertex3f(0.5f*sinf(y*(j+1))*cosf((i+1)*x), 0.5f*cosf(y*(j+1)), 0.5f*sinf(y*(j+1))*sinf((i+1)*x));
             glVertex3f(0.5f*sinf(y*(j+1))*cosf(i*x), 0.5f*cosf(y*(j+1)), 0.5f*sinf(y*(j+1))*sinf(i*x));
