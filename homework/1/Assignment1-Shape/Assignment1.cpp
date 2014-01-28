@@ -20,13 +20,15 @@ No callbacks are used.
 #include "Cone.h"
 #include "Sphere.h"
 #include "Torus.h"
+#include "funShape.h"
 
 enum OBJ_TYPE {
 	CUBE = 0,
 	CYLINDER = 1,
 	CONE = 2,
 	SPHERE = 3,
-	TORUS = 4
+	TORUS = 4,
+    FUN   = 5
 };
 
 /** These are the live variables passed into GLUI ***/
@@ -49,6 +51,7 @@ Cylinder* cylinder = new Cylinder();
 Cone* cone = new Cone();
 Sphere* sphere = new Sphere();
 Torus* torus = new Torus();
+FunShape* fun = new FunShape();
 Shape* shape = cube;
 
 /***************************************** callback_obj() ***********/
@@ -70,6 +73,9 @@ void callback_obj(int id) {
 	case TORUS:
 		shape = torus;
 		break;
+    case FUN:
+        shape = fun;
+        break;
 	default:
 		shape = cube;
 	}
@@ -168,6 +174,7 @@ void onExit()
 	delete cone;
 	delete sphere;
 	delete torus;
+    delete fun;
 }
 
 /**************************************** main() ********************/
@@ -271,6 +278,7 @@ int main(int argc, char* argv[])
 	glui->add_radiobutton_to_group(group1, "Cone");
 	glui->add_radiobutton_to_group(group1, "Sphere");
 	glui->add_radiobutton_to_group(group1, "Torus");
+    glui->add_radiobutton_to_group(group1, "funShape");
 	glui->add_button("Quit", 0, (GLUI_Update_CB)exit);
 
 	glui->set_main_gfx_window(main_window);
