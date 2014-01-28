@@ -5,7 +5,7 @@ void Torus::drawTriangles(){
     float c,a;
     c = 0.5f;
     a = 0.25f;
-    float da = 0.5f;
+    float da = 1.5f;
     for(i=0; i<m_segmentsX; i++){
         float u = i*PI*(2.0f/m_segmentsX);
         float du = (i+1)*PI*(2.0f/m_segmentsX);
