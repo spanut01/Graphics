@@ -1,5 +1,5 @@
 CC = g++
-SRC = Assignment1.cpp
+SRC = Assignment1.cpp Cube.cpp Cylinder.cpp Cone.cpp
 LIBS = -L/comp/175/public_html/labs/lib -lGL -lGLU -lglut -lglui
 EXEC = Assignment1
 
