@@ -14,7 +14,7 @@
 
 #include <string.h>
 #include "ply.h"
-#include <GLUI/glui.h>
+#include </comp/175/public_html/labs/include/GL/glui.h>
 
 float xy_aspect;
 int   last_x, last_y;
