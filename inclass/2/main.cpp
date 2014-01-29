@@ -33,6 +33,9 @@ float zoom = 1.0;
 int   show_ply=1;
 int   show_axes = 1;
 
+int zooming_in = 0;
+int zooming_out = 0;
+
 float ply_rotate[16] = { 1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1 };
 float view_rotate[16] = { 1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1 };
 float obj_pos[] = { 0.0, 0.0, 0.0 };
@@ -122,6 +125,20 @@ void control_cb( int control )
 /***************************************** myGlutMouse() **********/
 
 
+void myTimedFunction(int value){
+    if(zooming_in){
+        zoom += 0.1f;
+        glutTimerFunc(100, myTimedFunction, 0);
+    } 
+    if(zooming_out){
+        zoom -= 0.1f;
+        glutTimerFunc(100, myTimedFunction, 0);
+    } 
+
+
+    glutPostRedisplay();
+}
+
 /*
 
     Implement some Mouse functions here
@@ -134,12 +151,17 @@ void control_cb( int control )
 */
 void myGlutMouse(int button, int button_state, int x, int y )
 {
+    printf("button:%d, buttonstate:%d, x:%d, y:%d\n",button, button_state, x, y);
     // zoom in on left-click
-
+    if(button == 0 && button_state == 0)zooming_in = 1;
+    if(button == 0 && button_state == 1)zooming_in = 0;
     // zoom out on right-click
-
+    if(button == 2 && button_state == 0)zooming_out = 1;
+    if(button == 2 && button_state == 1)zooming_out = 0; 
     // Maybe do some scrolling?
+    glutTimerFunc(100, myTimedFunction, 0);
 
+    glutPostRedisplay();
 }
 
 /**************************************** myGlutKeyboard() **********/
@@ -155,12 +177,26 @@ void myGlutMouse(int button, int button_state, int x, int y )
 
 void myGlutKeyboard(unsigned char Key, int x, int y)
 {
+    printf("key:%d, x:%d, y:%d\n", Key, x, y);
     switch(Key)
     {
-        case 27:
+        case 27://esc
         case 'q':
             exit(0);
             break;
+        case 'w':
+            cam_pos[2] = cam_pos[2]+0.01f;
+            break;
+        case 's':
+            cam_pos[2] = cam_pos[2]-0.01f;
+            break;
+        case 'a':
+            cam_pos[0] = cam_pos[0]+0.01f;
+            break;
+        case 'd':
+            cam_pos[0] = cam_pos[0]-0.01f;
+            break;
+      
     };
     
     glutPostRedisplay();
@@ -179,12 +215,13 @@ void myGlutMenu( int value )
 
 void myGlutIdle( void )
 {
+    printf("myGlutIdle\n");
     /* According to the GLUT specification, the current window is
      undefined during an idle callback.  So we need to explicitly change
      it if necessary */
     if ( glutGetWindow() != main_window )
         glutSetWindow(main_window);
-    
+   
     /*  GLUI_Master.sync_live_all();  -- not needed - nothing to sync in this
      application  */
     
@@ -196,7 +233,8 @@ void myGlutIdle( void )
 /***************************************** myGlutMotion() **********/
 
 void myGlutMotion(int x, int y )
-{
+{ 
+    printf("myGlutMotion\n");
     glutPostRedisplay();
 }
 
@@ -229,6 +267,7 @@ void myGlutReshape( int x, int y )
 
 void drawAxes( float scale )
 {
+    printf("drawAxes\n");
     glDisable( GL_LIGHTING );
     
     glPushMatrix();
@@ -267,11 +306,11 @@ void drawAxes( float scale )
     glEnable( GL_LIGHTING );
 }
 
-
 /***************************************** myGlutDisplay() *****************/
 
 void myGlutDisplay( void )
 {
+    printf("myGlutDisplay\n");
     // Clear the buffer of colors in each bit plane.
     // bit plane - A set of bits that are on or off (Think of a black and white image)
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
