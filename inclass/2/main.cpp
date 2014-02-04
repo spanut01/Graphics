@@ -35,6 +35,9 @@ int   show_axes = 1;
 
 int zooming_in = 0;
 int zooming_out = 0;
+float rotateX = 0.0f;
+float rotateY = 0.0f;
+float rotateZ = 0.0f;
 
 float ply_rotate[16] = { 1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1 };
 float view_rotate[16] = { 1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1 };
@@ -125,20 +128,26 @@ void control_cb( int control )
 /***************************************** myGlutMouse() **********/
 
 
-void myTimedFunction(int value){
+void zoomTimedFunction(int value){
     if(zooming_in){
         zoom += 0.1f;
-        glutTimerFunc(100, myTimedFunction, 0);
+        glutTimerFunc(100, zoomTimedFunction, 0);
     } 
     if(zooming_out){
         zoom -= 0.1f;
-        glutTimerFunc(100, myTimedFunction, 0);
+        glutTimerFunc(100, zoomTimedFunction, 0);
     } 
 
 
     glutPostRedisplay();
 }
 
+//void rotateTimedFunction(int value){
+//  for (int i = 0; i < 12; i += 4){
+//        ply_rotate[0] = 0.1f;
+//    }
+//    glutPostRedisplay();
+//}
 /*
 
     Implement some Mouse functions here
@@ -153,14 +162,29 @@ void myGlutMouse(int button, int button_state, int x, int y )
 {
     printf("button:%d, buttonstate:%d, x:%d, y:%d\n",button, button_state, x, y);
     // zoom in on left-click
-    if(button == 0 && button_state == 0)zooming_in = 1;
-    if(button == 0 && button_state == 1)zooming_in = 0;
+    if(button == 3 && button_state == 0) zoom += 0.1f;
+//zooming_in = 1;
+//    if(button == 3 && button_state == 1)zooming_in = 0;
     // zoom out on right-click
-    if(button == 2 && button_state == 0)zooming_out = 1;
-    if(button == 2 && button_state == 1)zooming_out = 0; 
+    if(button == 4 && button_state == 0) zoom -= 0.1f;
+//zooming_out = 1;
+//    if(button == 4 && button_state == 1)zooming_out = 0; 
     // Maybe do some scrolling?
-    glutTimerFunc(100, myTimedFunction, 0);
+//    if (button != 1) glutTimerFunc(100, zoomTimedFunction, 0);
 
+//    if (button == 0 && button_state == 0){
+//        glRotatef(90.0f, -x, y, 0.0f);
+//        rotateY = y;
+//        if (y < 0) rotateZ = 0.1f;
+//        if (y > 0) rotateZ = -0.1f;
+//    }
+//    if (button == 0 && button_state == 1){
+//        rotateX = 0.0f;
+//        rotateY = 0.0f;
+//        rotateZ = 0.1f;
+//    }   
+    
+//    if (button == 0 && button_state == 0) glutTimerFunc(100, rotateTimedFunction, button);
     glutPostRedisplay();
 }
 
@@ -243,6 +267,7 @@ void myGlutMotion(int x, int y )
 void myGlutReshape( int x, int y )
 {
     float xy_aspect;
+    printf("myGlutReshape \n");
     xy_aspect = (float)x / (float)y;
 
     glViewport(0, 0, x, y);
