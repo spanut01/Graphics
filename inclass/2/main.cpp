@@ -35,9 +35,9 @@ int   show_axes = 1;
 
 int zooming_in = 0;
 int zooming_out = 0;
-float rotateX = 0.0f;
-float rotateY = 0.0f;
-float rotateZ = 0.0f;
+int rotateX = 0;
+int rotateY = 0;
+//float rotateZ = 0.0f;
 
 float ply_rotate[16] = { 1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1 };
 float view_rotate[16] = { 1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1 };
@@ -163,14 +163,15 @@ void myGlutMouse(int button, int button_state, int x, int y )
     printf("button:%d, buttonstate:%d, x:%d, y:%d\n",button, button_state, x, y);
     // zoom in on left-click
     if(button == 3 && button_state == 0) zoom += 0.1f;
-//zooming_in = 1;
-//    if(button == 3 && button_state == 1)zooming_in = 0;
+    if(button == 0 && button_state == 0) zooming_in = 1;
+    if(button == 0 && button_state == 1) zooming_in = 0;
     // zoom out on right-click
     if(button == 4 && button_state == 0) zoom -= 0.1f;
-//zooming_out = 1;
+    if(button == 2 && button_state == 0) zooming_out = 1;
+    if(button == 2 && button_state == 1) zooming_out = 0;
 //    if(button == 4 && button_state == 1)zooming_out = 0; 
     // Maybe do some scrolling?
-//    if (button != 1) glutTimerFunc(100, zoomTimedFunction, 0);
+    if (button == 0 || button == 2) glutTimerFunc(100, zoomTimedFunction, 0);
 
 //    if (button == 0 && button_state == 0){
 //        glRotatef(90.0f, -x, y, 0.0f);
@@ -185,6 +186,17 @@ void myGlutMouse(int button, int button_state, int x, int y )
 //    }   
     
 //    if (button == 0 && button_state == 0) glutTimerFunc(100, rotateTimedFunction, button);
+//
+//
+    if(button==1 && button_state==0){
+        rotateY+=(x-400);
+        while(rotateY<0)rotateY+=360;
+    }
+    if(button==1 && button_state==0){
+        rotateX+=(y-300);
+        while(rotateX<0)rotateX+=360;
+    }
+
     glutPostRedisplay();
 }
 
@@ -297,7 +309,7 @@ void drawAxes( float scale )
     
     glPushMatrix();
         glScalef( scale, scale, scale );
-        
+
         glBegin( GL_LINES );
             glColor3f( 1.0, 0.0, 0.0 );
             glVertex3f( .8f, 0.05f, 0.0 );  glVertex3f( 1.0, 0.25f, 0.0 ); /* Letter X */
@@ -372,6 +384,9 @@ void myGlutDisplay( void )
     glPushMatrix();
         glTranslatef( obj_pos[0], obj_pos[1], -obj_pos[2] );
         glScalef( zoom, zoom, zoom );
+
+        glRotatef(rotateY, 0.0f, 1.0f, 0.0f);
+        glRotatef(rotateX, 1.0f, 0.0f, 0.0f);
         glMultMatrixf( ply_rotate );
 
         // We wil either show a filled model or a 
