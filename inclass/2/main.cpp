@@ -505,9 +505,11 @@ int main(int argc, char* argv[])
     zoom_spinner->set_alignment( GLUI_ALIGN_RIGHT );
     
     GLUI_Scrollbar *sb;
+    new GLUI_StaticText(obj_panel, "Rotate X");
     sb = new GLUI_Scrollbar( obj_panel, "Rotate X",GLUI_SCROLL_HORIZONTAL, &rotateX,ROTATE_ID,control_cb);
     sb->set_int_limits(0,360);
-    sb = new GLUI_Scrollbar( obj_panel, "Rotate Y",GLUI_SCROLL_HORIZONTAL, &rotateX,ROTATE_ID,control_cb);
+    new GLUI_StaticText(obj_panel, "Rotate Y");
+    sb = new GLUI_Scrollbar( obj_panel, "Rotate Y",GLUI_SCROLL_HORIZONTAL, &rotateY,ROTATE_ID,control_cb);
     sb->set_int_limits(0,360);
     
     
