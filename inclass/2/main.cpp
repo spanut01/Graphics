@@ -523,7 +523,7 @@ int main(int argc, char* argv[])
                      &light0_intensity, LIGHT0_INTENSITY_ID,
                      control_cb );
     light0_spinner->set_float_limits( 0.0, 1.0 );
-    GLUI_Scrollbar *sb;
+
     sb = new GLUI_Scrollbar( light0, "Red",GLUI_SCROLL_HORIZONTAL, &light0_diffuse[0],LIGHT0_INTENSITY_ID,control_cb);
     sb->set_float_limits(0,1);
     sb = new GLUI_Scrollbar( light0, "Green",GLUI_SCROLL_HORIZONTAL, &light0_diffuse[1],LIGHT0_INTENSITY_ID,control_cb);
