@@ -60,6 +60,7 @@ ply* myPLY;
 /********** User IDs for callbacks ********/
 #define LIGHT0_ENABLED_ID    200
 #define LIGHT0_INTENSITY_ID  250
+#define ROTATE_ID            260
 #define ENABLE_ID            300
 #define DISABLE_ID           301
 #define SHOW_ID              302
@@ -122,6 +123,9 @@ void control_cb( int control )
     else if ( control == HIDE_ID )
     {
         glui2->hide();
+    }
+    else if(control == ROTATE_ID){
+        glutPostRedisplay();
     }
 }
 
@@ -499,6 +503,13 @@ int main(int argc, char* argv[])
     new GLUI_Spinner( obj_panel, "Zoom:", &zoom);
     zoom_spinner->set_float_limits( .2f, 4.0 );
     zoom_spinner->set_alignment( GLUI_ALIGN_RIGHT );
+    
+    GLUI_Scrollbar *sb;
+    sb = new GLUI_Scrollbar( obj_panel, "Rotate X",GLUI_SCROLL_HORIZONTAL, &rotateX,ROTATE_ID,control_cb);
+    sb->set_int_limits(0,360);
+    sb = new GLUI_Scrollbar( obj_panel, "Rotate Y",GLUI_SCROLL_HORIZONTAL, &rotateX,ROTATE_ID,control_cb);
+    sb->set_int_limits(0,360);
+    
     
     /******** Add some controls for lights ********/
     
