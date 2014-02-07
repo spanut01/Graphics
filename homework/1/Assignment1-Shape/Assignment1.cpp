@@ -278,7 +278,7 @@ int main(int argc, char* argv[])
 	glui->add_radiobutton_to_group(group1, "Cone");
 	glui->add_radiobutton_to_group(group1, "Sphere");
 	glui->add_radiobutton_to_group(group1, "Torus");
-    glui->add_radiobutton_to_group(group1, "funShape");
+//    glui->add_radiobutton_to_group(group1, "funShape");
 	glui->add_button("Quit", 0, (GLUI_Update_CB)exit);
 
 	glui->set_main_gfx_window(main_window);
