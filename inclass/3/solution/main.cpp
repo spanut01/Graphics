@@ -12,7 +12,8 @@
 #include <string.h>
 #include <iostream>
 #include <fstream>
-#include <GL/glui.h>
+//#include <GL/glui.h>
+#include </comp/175/public_html/labs/include/GL/glui.h>
 #include <math.h>
 #include <time.h>
 #include "ply.h"	// Our ply loader

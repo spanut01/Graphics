@@ -21,7 +21,8 @@ Use glMatrixMode(GL_PROJECTION) to modify your projection matrix.
 #ifndef MOVIE_CAMERA_H
 #define MOVIE_CAMERA_H
 
-#include <GL/glui.h>
+//#include <GL/glui.h>
+#include </comp/175/public_html/labs/include/GL/glui.h>
 
 class movieCamera{
 
