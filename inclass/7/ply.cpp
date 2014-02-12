@@ -276,10 +276,48 @@ void ply::render(){
 
 void ply::findNeighbors(){
     //clear out uninitialized stuff
-    int i, j;
+    int i, j, k;
     for(i=0; i<faceCount; i++){
         for(j=0; j<3; j++){
             faceList[i].neighbors[j] = -1;
+        }
+    }
+    for(i=0; i<vertexCount; i++){
+        vertexList[i].facesnum = 0;
+        //for(j=0; j<3; j++){
+        //    vertexList[i].faces[j] = -1;
+        //}
+    }
+    //so vertexes know what faces they're in
+    for(i=0; i<faceCount; i++){//face i
+        for(j=0; j<3; j++){
+            int vertexnum = faceList[i].vertexList[j];
+            if(vertexList[vertexnum].facesnum < 10){
+                vertexList[vertexnum].faces[vertexList[vertexnum].facesnum] = i;
+                vertexList[vertexnum].facesnum++;
+            } else printf("Error: vertex %d is in too many faces\n", vertexnum);
+        }
+    }
+    //find neighbors
+    int l, m;
+    for(i=0; i<faceCount; i++){//face i
+        for(j=0; j<2; j++){//vertex j
+            int vertexnum = faceList[i].vertexList[j];
+            for(k=0; k<vertexList[vertexnum].facesnum; k++){//possible neighbors
+                int candidate = vertexList[vertexnum].faces[k];
+                int shared = 1;//face i's vertex j is in candidate
+                for(l=j+1; l<3; l++){//check other vertexes of i
+                    int checking = faceList[i].vertexList[l];
+                    for(m=0; m<3; m++){//vs all vertexes of candidate
+                        if(faceList[candidate].vertexList[m]==checking)shared++;
+                    }
+                }
+                if(shared>1){
+                    m=0;
+                    while(faceList[i].neighbors[m] == -1)m++;
+                    faceList[i].neighbors[m] = candidate;
+                }
+            }
         }
     }
 }
