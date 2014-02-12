@@ -11,7 +11,8 @@ struct vertex{
 	float intensity;
 	float r,g,b;		// Color values
 	
-	int faces[3];
+	int facesnum;
+	int faces[15];//hopefully 10 is enough
 };
 
 /*  ============== Face ==============
@@ -23,6 +24,7 @@ struct face{
 	int vertexCount;
 	int* vertexList;
   
+  //neighbors share an edge not just a point
   int neighbors[3];
 	// Default constructor
 	face(){

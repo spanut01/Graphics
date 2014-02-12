@@ -191,6 +191,7 @@ void ply::loadGeometry(){
         exit(1);
     }
     myfile.close();
+    findNeighbors();
     scaleAndCenter();
 };
 
@@ -292,7 +293,7 @@ void ply::findNeighbors(){
     for(i=0; i<faceCount; i++){//face i
         for(j=0; j<3; j++){
             int vertexnum = faceList[i].vertexList[j];
-            if(vertexList[vertexnum].facesnum < 10){
+            if(vertexList[vertexnum].facesnum < 15){
                 vertexList[vertexnum].faces[vertexList[vertexnum].facesnum] = i;
                 vertexList[vertexnum].facesnum++;
             } else printf("Error: vertex %d is in too many faces\n", vertexnum);
