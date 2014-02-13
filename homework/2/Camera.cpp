@@ -39,7 +39,7 @@ Matrix Camera::GetProjectionMatrix() {
     unhinging[14] = -1.0;
     unhinging[15] = 0.0;
 
-    projection = scaling * unhinging;
+    //projection = unhinging * scaling;
     return projection;
 }
 
@@ -80,7 +80,8 @@ Matrix Camera::GetModelViewMatrix() {
     basisRotation[9] = w[1];
     basisRotation[10] = w[2];
 
-    modelView = eyeTranslation * basisRotation;
+    modelView = basisRotation * eyeTranslation;
+    modelView.print();
     return modelView;
 }
 
