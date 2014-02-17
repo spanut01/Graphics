@@ -77,7 +77,10 @@ void movieCamera::wideAngle(float _fov){
   Postcondition:
 =============================================== */ 
 void movieCamera::orthogonal(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble nearVal, GLdouble farVal){
-
+  glPushMatrix();
+  glMatrixMode(GL_PROJECTION);
+  glOrtho(left,right,bottom,top,nearVal,farVal);
+  glPopMatrix();
 }
 
 /*  ===============================================
