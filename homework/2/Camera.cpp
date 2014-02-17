@@ -113,15 +113,25 @@ Matrix Camera::GetModelViewMatrix() {
 
 void Camera::RotateV(double angle) {
     rotationV = PI * angle / 180.0;
-    Vector tempu = cos(rotationV)*u - sin(rotationV)*v;
-    Vector tempv = sin(rotationV)*u - cos(rotationV)*v;
+    Vector tempu = cos(rotationV) * u + sin(rotationV) * w;
+    Vector tempw = cos(rotationV) * w - sin(rotationV) * u;
     u = tempu;
-    v = tempv;
+    w = tempw;
 }
 void Camera::RotateU(double angle) {
+    rotationU = PI * angle / 180.0;
+    Vector tempw = cos(rotationU) * w + sin(rotationU) * v;
+    Vector tempv = cos(rotationU) * v - sin(rotationU) * w;
+    w = tempw;
+    v = tempv;
 }
 
 void Camera::RotateW(double angle) {
+    rotationW = PI * angle / 180.0;
+    Vector tempu = cos(rotationW)*u - sin(rotationW)*v;
+    Vector tempv = sin(rotationW)*u + cos(rotationW)*v;
+    u = tempu;
+    v = tempv;
 }
 
 //unused
