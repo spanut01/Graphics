@@ -112,6 +112,13 @@ public:
 		p[3] = 1;
 	}
 
+void print() const {
+  for (int j=0; j<4; j++) {
+  fprintf (stderr, "%f\t", p[j]);
+  }
+  fprintf (stderr, "\n");
+  };
+
 private:
 	double p[4];
 };
@@ -229,6 +236,13 @@ public:
 		p[2] = 0;
 		p[3] = 0;
 	}
+
+void print() const {
+  for (int j=0; j<4; j++) {
+  fprintf (stderr, "%f\t", p[j]);
+  }
+  fprintf (stderr, "\n");
+  };
 
 private:
 	double p[4];

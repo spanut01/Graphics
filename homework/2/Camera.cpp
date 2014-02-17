@@ -6,6 +6,7 @@ Camera::Camera() {
 Camera::~Camera() {
 }
 
+//not actually called
 void Camera::Orient(Point& eye, Point& focus, Vector& up) {
     eyePoint = eye;
     Vector temp = focus - eye;
@@ -18,28 +19,43 @@ void Camera::Orient(Point& eye, Point& focus, Vector& up) {
     
 }
 
-
+//this one is actually called
 void Camera::Orient(Point& eye, Vector& look, Vector& up) {
     eyePoint = eye;
     lookVector = normalize(look);
     //set change of basis
     u = cross(lookVector, up);
+    u = normalize(u);
+    //fprintf(stderr,"\nu:\n");
+    //u.print();
     upVector = cross(u, lookVector);
-    v = upVector;
+    v = normalize(upVector);
+    //fprintf(stderr,"\nv:\n");
+    //v.print();
     w = -lookVector;
+    //fprintf(stderr,"\nw:\n");
+    //w.print();
 }
 
 Matrix Camera::GetProjectionMatrix() {
-    scaling[0] = 1.0/(tan(thetaH/2.0)*far);//TODO this uses the wrong theta
-    scaling[5] = 1.0/(tan(thetaH/2.0)*far);
+    double thetaW = ((double)width/(double)height)*thetaH;
+    scaling[0] = 2.0/(tan(thetaW/2.0)*far);
+    scaling[5] = 2.0/(tan(thetaH/2.0)*far);
     scaling[10] = 1.0/far;
-
-    unhinging[10] = 1.0/(near+1.0);
-    unhinging[11] = -near/(near+1.0);
+    fprintf(stderr,"\nscaling:\n");
+    scaling.print();
+    
+    near = -near / far;
+    unhinging[10] = -1.0/(near+1.0);
+    unhinging[11] = near/(near+1.0);
     unhinging[14] = -1.0;
     unhinging[15] = 0.0;
+    fprintf(stderr,"\nunhinging:\n");
+    unhinging.print();
 
-    //projection = unhinging * scaling;
+    projection = scaling * unhinging;
+    fprintf(stderr,"\nprojection:\n");
+    projection.print();
     return projection;
 }
 
@@ -62,11 +78,6 @@ void Camera::SetScreenSize (int screenWidth, int screenHeight) {
 }
 
 Matrix Camera::GetModelViewMatrix() {
-    //set translation
-    eyeTranslation[3] = -eyePoint[0];
-    eyeTranslation[7] = -eyePoint[1];
-    eyeTranslation[11] = -eyePoint[2];
-
     //set change of basis
     basisRotation[0] = u[0];
     basisRotation[1] = u[1];
@@ -80,8 +91,22 @@ Matrix Camera::GetModelViewMatrix() {
     basisRotation[9] = w[1];
     basisRotation[10] = w[2];
 
-    modelView = basisRotation * eyeTranslation;
+    basisRotation = transpose(basisRotation);
+    
+    Point translatedEye = (basisRotation * -eyePoint);
+    
+    //fprintf(stderr,"\ntranslatedEye:\n");
+    //translatedEye.print();
+    
+    //set translation
+    modelView = basisRotation;
+    modelView[12] = translatedEye[0];
+    modelView[13] = translatedEye[1];
+    modelView[14] = translatedEye[2];
+    
+    fprintf(stderr,"\nmodelView:\n");
     modelView.print();
+    
     return modelView;
 }
 

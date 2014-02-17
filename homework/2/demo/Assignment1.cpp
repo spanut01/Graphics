@@ -120,6 +120,9 @@ void myGlutDisplay(void)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	Matrix projection = camera->GetProjectionMatrix();
+  fprintf(stderr,"\nprojection:\n");
+  projection.print();
+  fprintf(stderr,"\nnear plane: %f\n",camera->m_nearPlane);
 	glMultMatrixd(projection.unpack());
 
 
@@ -131,6 +134,8 @@ void myGlutDisplay(void)
 	camera->RotateU(camRotU);
 	camera->RotateW(camRotW);
 	Matrix modelView = camera->GetModelViewMatrix();
+  fprintf(stderr,"\nmodelView:\n");
+  modelView.print();
 	glMultMatrixd(modelView.unpack());
 
 	//rotate object

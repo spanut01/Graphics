@@ -46,7 +46,7 @@ int GetScreenHeight();
 double GetFilmPlanDepth();
 double GetScreenWidthRatio();
 
-private:
+//private:
 Matrix m_worldToCamera; //World to camera matrix
 Matrix m_cameraToWorld; //camera to world matrix
 //Matrix m_projection; //Projection matrix onto film plane.
