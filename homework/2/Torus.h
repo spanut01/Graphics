@@ -1,12 +1,13 @@
-#ifndef SPHERE_H
-#define SPHERE_H
+#ifndef TORUS_H
+#define TORUS_H
 
 #include "Shape.h"
+#include "Algebra.h"
 
-class Sphere : public Shape {
+class Torus : public Shape {
 public:
-	Sphere() {};
-	~Sphere() {};
+	Torus() {};
+	~Torus() {};
 
 	void draw() {
         glPushMatrix();
@@ -23,7 +24,6 @@ public:
         glEnd();
         glPopMatrix();
 	};
-
 private:
     void drawTriangles();
     void drawNormals();

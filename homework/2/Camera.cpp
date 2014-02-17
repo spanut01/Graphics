@@ -39,8 +39,8 @@ void Camera::Orient(Point& eye, Vector& look, Vector& up) {
 
 Matrix Camera::GetProjectionMatrix() {
     double thetaW = ((double)width/(double)height)*thetaH;
-    scaling[0] = 2.0/(tan(thetaW/2.0)*far);
-    scaling[5] = 2.0/(tan(thetaH/2.0)*far);
+    scaling[0] = 1.0/(tan(PI * thetaW/360.0)*far);
+    scaling[5] = 1.0/(tan(PI * thetaH/360.0)*far);
     scaling[10] = 1.0/far;
     fprintf(stderr,"\nscaling:\n");
     scaling.print();
@@ -54,6 +54,7 @@ Matrix Camera::GetProjectionMatrix() {
     unhinging.print();
 
     projection = scaling * unhinging;
+    projection = transpose(projection); 
     fprintf(stderr,"\nprojection:\n");
     projection.print();
     return projection;
