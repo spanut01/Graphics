@@ -38,30 +38,44 @@ void solarSystem::render(){
 
         glPushMatrix();
             glRotatef(rotations[0],0,1,0);
-            glTranslatef(1.3,0.0,1.5);
+            glTranslatef(2.0,0.0,0.0);
             glColor3f(0.7,0.7,0.7);
             glutSolidSphere(0.05f,10,10);
         glPopMatrix();
 
         glPushMatrix();
             glRotatef(rotations[1],0,1,0);
-            glTranslatef(2.1,0.0,2.1);
+            glTranslatef(3,0.0,0);
             glColor3f(0.6,0.4,0.0);
             glutSolidSphere(0.1f,10,10);
         glPopMatrix();
 
         glPushMatrix();
             glRotatef(rotations[2],0,1,0);
-            glTranslatef(2.7,0.0,3.0);
+            glTranslatef(4,0.0,0);
             glColor3f(0.0,0.6,0.6);
             glutSolidSphere(0.15f,10,10);
         glPopMatrix();
 
         glPushMatrix();
             glRotatef(rotations[2],0,1,0);
-            glTranslatef(3.9,0.0,3.0);
+            glTranslatef(5,0.0,0);
             glColor3f(0.5,0.0,0.0);
             glutSolidSphere(0.15f,10,10);
+        glPopMatrix();
+        
+        glPushMatrix();
+            glRotatef(rotations[4], 0, 1, 0);
+            glTranslatef(7.0, 0.0, 0.0);
+            glColor3f(0.5, 0.0, 0.0);
+            glutSolidSphere(0.15,10,10);
+        glPopMatrix();
+    
+        glPushMatrix();
+            glRotatef(rotations[5], 0, 1, 0);
+            glTranslatef(9, 0, 0);
+            glColor3f(0.5, 0.5, 0);
+            glutSolidSphere(0.15, 10,10);
         glPopMatrix();
 
         for(i=0; i<10; i++)rotations[i]+=((float)(i+1))/3.0;
