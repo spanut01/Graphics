@@ -112,8 +112,12 @@ Matrix Camera::GetModelViewMatrix() {
 }
 
 void Camera::RotateV(double angle) {
+    rotationV = PI * angle / 180.0;
+    Vector tempu = cos(rotationV)*u - sin(rotationV)*v;
+    Vector tempv = sin(rotationV)*u - cos(rotationV)*v;
+    u = tempu;
+    v = tempv;
 }
-
 void Camera::RotateU(double angle) {
 }
 
