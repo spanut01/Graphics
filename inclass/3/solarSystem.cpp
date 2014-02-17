@@ -55,10 +55,16 @@ void solarSystem::render(){
             glTranslatef(4,0.0,0);
             glColor3f(0.0,0.6,0.6);
             glutSolidSphere(0.15f,10,10);
+            glPushMatrix();
+                glRotatef(rotations[1], 0, 1, 0);
+                glTranslatef(0.2, 0, 0);
+                glColor3f(1, 1, 1);
+                glutSolidSphere(0.03, 10, 10);
+            glPopMatrix();
         glPopMatrix();
 
         glPushMatrix();
-            glRotatef(rotations[2],0,1,0);
+            glRotatef(rotations[3],0,1,0);
             glTranslatef(5,0.0,0);
             glColor3f(0.5,0.0,0.0);
             glutSolidSphere(0.15f,10,10);

@@ -141,6 +141,7 @@ void myGlutDisplay(void)
 		}
 		
 		if (wireframe) {
+            glPushMatrix();
 			glDisable(GL_POLYGON_OFFSET_FILL);
 			glColor3f(0.0, 0.0, 0.0);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
