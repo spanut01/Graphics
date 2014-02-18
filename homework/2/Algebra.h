@@ -346,10 +346,10 @@ public:
 		p[12] = 0; p[13] = 0; p[14] = 0; p[15] = 1;
 	}
 	void print() const {
-	for (int i=0; i<4; i++) {
-	for (int j=0; j<4; j++) {
-	fprintf (stderr, "%f\t", p[i*4+j]);
-	}
+	for (int i=0; i<16; i++) {
+            //for (int j=0; j<4; j++) {
+            fprintf (stderr, "%f\t", p[i]);
+            //}
 	fprintf (stderr, "\n");
 	}
 	};
