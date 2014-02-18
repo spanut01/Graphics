@@ -94,20 +94,15 @@ Matrix Camera::GetModelViewMatrix() {
 
     basisRotation = transpose(basisRotation);
     
-    Vector eyeTranslateV (-eyePoint[0], -eyePoint[1], -eyePoint[2]);
-    Matrix eyeTranslate = trans_mat(eyeTranslateV);
-    
-    modelView = basisRotation * eyeTranslate;
-    
-    //Point translatedEye = (basisRotation * -eyePoint);
+    Point translatedEye = (basisRotation * -eyePoint);
     //fprintf(stderr,"\ntranslatedEye:\n");
     //translatedEye.print();
     
     //set translation
-    //modelView = basisRotation;
-    //modelView[12] = translatedEye[0];
-    //modelView[13] = translatedEye[1];
-    //modelView[14] = translatedEye[2];
+    modelView = basisRotation;
+    modelView[12] = translatedEye[0];
+    modelView[13] = translatedEye[1];
+    modelView[14] = translatedEye[2];
     
     fprintf(stderr,"\nmodelView:\n");
     modelView.print();
