@@ -10,7 +10,7 @@
 #include <string.h>
 #include <iostream>
 #include <fstream>
-#include </comp/175/public_html/labs/include/GL/glui.h>
+#include <GL/glui.h>
 #include <math.h>
 #include "ply.h"
 
@@ -122,6 +122,12 @@ void myGlutDisplay(void)
                 myPLY->render();
         }
 
+        if(1){
+            glColor3f(1.0, 1.0, 1.0);
+            glLineWidth(5);
+            myPLY->renderSilhouette();
+        }
+        
         glutSwapBuffers();
 }
 

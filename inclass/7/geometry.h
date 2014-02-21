@@ -26,6 +26,7 @@ struct face{
   
   //neighbors share an edge not just a point
   int neighbors[3];
+  float normX, normY, normZ;
 	// Default constructor
 	face(){
 		vertexCount = 0;

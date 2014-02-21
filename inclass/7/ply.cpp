@@ -1,7 +1,7 @@
 /*  =================== File Information =================
   File Name: ply.cpp
   Description:
-  Author: (You)
+  Author: Paul Nixon
 
   Purpose:
   Examples:
@@ -11,7 +11,7 @@
 #include <fstream>
 #include <stdio.h>
 #include <cstdlib>
-#include </comp/175/public_html/labs/include/GL/glui.h>
+#include <GL/glui.h>
 #include "ply.h"
 #include "geometry.h"
 #include <math.h>
@@ -252,15 +252,15 @@ void ply::render(){
     glTranslatef(getXPosition(),getYPosition(),getZPosition());
     glScalef(getXScale(),getYScale(),getZScale());
     // For each of our faces
-        for(int i = 0; i < faceCount; i++) {
+    glBegin(GL_TRIANGLES);
+          for(int i = 0; i < faceCount; i++) {
             // All of our faces are actually triangles for PLY files
-                        glBegin(GL_TRIANGLES);
                         // Get the vertex list from the face list
                         int index0 = faceList[i].vertexList[0];
                         int index1 = faceList[i].vertexList[1];
                         int index2 = faceList[i].vertexList[2];
 
-                        setNormal(vertexList[index0].x, vertexList[index0].y, vertexList[index0].z,
+                        setNormal(i, vertexList[index0].x, vertexList[index0].y, vertexList[index0].z,
                                           vertexList[index1].x, vertexList[index1].y, vertexList[index1].z,
                                           vertexList[index2].x, vertexList[index2].y, vertexList[index2].z);
 
@@ -269,8 +269,8 @@ void ply::render(){
                 int index = faceList[i].vertexList[j];
                 glVertex3f(vertexList[index].x,vertexList[index].y,vertexList[index].z);
             }
-            glEnd();
         }
+        glEnd();        
         glPopMatrix();
 }
 
@@ -302,29 +302,68 @@ void ply::findNeighbors(){
     //find neighbors
     int l, m;
     for(i=0; i<faceCount; i++){//face i
-        for(j=0; j<2; j++){//vertex j
+        for(j=0; j<3; j++){//vertex j
             int vertexnum = faceList[i].vertexList[j];
+            //printf("\nvertexnum %d\n",vertexnum);
             for(k=0; k<vertexList[vertexnum].facesnum; k++){//possible neighbors
                 int candidate = vertexList[vertexnum].faces[k];
-                int shared = 1;//face i's vertex j is in candidate
-                for(l=j+1; l<3; l++){//check other vertexes of i
+                //printf("candidate %d\n",candidate);
+                int shared = 0;//face i's vertex j is in candidate
+                for(l=0; l<3; l++){//check other vertexes of i
                     int checking = faceList[i].vertexList[l];
                     for(m=0; m<3; m++){//vs all vertexes of candidate
                         if(faceList[candidate].vertexList[m]==checking)shared++;
+                        //printf("shared %d\n",shared);
                     }
                 }
-                if(shared>1){
-                    m=0;
-                    while(faceList[i].neighbors[m] == -1)m++;
+                if(shared == 2){
+                    //skip other neighbors
+                    for(m=0; (faceList[i].neighbors[m] != -1 
+                        && faceList[i].neighbors[m] != candidate); m++);
+                    //printf("storing neighbor %d\n",m);
                     faceList[i].neighbors[m] = candidate;
+                    if(m==3)printf("face %d has too many neighbors\n",i);
                 }
             }
         }
     }
+    //check if neighbors have been found
+    int fails = 0;
+    for(i=0; i<faceCount; i++){
+        for(j=0; j<3; j++){
+            if(faceList[i].neighbors[j] == -1){
+                fails++;
+            }
+        }
+    }
+    printf("%d out of %d faces have less than 3 neighbors.\n",fails,faceCount);
 }
 
 void ply::renderSilhouette(){
-    
+    glPushMatrix();
+    glBegin(GL_LINES);
+    int face, neighbor, j, k, l;
+    for(face=0; face<faceCount; face++){
+        for(j=0; j<3 && j!=-1; j++){
+            neighbor = faceList[face].neighbors[j];
+            if(neighbor != -1 && faceList[face].normY < 0 && faceList[neighbor].normY > 0){
+                //draw edge
+                int points = 0;
+                for(k=0;k<3;k++){
+                    int currentVert = faceList[face].vertexList[k];
+                    for(l=0;l<3;l++){
+                        if(currentVert == faceList[neighbor].vertexList[l] && points < 2){
+                            //printf("drawing face %d vertex %d (%f,%f,%f)\n",face,currentVert,vertexList[currentVert].x,vertexList[currentVert].y,vertexList[currentVert].z);
+                            glVertex3f(vertexList[currentVert].x,vertexList[currentVert].y,vertexList[currentVert].z);
+                            points++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    glEnd();
+    glPopMatrix();
 }
 
 /*  ===============================================
@@ -379,7 +418,7 @@ void ply::printFaceList(){
         }
 }
 
-void ply::setNormal(float x1, float y1, float z1,
+void ply::setNormal(int facenum, float x1, float y1, float z1,
                                         float x2, float y2, float z2,
                                         float x3, float y3, float z3) {
         
@@ -410,5 +449,9 @@ void ply::setNormal(float x1, float y1, float z1,
         cy = cy / length;
         cz = cz / length;       
 
+        faceList[facenum].normX = cx;
+        faceList[facenum].normY = cy;
+        faceList[facenum].normZ = cz;
+        
         glNormal3f(cx, cy, cz);
 }
