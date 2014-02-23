@@ -45,9 +45,13 @@ Matrix Camera::GetProjectionMatrix() {
     fprintf(stderr,"\nscaling:\n");
     scaling.print();
     
-    float c = -near / far;
-    unhinging[10] = -1.0/(c+1.0);
-    unhinging[11] = c/(c+1.0);
+    //float c = -near / far;
+    //unhinging[10] = -1.0/(c+1.0);
+    //unhinging[11] = c/(c+1.0);
+
+//    near = -near / far;
+    unhinging[10] = -(far + near) / (far - near);
+    unhinging[11] = (-2 * far * near)/(far - near);
     unhinging[14] = -1.0;
     unhinging[15] = 0.0;
     fprintf(stderr,"\nunhinging:\n");
@@ -81,22 +85,21 @@ void Camera::SetScreenSize (int screenWidth, int screenHeight) {
 Matrix Camera::GetModelViewMatrix() {
     //set change of basis
     basisRotation[0] = u[0];
-    basisRotation[1] = u[1];
-    basisRotation[2] = u[2];
+    basisRotation[4] = u[1];
+    basisRotation[8] = u[2];
 
-    basisRotation[4] = v[0];
+    basisRotation[1] = v[0];
     basisRotation[5] = v[1];
-    basisRotation[6] = v[2];
+    basisRotation[9] = v[2];
 
-    basisRotation[8] = w[0];
-    basisRotation[9] = w[1];
+    basisRotation[2] = w[0];
+    basisRotation[6] = w[1];
     basisRotation[10] = w[2];
-
-    basisRotation = transpose(basisRotation);
-    
+ 
     Vector eyeTranslateV (-eyePoint[0], -eyePoint[1], -eyePoint[2]);
     Matrix eyeTranslate = trans_mat(eyeTranslateV);
-    
+    printf("eye: \n");
+    eyeTranslate.print();
     modelView = basisRotation * eyeTranslate;
     
     //Point translatedEye = (basisRotation * -eyePoint);
