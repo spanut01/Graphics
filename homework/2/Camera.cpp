@@ -38,6 +38,7 @@ void Camera::Orient(Point& eye, Vector& look, Vector& up) {
 }
 
 Matrix Camera::GetProjectionMatrix() {
+    //fprintf(stderr,"theta_h: %f\n",PI*thetaH/360.0);//same
     double thetaW = ((double)width/(double)height)*thetaH;
     scaling[0] = 1.0/(tan(PI * thetaW/360.0)*far);
     scaling[5] = 1.0/(tan(PI * thetaH/360.0)*far);
@@ -45,13 +46,12 @@ Matrix Camera::GetProjectionMatrix() {
     fprintf(stderr,"\nscaling:\n");
     scaling.print();
     
-    //float c = -near / far;
-    //unhinging[10] = -1.0/(c+1.0);
-    //unhinging[11] = c/(c+1.0);
+    float c = -near / far;
+    unhinging[10] = -1.0/(c+1.0);
+    unhinging[11] = c/(c+1.0);
 
-//    near = -near / far;
-    unhinging[10] = -(far + near) / (far - near);
-    unhinging[11] = (-2 * far * near)/(far - near);
+    //unhinging[10] = -(far + near) / (far - near);
+    //unhinging[11] = (-2 * far * near)/(far - near);
     unhinging[14] = -1.0;
     unhinging[15] = 0.0;
     fprintf(stderr,"\nunhinging:\n");

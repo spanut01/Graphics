@@ -39,8 +39,10 @@ m_cameraToWorld = trans_mat(Vector(eye[0], eye[1], eye[2])) * transpose(orient);
 
 Matrix Camera::GetProjectionMatrix()
 {
-	double tan_theta_h = tan(m_viewAngle / 2.0 * PI / 180.0);
-	double tan_theta_w = tan_theta_h * m_screenWidthRatio;
+  double theta_h = m_viewAngle / 2.0 * PI / 180.0;
+	printf("theta_h: %f\n",theta_h);
+  double tan_theta_h = tan(theta_h);
+  double tan_theta_w = tan_theta_h * m_screenWidthRatio;
 	double one_over_far = 1.0 / m_farPlane;
 	double c = -1 * m_nearPlane * one_over_far;
 
