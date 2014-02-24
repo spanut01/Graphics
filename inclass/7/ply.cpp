@@ -346,7 +346,7 @@ void ply::renderSilhouette(){
     for(face=0; face<faceCount; face++){
         for(j=0; j<3 && j!=-1; j++){
             neighbor = faceList[face].neighbors[j];
-            if(neighbor != -1 && faceList[face].normY < 0 && faceList[neighbor].normY > 0){
+            if(neighbor != -1 && faceList[face].normZ < 0 && faceList[neighbor].normZ > 0){
                 //draw edge
                 int points = 0;
                 for(k=0;k<3;k++){
