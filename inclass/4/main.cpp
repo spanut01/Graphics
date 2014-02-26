@@ -190,7 +190,7 @@ void startScene(){
 
 		// T-rex
 		glPushMatrix();	
-			float trex_hopping = 1.0;
+			float trex_hopping = 0;
 			trex->setPosition(-5+rexSpeed,(sin(jump)*trex_hopping)+1.25,-6);	// Set position variables (useful for later)	
 			if(wireframe==1){ glColor3f(0.0,0.0,0.0); trex->renderWireFrame(); }
 			if(filled==1)	{ glColor3f(0.25f,0.2f,0.1f); trex->render(); }
@@ -373,14 +373,14 @@ void myGlutDisplay(void)
 							1,10);	
 		}
 		else if(difftime(time(NULL),start) > 6 && difftime(time(NULL),start) <= 10){
-			std::cout << "perspective shot" << endl;
+			std::cout << "follow cam" << endl;
 			//camera1->perspective(105,.75,1,10);	// Get the regular perspective
-			camera1->follow(trex->getXPosition(), trex->getYPosition()-2,trex->getZPosition(),
+			camera1->follow(jeep->getXPosition(), jeep->getYPosition(),jeep->getZPosition(),
 				0, 0, 0,
 				0, 0, 0); // attach the camera to the t-rex
 		}
 		else if(difftime(time(NULL),start) > 10 && difftime(time(NULL),start) <= 14){
-			std::cout << "follow cam" << endl;
+			std::cout << "spin cam" << endl;
 			// Spin around a point in space.
 			// Radius is fixed, but could be adjusted.
 			// Y height may also need to be adjusted.

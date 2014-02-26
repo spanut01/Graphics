@@ -34,7 +34,8 @@ float movieCamera::rotate_around = 0;
 	      Postcondition:
     	=============================================== */ 
 movieCamera::movieCamera(){
-	}
+
+}
 
 	/*  ===============================================
 	      Desc: Default Destructor
@@ -54,7 +55,8 @@ movieCamera::~movieCamera(){
       Postcondition:
 	=============================================== */ 
 void movieCamera::closeUp(float your_x, float your_y, float your_z, float near, float far){
-
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-your_x, -your_y, -your_z);
 }
 
 /*
@@ -105,6 +107,10 @@ void movieCamera::perspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GL
 void movieCamera::follow(float your_x, float your_y, float your_z,
 						float target_x, float target_y, float target_z,
 						float up_x, float up_y, float up_z){
+    glRotatef(270, 0, 1, 0);
+    glRotatef(22, 0, 0, 1);
+    glTranslatef(-your_x + 2, -your_y, -your_z);
+
 }
 /*  ===============================================
       Desc: Spin around a point in space at a distance(i.e. "radius")
@@ -114,7 +120,8 @@ void movieCamera::follow(float your_x, float your_y, float your_z,
 void movieCamera::spinAroundPoint(float your_x, float your_y, float your_z, float distance){
 	rotate_around += 1;
 
-	/* Your code here */
+	glTranslatef(your_x, your_y, your_z);
+    glRotatef(rotate_around, 0, 1, 0);
 
 	if(rotate_around>360){ rotate_around = 0; }
 }

@@ -373,14 +373,13 @@ void myGlutDisplay(void)
 							1,10);	
 		}
 		else if(difftime(time(NULL),start) > 6 && difftime(time(NULL),start) <= 10){
-			std::cout << "perspective shot" << endl;
-			//camera1->perspective(105,.75,1,10);	// Get the regular perspective
-			camera1->follow(trex->getXPosition(), trex->getYPosition()-2,trex->getZPosition(),
+			std::cout << "follow cam" << endl;
+			camera1->follow(jeep->getXPosition(), jeep->getYPosition(),jeep->getZPosition(),
 				0, 0, 0,
 				0, 0, 0); // attach the camera to the t-rex
 		}
 		else if(difftime(time(NULL),start) > 10 && difftime(time(NULL),start) <= 14){
-			std::cout << "follow cam" << endl;
+			std::cout << "spin around cam" << endl;
 			// Spin around a point in space.
 			// Radius is fixed, but could be adjusted.
 			// Y height may also need to be adjusted.
