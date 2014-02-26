@@ -95,9 +95,9 @@ void movieCamera::wideAngle(float _fov){
 void movieCamera::orthogonal(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble nearVal, GLdouble farVal){
 	glPushMatrix();
 		glOrtho(left,right,bottom,top,nearVal,farVal);
-		glPushMatrix();
-		glTranslatef(-2,-1,-9);
-	glPopMatrix();
+//		glPushMatrix();
+//		glTranslatef(-2,-1,-9);
+//	glPopMatrix();
 }
 
 /*

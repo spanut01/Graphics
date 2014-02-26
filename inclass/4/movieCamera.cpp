@@ -18,6 +18,7 @@ Relevant keywords and OpenGL calls to (understand/complete/create cool effects) 
 
   ===================================================== */
 #include <math.h>
+#include "Algebra.h"
 #include "movieCamera.h"
 
 // Static initializers
@@ -77,11 +78,15 @@ void movieCamera::wideAngle(float _fov){
   Postcondition:
 =============================================== */ 
 void movieCamera::orthogonal(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble nearVal, GLdouble farVal){
-  glPushMatrix();
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho(left,right,bottom,top,nearVal,farVal);
-  glPopMatrix();
+  //glPushMatrix();
+  //glMatrixMode(GL_PROJECTION);
+  //glLoadIdentity();
+  glScalef(.1,.1,.1);
+  glOrtho(left,right,bottom,top,near,far);
+  //glOrtho(left-10,right+10,bottom-10,top+10,nearVal-5,farVal+15);
+  //glRotatef(PI,0,1,0);
+  //glTranslatef(0,0,-4);
+  //glPopMatrix();
 }
 
 /*  ===============================================
@@ -90,7 +95,7 @@ void movieCamera::orthogonal(GLdouble left, GLdouble right, GLdouble bottom, GLd
       Postcondition:
 	=============================================== */ 
 void movieCamera::perspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar){
-
+  gluPerspective(fovy,aspect,zNear,zFar);
 }
 /*  ===============================================
       Desc: 
