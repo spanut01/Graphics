@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 const double EPSILON = 1e-30;
 #define PI 3.1415926535897932384626433832795028841971693993751058209749445923
@@ -110,6 +111,13 @@ public:
 		p[2] = 0;
 		p[3] = 1;
 	}
+
+void print() const {
+  for (int j=0; j<4; j++) {
+  fprintf (stderr, "%f\t", p[j]);
+  }
+  fprintf (stderr, "\n");
+  };
 
 private:
 	double p[4];
@@ -229,6 +237,13 @@ public:
 		p[3] = 0;
 	}
 
+void print() const {
+  for (int j=0; j<4; j++) {
+  fprintf (stderr, "%f\t", p[j]);
+  }
+  fprintf (stderr, "\n");
+  };
+
 private:
 	double p[4];
 };
@@ -330,14 +345,14 @@ public:
 		p[8] = 0; p[9] = 0; p[10] = 1; p[11] = 0;
 		p[12] = 0; p[13] = 0; p[14] = 0; p[15] = 1;
 	}
-	/*void print() const {
-	for (int i=0; i<4; i++) {
-	for (int j=0; j<4; j++) {
-	fprintf (stderr, "%f\t", p[i*4+j]);
-	}
-	fprintf (stderr, "\n");
-	}
-	};*/
+	void print() const{
+            for(int i=0; i<4; i++){
+                for(int j=0; j<4; j++){
+                  fprintf (stderr, "%f\t", p[j*4+i]);
+                }
+                fprintf (stderr, "\n");
+            }
+	};
 private:
 	double p[16];
 };

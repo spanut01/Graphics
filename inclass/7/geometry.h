@@ -12,7 +12,7 @@ struct vertex{
 	float r,g,b;		// Color values
 	
 	int facesnum;
-	int faces[15];//hopefully 10 is enough
+	int faces[20];//hopefully 10 is enough
 };
 
 /*  ============== Face ==============

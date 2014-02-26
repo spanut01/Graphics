@@ -293,7 +293,7 @@ void ply::findNeighbors(){
     for(i=0; i<faceCount; i++){//face i
         for(j=0; j<3; j++){
             int vertexnum = faceList[i].vertexList[j];
-            if(vertexList[vertexnum].facesnum < 15){
+            if(vertexList[vertexnum].facesnum < 20){
                 vertexList[vertexnum].faces[vertexList[vertexnum].facesnum] = i;
                 vertexList[vertexnum].facesnum++;
             } else printf("Error: vertex %d is in too many faces\n", vertexnum);
@@ -341,9 +341,13 @@ void ply::findNeighbors(){
 
 void ply::renderSilhouette(){
     glPushMatrix();
+    //glBegin(GL_LINES);
     glBegin(GL_LINES);
     int face, neighbor, j, k, l;
+    int pointperface;
+    float todraw[18];
     for(face=0; face<faceCount; face++){
+        pointperface = 0;
         for(j=0; j<3 && j!=-1; j++){
             neighbor = faceList[face].neighbors[j];
             if(neighbor != -1 && faceList[face].normZ < 0 && faceList[neighbor].normZ > 0){
@@ -354,12 +358,20 @@ void ply::renderSilhouette(){
                     for(l=0;l<3;l++){
                         if(currentVert == faceList[neighbor].vertexList[l] && points < 2){
                             //printf("drawing face %d vertex %d (%f,%f,%f)\n",face,currentVert,vertexList[currentVert].x,vertexList[currentVert].y,vertexList[currentVert].z);
-                            glVertex3f(vertexList[currentVert].x,vertexList[currentVert].y,vertexList[currentVert].z);
+                            todraw[pointperface*3] = vertexList[currentVert].x;
+                            todraw[pointperface*3+1] = vertexList[currentVert].y;
+                            todraw[pointperface*3+2] = vertexList[currentVert].z;
+                            //glVertex3f(vertexList[currentVert].x,vertexList[currentVert].y,vertexList[currentVert].z);
+                            pointperface++;
                             points++;
                         }
                     }
                 }
             }
+        }
+        if(pointperface)printf("%d points from face %d\n",pointperface,face);
+        for(j=0; j<(pointperface-(pointperface%2)); j++){
+            glVertex3f(todraw[j*3],todraw[j*3+1],todraw[j*3+2]);
         }
     }
     glEnd();
