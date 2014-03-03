@@ -74,7 +74,7 @@ void visit(SceneNode* currentNode){
         visit(*kidIt);
         kidIt++;
     }
-    printf("End %d children\n",currentNode->children.size());
+    printf("End %d children\n",currentNode->children.size);
     
 }
 

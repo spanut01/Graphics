@@ -34,7 +34,7 @@ float lookZ = -2;
 
 /** These are GLUI control panel objects ***/
 int  main_window;
-string filenamePath = "./data/general/test.xml";
+string filenamePath = "data\\general\\test.xml";
 GLUI_EditText* filenameTextField = NULL;
 
 

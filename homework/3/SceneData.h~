@@ -200,8 +200,6 @@ public:
    /*! Children of this node */
    std::vector<SceneNode*> children;
    
-   StackOperation stack;
-   
    /*! For when it's flattened */
    SceneNode* next;
 };
