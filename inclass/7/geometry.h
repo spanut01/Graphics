@@ -11,6 +11,8 @@ struct vertex{
 	float intensity;
 	float r,g,b;		// Color values
 	
+	int edges[3];
+	
 	int facesnum;
 	int faces[20];//hopefully 10 is enough
 };
@@ -37,4 +39,12 @@ struct face{
 
 };
 
+/* Edge: Connects two vertices, and two faces.  
+ * Linked list sorted by 1st (numbered) vertex
+ */
+struct edge{
+  struct edge* next;
+  int vertexes[2];
+  int faces[2];
+};
 #endif

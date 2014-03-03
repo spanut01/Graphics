@@ -28,6 +28,7 @@ ply::ply(string _filePath){
         filePath = _filePath;
         vertexList = NULL;
         faceList = NULL;
+        edgeList = NULL;
         properties = 0; 
         // Call helper function to load geometry
         loadGeometry();
@@ -274,6 +275,28 @@ void ply::render(){
         glPopMatrix();
 }
 
+//precondition: v1 < v2
+void ply::storeEdge(int v1, int v2, int face){
+    struct edge* ptr = edgeList[v1];
+    while(ptr != NULL){
+        if(ptr->vertexes[1] == v2){
+            ptr->faces[1] = face;
+            break;
+        }
+        ptr = ptr->next;
+    }
+    if(ptr == NULL){//loop hit end
+        //make a new edge
+        struct edge* newedge = (struct edge*)malloc(sizeof(struct edge));
+        newedge->vertexes[0] = v1;
+        newedge->vertexes[1] = v2;
+        newedge->faces[0] = face;
+        newedge->faces[1] = -1;//because 0 is a valid number
+        //link @ head
+        newedge->next = edgeList[v1];
+        edgeList[v1] = newedge;
+    }
+}
 
 void ply::findNeighbors(){
     //clear out uninitialized stuff
@@ -299,7 +322,23 @@ void ply::findNeighbors(){
             } else printf("Error: vertex %d is in too many faces\n", vertexnum);
         }
     }
+    //edges
+    edgeList = (struct edge**)malloc(vertexCount*sizeof(void*));
+    for(i=0; i<vertexCount; i++)edgeList[i] = NULL;
+    int v1, v2;
+    for(i=0; i<faceCount; i++){
+        for(j=0; j<3; j++){
+        v1 = faceList[i].vertexList[j];
+            for(k=0; k<3; k++){
+                v2 = faceList[i].vertexList[k];
+                if(v1 < v2){
+                    storeEdge(v1, v2, i);
+                }
+            }
+        }
+    }
     //find neighbors
+    /*
     int l, m;
     for(i=0; i<faceCount; i++){//face i
         for(j=0; j<3; j++){//vertex j
@@ -337,8 +376,9 @@ void ply::findNeighbors(){
         }
     }
     printf("%d out of %d faces have less than 3 neighbors.\n",fails,faceCount);
+    */
 }
-
+/*
 void ply::renderSilhouette(){
     glPushMatrix();
     //glBegin(GL_LINES);
@@ -376,7 +416,32 @@ void ply::renderSilhouette(){
     }
     glEnd();
     glPopMatrix();
-}
+} */
+
+void ply::renderSilhouette(){
+    glPushMatrix();
+    glBegin(GL_LINES);
+    
+    int i;
+    for(i=0; i<vertexCount; i++){
+        struct edge* ptr = edgeList[i];
+        while(ptr != NULL){
+            int f1 = ptr->faces[0];
+            int f2 = ptr->faces[1];
+            
+            if(f1 != -1 && ((faceList[f1].normZ < 0 && faceList[f2].normZ > 0) || (faceList[f1].normZ > 0 && faceList[f2].normZ < 0))){
+                int v1 = ptr->vertexes[0];
+                int v2 = ptr->vertexes[1];
+                glVertex3f(vertexList[v1].x,vertexList[v1].y,vertexList[v1].z);
+                glVertex3f(vertexList[v2].x,vertexList[v2].y,vertexList[v2].z);
+            }
+            ptr = ptr->next;
+        }
+    }
+    
+    glEnd();
+    glPopMatrix();
+} 
 
 /*  ===============================================
       Desc: Prints some statistics about the file you have read in
