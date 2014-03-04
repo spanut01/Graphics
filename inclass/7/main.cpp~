@@ -95,8 +95,8 @@ void myGlutDisplay(void)
         glScalef(scale / 100.0, scale / 100.0, scale / 100.0);
         glRotatef(rotY, 0.0, 1.0, 0.0);
         float rotRad = PI * (rotY / 180.0);
-        myPLY->lookX = sinf(rotRad);
-        myPLY->lookZ = cosf(rotRad);
+        lookX = sinf(rotRad);
+        lookZ = cosf(rotRad);
 
         //draw the axes
         glLineWidth(1);

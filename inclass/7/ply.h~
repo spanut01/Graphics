@@ -75,10 +75,6 @@ class ply : public entity{
                         =============================================== */
                 void printVertexList();
                 void printFaceList();
-                
-                //components of look vector (changeable by rotation around Y)
-                float lookX;
-                float lookZ;
 
         private:
                 /*      ===============================================
@@ -121,7 +117,9 @@ class ply : public entity{
                 //the array is indexed by the lower-numbered vertex in the edge.
                 struct edge** edgeList;
                 
-                
+                //components of look vector (changeable by rotation around Y)
+                float lookX;
+                float lookZ;
 
 
 };

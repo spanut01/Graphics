@@ -28,7 +28,7 @@ struct face{
         float normX, normY, normZ;
         
         //dot of normal and look
-        float dotProd;
+        float dotX, dotY, dotZ;
 
         // Default constructor
 	face(){
