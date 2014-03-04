@@ -10,6 +10,7 @@
 
 #include "SceneData.h"
 
+
 #include <vector>
 #include <map>
 
@@ -43,9 +44,11 @@ class SceneParser
       //! Returns the ith light data
       bool getLightData(int i, SceneLightData& data);
       
-      //! flattens the graph, root node becomes head node
+      //! flattens the graph, root node replaced by below head node
       bool flatten();
 
+      //! after the scene graph is flattened 
+      FlatSceneNode* headNode;
 
    private:
       //the filename should be contained within this parser implementation
@@ -63,6 +66,8 @@ class SceneParser
       std::vector<SceneLightData*> m_lights;
       SceneGlobalData m_globalData;
       std::vector<SceneNode*> m_nodes;
+      void visit(SceneNode* currentNode, Matrix incomingMatrix);//helper for flatten
+      FlatSceneNode* endNode;//don't touch my tail
 };
 
 #endif

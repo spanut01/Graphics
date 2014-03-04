@@ -174,18 +174,6 @@ public:
    Matrix matrix;
 };
 
-class StackOperation
-{
-public:
-    //booleans
-    int pushBefore;
-    int popAfter;
-    StackOperation(void){
-        pushBefore = 0;
-        popAfter = 0;
-    };
-};
-
 //! Structure for non-primitive scene objects
 class SceneNode
 {
@@ -199,11 +187,32 @@ public:
 
    /*! Children of this node */
    std::vector<SceneNode*> children;
-   
-   StackOperation stack;
-   
-   /*! For when it's flattened */
-   SceneNode* next;
+};
+
+//! Structure for flattened scene nodes
+class FlatSceneNode
+{
+public:
+    //! default constructor
+    FlatSceneNode(){
+        matrix = Matrix();
+        primitive = NULL;
+        next = NULL;
+    }
+    //! actual constructor
+    FlatSceneNode(ScenePrimitive* prim, Matrix mat){
+        primitive = prim;
+        matrix = mat;
+        next = NULL;
+    }
+    //! current matrix when this is being drawn
+    Matrix matrix;
+    //! shape to be drawn
+    ScenePrimitive* primitive;
+    //! singly linked list
+    FlatSceneNode* next;
+    //  material 
+    SceneMaterial* material;
 };
 
 #endif

@@ -23,6 +23,9 @@ SceneParser::SceneParser(const std::string& name)
    m_objects.clear();
    m_lights.clear();
    m_nodes.clear();
+
+   headNode = NULL;
+   endNode = NULL;
 }
 
 SceneParser::~SceneParser() 
@@ -53,34 +56,61 @@ SceneParser::~SceneParser()
    m_objects.clear(); 
 }
 
-void visit(SceneNode* currentNode){
-    printf("New Node\n");
+void SceneParser::visit(SceneNode* currentNode, Matrix currentMatrix){
+    //printf("New Node\n");
     
+    //Matrix currentMatrix = incomingMatrix;
+
     std::vector<SceneTransformation*>::iterator transIt = currentNode->transformations.begin();
     while(transIt!=currentNode->transformations.end()){
-        printf("Transformation Type %d \n",(*transIt)->type);
+        //printf("Transformation Type %d \n",(*transIt)->type);
+        if((*transIt)->type == TRANSFORMATION_TRANSLATE){
+            //printf("Got a translate\n");
+            currentMatrix = currentMatrix * trans_mat((*transIt)->translate);
+        }
+        if((*transIt)->type == TRANSFORMATION_SCALE){
+            //printf("Got a scale\n");
+            currentMatrix = currentMatrix * scale_mat((*transIt)->scale);
+        }
+        if((*transIt)->type == TRANSFORMATION_ROTATE){
+            //printf("Got a rotate\n");
+            currentMatrix = currentMatrix * rot_mat((*transIt)->rotate, (*transIt)->angle);
+        }
+        if((*transIt)->type == TRANSFORMATION_MATRIX){
+            //printf("Got a matrix\n");
+            currentMatrix = currentMatrix * (*transIt)->matrix;
+        }
         transIt++;
     }
-    
+    //printf("\nMatrix:\n");
+    //currentMatrix.print();
+
+
     std::vector<ScenePrimitive*>::iterator primIt = currentNode->primitives.begin();
     while(primIt!=currentNode->primitives.end()){
-        printf("Primitive Type %d \n",(*primIt)->type);
+        //printf("Primitive Type %d \n",(*primIt)->type);
+        FlatSceneNode* newNode = new FlatSceneNode((*primIt), currentMatrix);
+        endNode->next = newNode;
+        endNode = newNode;
         primIt++;
     }
     
     std::vector<SceneNode*>::iterator kidIt = currentNode->children.begin();
     while(kidIt!=currentNode->children.end()){
-        printf("New Child\n");
-        visit(*kidIt);
+        //printf("New Child\n");
+        visit(*kidIt, currentMatrix);
         kidIt++;
     }
-    printf("End %d children\n",currentNode->children.size());
+    //printf("End %d children\n",currentNode->children.size());
     
 }
 
 bool SceneParser::flatten(){
+    headNode = new FlatSceneNode();//now don't write to this variable ever again
+    endNode = headNode;
     SceneNode* currentNode = m_objects["root"];
-    visit(currentNode);
+    Matrix mat = Matrix();
+    visit(currentNode, mat);
 }
 
 bool SceneParser :: getGlobalData(SceneGlobalData& data) 
