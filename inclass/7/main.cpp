@@ -44,7 +44,6 @@ void myGlutIdle(void)
         if (glutGetWindow() != main_window){
                 glutSetWindow(main_window);
         }
-
         glutPostRedisplay();
 }
 
@@ -60,7 +59,6 @@ void myGlutReshape(int x, int y)
         float xy_aspect;
         xy_aspect = (float)x / (float)y;
 
-        //
         glViewport(0, 0, x, y);
         // Determine if we are modifying the camera(GL_PROJECITON) matrix(which is our viewing volume)
         // Otherwise we could modify the object transormations in our world with GL_MODELVIEW
@@ -95,9 +93,10 @@ void myGlutDisplay(void)
         glScalef(scale / 100.0, scale / 100.0, scale / 100.0);
         glRotatef(rotY, 0.0, 1.0, 0.0);
         float rotRad = PI * (rotY / 180.0);
-        myPLY->lookX = sinf(rotRad);
-        myPLY->lookZ = cosf(rotRad);
-
+        myPLY->lookX = sinf(-rotRad);
+        myPLY->lookZ = cosf(-rotRad);
+        //cout<<"lookX: "<<myPLY->lookX<<"  lookZ: "<<myPLY->lookZ<<"\n";
+        
         //draw the axes
         glLineWidth(1);
         glBegin(GL_LINES);
@@ -126,9 +125,9 @@ void myGlutDisplay(void)
         }
 
         if(silhouette){
-            glColor3f(1.0, 1.0, 1.0);
-            glLineWidth(2);
-            myPLY->renderSilhouette();
+              glColor3f(1.0, 1.0, 1.0);
+              glLineWidth(2);
+              myPLY->renderSilhouette();
         }
         
         glutSwapBuffers();

@@ -10,9 +10,8 @@ struct vertex{
 	float confidence;
 	float intensity;
 	float r,g,b;		// Color values
-	
-	int facesnum;           //these aren't actually used for silhouette
-	int faces[20];          //hopefully 20 is enough
+//	int facesnum;           //these aren't actually used for silhouette
+//	int faces[20];          //usually 20 is enough
 };
 
 /*  ============== Face ==============
@@ -26,7 +25,6 @@ struct face{
   
         //normal vector
         float normX, normY, normZ;
-        
         //dot of normal and look
         float dotProd;
 
@@ -45,5 +43,15 @@ struct edge{
         struct edge* next;
         int vertexes[2];
         int faces[2];
+        
+        //default constructor
+        edge(){
+            next = NULL;
+            //these are -1 because 0 would be a meaningful value
+            vertexes[0] = -1;
+            vertexes[1] = -1;
+            faces[0] = -1;
+            faces[1] = -1;
+        }
 };
 #endif

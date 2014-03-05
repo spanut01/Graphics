@@ -1,10 +1,8 @@
 /*  =================== File Information =================
   File Name: ply.cpp
-  Description:
+  Description: Loads a .ply file and renders it on screen.  
+        New to this version: also renders the silhouette!
   Author: Paul Nixon
-
-  Purpose:
-  Examples:
   ===================================================== */
 #include <iostream>
 #include <string>
@@ -21,8 +19,9 @@ using namespace std;
 
 /*  ===============================================
       Desc: Default constructor for a ply object
-      Precondition:
-      Postcondition:
+      Precondition: _filePath is set to a valid filesystem location
+            which contains a valid .ply file (triangles only)
+      Postcondition: vertexList, faceList are filled in
     =============================================== */ 
 ply::ply(string _filePath){
         filePath = _filePath;
@@ -37,45 +36,54 @@ ply::ply(string _filePath){
 /*  ===============================================
       Desc: Destructor for a ply object
       Precondition: Memory has been already allocated
-      Postcondition:  
       =============================================== */ 
 ply::~ply(){
+  deconstruct();
+}
+void ply::deconstruct(){
+  int i;
   // Delete the allocated arrays
-        delete[] vertexList;
+  delete[] vertexList;
 
-        for (int i = 0; i < faceCount; i++) {
-                delete [] faceList[i].vertexList;
-        }
+  for (i = 0; i < faceCount; i++) {
+          delete [] faceList[i].vertexList;
+  }
 
-        delete[] faceList;
+  delete[] faceList;
+  
+  struct edge* iter;
+  struct edge* next;
+  for(i=0; i<vertexCount; i++){
+      iter = edgeList[i];
+      while(iter!=NULL){
+          next = iter->next;
+          delete iter;
+          iter = next;
+      }
+  }
+  delete[] edgeList;
   // Set pointers to NULL
   vertexList = NULL;
   faceList = NULL;
+  edgeList = NULL;
 }
 
 /*  ===============================================
       Desc: reloads the geometry for a 3D object
-      Precondition:
-      Postcondition:
+            (or loads a different file)
     =============================================== */ 
 void ply::reload(string _filePath){
+  
   filePath = _filePath;
-  // reclaim memory allocated in each array
-  delete[] vertexList;
-  for (int i = 0; i < faceCount; i++) {
-          delete[] faceList[i].vertexList;
-  }
-  delete[] faceList;
-  // Set pointers to array
-  vertexList = NULL;
-  faceList = NULL;
+  deconstruct();
   // Call our function again to load new vertex and face information.
   loadGeometry();
 }
 /*  ===============================================
-      Desc: You get to implement this
-      Precondition:
-      Postcondition:  
+      Desc: Loads the data structures (look at geometry.h and ply.h)
+      Precondition: filePath is something valid, arrays are NULL
+      Postcondition: data structures are filled 
+          (including edgeList, this calls scaleAndCenter and findNeighbors)
       =============================================== */ 
 void ply::loadGeometry(){
 
@@ -199,7 +207,7 @@ void ply::loadGeometry(){
 /*  ===============================================
 Desc: Moves all the geometry so that the object is centered at 0, 0, 0 and scaled to be between 0.5 and -0.5
 Precondition: after all the vetices and faces have been loaded in
-Postcondition:
+Postcondition: points have reasonable values
 =============================================== */
 void ply::scaleAndCenter() {
     float avrg_x = 0.0;
@@ -239,8 +247,8 @@ void ply::scaleAndCenter() {
 
 /*  ===============================================
       Desc: Draws a filled 3D object
-      Precondition:
-      Postcondition:
+      Precondition: arrays are EITHER valid data OR NULL
+      Postcondition: no changes to data
       Error Condition: If we haven't allocated memory for our
       faceList or vertexList then do not attempt to render.
     =============================================== */  
@@ -276,6 +284,7 @@ void ply::render(){
 }
 
 //Helper function used by findNeighbors
+//because the edgeList is an array of linked lists
 //Precondition: v1 < v2
 void ply::storeEdge(int v1, int v2, int face){
     struct edge* ptr = edgeList[v1];
@@ -303,6 +312,7 @@ void ply::storeEdge(int v1, int v2, int face){
 void ply::findNeighbors(){
     //clear out uninitialized stuff
     int i, j, k;
+    /*
     for(i=0; i<vertexCount; i++){
         vertexList[i].facesnum = 0;
     }
@@ -315,7 +325,7 @@ void ply::findNeighbors(){
                 vertexList[vertexnum].facesnum++;
             } else printf("Error: vertex %d is in too many faces\n", vertexnum);
         }
-    }
+    }*/
     //edges
     edgeList = (struct edge**)malloc(vertexCount*sizeof(void*));
     for(i=0; i<vertexCount; i++)edgeList[i] = NULL;
@@ -359,7 +369,26 @@ void ply::renderSilhouette(){
             ptr = ptr->next;
         }
     }
+    /*
+    glEnd();
+    glPopMatrix();
     
+    glPushMatrix();
+    glLineWidth(1);
+    glBegin(GL_LINES);
+    glColor3f(1.0,0.0,0.0);
+    int j;
+    for(i=0; i<faceCount; i++){
+        for(j=0;j<3;j++){
+        int v1 = faceList[i].vertexList[j];
+        glVertex3f(vertexList[v1].x,vertexList[v1].y,vertexList[v1].z);
+        float x = faceList[i].normX*0.05f;
+        float y = faceList[i].normY*0.05f;
+        float z = faceList[i].normZ*0.05f;
+        glVertex3f(vertexList[v1].x+x,vertexList[v1].y+y,vertexList[v1].z+z);
+        }
+    }
+    */
     glEnd();
     glPopMatrix();
 } 
@@ -367,9 +396,6 @@ void ply::renderSilhouette(){
 /*  ===============================================
       Desc: Prints some statistics about the file you have read in
       This is useful for debugging information to see if we parse our file correctly.
-
-      Precondition:
-      Postcondition:  
     =============================================== */ 
 void ply::printAttributes(){
       cout << "==== ply Mesh Attributes=====" << endl;
@@ -380,9 +406,6 @@ void ply::printAttributes(){
 
 /*  ===============================================
       Desc: Iterate through our array and print out each vertex.
-
-      Precondition:
-      Postcondition:  
     =============================================== */ 
 void ply::printVertexList(){
         if(vertexList==NULL){
@@ -396,9 +419,6 @@ void ply::printVertexList(){
 
 /*  ===============================================
       Desc: Iterate through our array and print out each face.
-
-      Precondition:
-      Postcondition:  
     =============================================== */ 
 void ply::printFaceList(){
         if(faceList==NULL){
@@ -416,6 +436,8 @@ void ply::printFaceList(){
         }
 }
 
+//makes a GL Call to set the normal but also stores it 
+//so it can be accessible for silhouette finding
 void ply::setNormal(int facenum, float x1, float y1, float z1,
                                         float x2, float y2, float z2,
                                         float x3, float y3, float z3) {
