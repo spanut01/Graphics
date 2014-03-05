@@ -78,7 +78,7 @@ void populatePoints(){
 	for(int i = 0; i < 101; i++){
 		float randomHeight = rand_FloatRange(0,maxYHeight);
 		float randomWidth = rand_FloatRange(0,maxZWidth);
-		mySpline->addPoint(i*stepSize,randomHeight,randomWidth);
+		mySpline->addPoint(i*stepSize,randomHeight,0);
 	}
 
 	/*

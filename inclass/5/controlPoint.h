@@ -1,5 +1,5 @@
 /*  =================== File Information =================
-	File Name: controlPoint.h
+	File Name: ControlPoint.h
 	Description:
 	Author: Michael Shah
 	Last Modified: 3/04/14
@@ -18,17 +18,17 @@
 	Purpose: 
 	Usage:
 */
-struct controlPoint{
+struct ControlPoint{
 	// Public members
 	float x,y,z;
-	controlPoint* next;
+	ControlPoint* next;
 
 	/*	===============================================
 	Desc: Default constructor.
 	Precondition:
 	Postcondition:
 	=============================================== */ 
-	controlPoint(){
+	ControlPoint(){
 		x = 0.0f;
 		y = 0.0f;
 		z = 0.0f;

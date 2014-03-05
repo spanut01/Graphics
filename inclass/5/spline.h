@@ -80,8 +80,8 @@ class spline{
 		int points;
 
 		// Linked list of points
-		controlPoint* head;
-		controlPoint* tail;
+		ControlPoint* head;
+		ControlPoint* tail;
 
 };
 

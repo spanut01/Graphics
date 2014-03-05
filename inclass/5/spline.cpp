@@ -37,7 +37,7 @@ Postcondition:
 =============================================== */ 
 spline::~spline(){
 	// Delete all of our control points
-	controlPoint* iter;
+	ControlPoint* iter;
 	iter = head;
 	while(iter != NULL){
 		delete iter;
@@ -52,7 +52,7 @@ Postcondition:
 =============================================== */ 
 void spline::addPoint(float x, float y, float z){
 	// Create a new point
-	controlPoint* temp = new controlPoint();
+	ControlPoint* temp = new ControlPoint();
 	// Did the memory allocate?
 	if(temp!=NULL){
 		temp->setValues(x,y,z);
@@ -79,12 +79,31 @@ void spline::addPoint(float x, float y, float z){
 
 /*	===============================================
 Desc:			Implement this function
-Precondition:
+    Calculates between a range(start point and endpoint
+      
+Precondition: 
 Postcondition:
 =============================================== */ 
 void spline::cubic_spline(int resolution, int output){
-
-	}
+    ControlPoint* start = head;
+    ControlPoint* goal = head->next;
+    glPointSize(1.0); // Sets the size of the dots
+    glBegin(GL_POINTS);
+        float stepsize = 1.0/ (float) resolution;
+        float t, i, y, z;
+        glColor3f(0.0, 1.0, 0.0);
+        while(goal != NULL){
+            for(i = 0.0; i < 1.0; i += stepsize){
+                t = start->x + i;
+                y = calculate_Spline(i, start->y, goal->y, 5.0, 5.0);
+                z = calculate_Spline(i, start->z, goal->z, 5.0, 5.0);   
+                glVertex3f(t, y, z);
+            }
+            start = goal;
+            goal = goal->next;
+        }
+    glEnd();
+}
 
 /*	===============================================
 Desc:	Fill this in 
@@ -97,7 +116,7 @@ Precondition:
 Postcondition:
 =============================================== */ 
 float spline::calculate_Spline (float t, float S, float G, float Vs, float Vg) {
-
+    return (t*t*t*(2*S - 2*G + Vs + Vg) + t*t*(-3*S + 3*G - 2*Vs - Vg) + t*Vs + S);
 }
 
 /*	===============================================
@@ -111,7 +130,7 @@ void spline::render(){
 	glPointSize(20.0);
 
 	// Create an iterator to move through all of our control points
-	controlPoint* iter;
+	ControlPoint* iter;
 	// Set the iterator to the head of our list.
 	iter = head;
 
