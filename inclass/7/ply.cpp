@@ -369,26 +369,6 @@ void ply::renderSilhouette(){
             ptr = ptr->next;
         }
     }
-    /*
-    glEnd();
-    glPopMatrix();
-    
-    glPushMatrix();
-    glLineWidth(1);
-    glBegin(GL_LINES);
-    glColor3f(1.0,0.0,0.0);
-    int j;
-    for(i=0; i<faceCount; i++){
-        for(j=0;j<3;j++){
-        int v1 = faceList[i].vertexList[j];
-        glVertex3f(vertexList[v1].x,vertexList[v1].y,vertexList[v1].z);
-        float x = faceList[i].normX*0.05f;
-        float y = faceList[i].normY*0.05f;
-        float z = faceList[i].normZ*0.05f;
-        glVertex3f(vertexList[v1].x+x,vertexList[v1].y+y,vertexList[v1].z+z);
-        }
-    }
-    */
     glEnd();
     glPopMatrix();
 } 
