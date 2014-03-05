@@ -83,8 +83,56 @@ Precondition:
 Postcondition:
 =============================================== */ 
 void spline::cubic_spline(int resolution, int output){
+	// Color each segment a different color
+	
 
-	}
+	controlPoint* iter = head;
+	controlPoint* iter2 = head->next;
+
+	glPointSize(1.0);		// Set our point size
+		glDisable(GL_LIGHTING);	// Remove lighting so that the points render correctly
+			glPushMatrix();
+				float intervalColor = 0.0;
+				glBegin(GL_POINTS);
+					while(iter->next != NULL && iter2->next != NULL){
+						float deltaSteps = resolution;
+						float stepSize = ((iter2->x)-(iter->x)) / deltaSteps;
+						// Color our intervals different colors
+						
+						
+						for(float t = 0; t < (iter2->x)-(iter->x) ; t+=stepSize)
+						{
+							float yStart = iter->y;
+							float yGoal = iter2->y;
+
+							float zStart = iter->z;
+							float zGoal = iter2->z;
+
+							// See if we've reached a new interval, and update our points
+							// accordingly
+							if((iter->x) + t > (iter2->x)){
+								yGoal = iter2->next->y;
+								zGoal = iter2->next->z;
+							}
+								glColor3f(intervalColor,1-intervalColor,0);
+								float yCoordinate = calculate_Spline(t, yStart, yGoal, 5, 5);//cubic_equation(S,G,Vs,Vg,t);
+								float zCoordinate = calculate_Spline(t,zStart,zGoal,5,5);
+								if(output==1){
+									std::cout << (iter->x)+t << "," << yCoordinate << "," << zCoordinate << std::endl;
+								}
+								glVertex3f((iter->x)+t,yCoordinate,zCoordinate);
+						}
+								intervalColor+=.1;
+								if(intervalColor>1){
+									intervalColor=0.0;
+								}
+						iter = iter->next;
+						iter2 = iter->next;
+					}
+				glEnd();
+			glPopMatrix();
+		glEnable(GL_LIGHTING);
+}
 
 /*	===============================================
 Desc:	Fill this in 
@@ -97,7 +145,10 @@ Precondition:
 Postcondition:
 =============================================== */ 
 float spline::calculate_Spline (float t, float S, float G, float Vs, float Vg) {
-
+  return t*t*t*( 2.0*S - 2.0*G + 1.0*Vs + 1.0*	Vg) +
+                  t*t*(-3.0*S + 3.0*G - 2.0*Vs - 1.0*	Vg) +
+                    t*(                           		Vs) +
+                      (     S);
 }
 
 /*	===============================================
