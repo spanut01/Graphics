@@ -281,22 +281,22 @@ void myGlutDisplay(void)
 		// note that you don't need to applyMaterial, just draw the geometry
 		FlatSceneNode* current = parser->headNode;
                 while(current != NULL){
-                    printf("new node\n");
+                    //printf("new node\n");
                     if(current->primitive != NULL){
                         glPushMatrix();
-                        printf("\nMatrix:\n");
-                        current->matrix.print();
+                        //printf("\nMatrix:\n");
+                        //current->matrix.print();
                         glMultMatrixd(current->matrix.unpack());
 
                         Shape* shape;
                         PrimitiveType type = current->primitive->type; 
                         renderShape(type);
-                        printf("Drawing %d\n",current->primitive->type);
+                        //printf("Drawing %d\n",current->primitive->type);
                         glPopMatrix();
                     }
                     current = current->next;
                 }
-                printf("Done in loop\n");
+                //printf("Done in loop\n");
 	}
 
         glDisable(GL_COLOR_MATERIAL);
@@ -315,23 +315,23 @@ void myGlutDisplay(void)
 		// note that you should always applyMaterial first, then draw the geometry
 		FlatSceneNode* current = parser->headNode;
                 while(current != NULL){
-                    printf("new node\n");
+                    //printf("new node\n");
                     if(current->primitive != NULL){
                         glPushMatrix();
-                        printf("\nMatrix:\n");
-                        current->matrix.print();
+                        //printf("\nMatrix:\n");
+                        //current->matrix.print();
                         glMultMatrixd(current->matrix.unpack());
 
                         applyMaterial(current->primitive->material);
                         Shape* shape;
                         PrimitiveType type = current->primitive->type; 
                         renderShape(type);
-                        printf("Drawing %d\n",current->primitive->type);
+                        //printf("Drawing %d\n",current->primitive->type);
                         glPopMatrix();
                     }
                     current = current->next;
                 }
-                printf("Done in loop\n");
+                //printf("Done in loop\n");
 	}
 	glDisable(GL_LIGHTING);
 	
