@@ -50,7 +50,7 @@ class ply : public entity{
                 =============================================== */  
                 void render();
                 //iterates through the geometry to fill in the edgeList
-                void findEdges();
+                void findNeighbors();
                 //draws the silhouette around the ply object
                 void renderSilhouette();
 
@@ -78,8 +78,9 @@ class ply : public entity{
                 void loadGeometry();
                 //makes the points fit in the window
                 void scaleAndCenter();
-                //calculates the normal, sends it to graphics card, 
-                //NOTE and stores it
+                //creates and stores a struct edge within the edgeList
+                void storeEdge(int v1, int v2, int face);
+                //calculates the normal, sends it to graphics card, and stores it
                 void setNormal(int facenum, float x1, float y1, float z1,
                                                 float x2, float y2, float z2,
                                                 float x3, float y3, float z3);

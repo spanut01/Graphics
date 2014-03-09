@@ -83,7 +83,7 @@ void ply::reload(string _filePath){
       Desc: Loads the data structures (look at geometry.h and ply.h)
       Precondition: filePath is something valid, arrays are NULL
       Postcondition: data structures are filled 
-          (including edgeList, this calls scaleAndCenter and findEdges)
+          (including edgeList, this calls scaleAndCenter and findNeighbors)
       =============================================== */ 
 void ply::loadGeometry(){
 
@@ -200,7 +200,7 @@ void ply::loadGeometry(){
         exit(1);
     }
     myfile.close();
-    findEdges();
+    findNeighbors();
     scaleAndCenter();
 };
 
@@ -283,12 +283,64 @@ void ply::render(){
         glPopMatrix();
 }
 
+//Helper function used by findNeighbors
+//because the edgeList is an array of linked lists
+//Precondition: v1 < v2
+void ply::storeEdge(int v1, int v2, int face){
+    struct edge* ptr = edgeList[v1];
+    while(ptr != NULL){
+        if(ptr->vertexes[1] == v2){
+            ptr->faces[1] = face;
+            break;
+        }
+        ptr = ptr->next;
+    }
+    if(ptr == NULL){//loop hit end
+        //make a new edge
+        struct edge* newedge = (struct edge*)malloc(sizeof(struct edge));
+        newedge->vertexes[0] = v1;
+        newedge->vertexes[1] = v2;
+        newedge->faces[0] = face;
+        newedge->faces[1] = -1;//because 0 is a valid number
+        //link @ head
+        newedge->next = edgeList[v1];
+        edgeList[v1] = newedge;
+    }
+}
 
 //loads data structures so edges are known
-void ply::findEdges(){
-    //edges, if you want to use this data structure
-    edgeList = (struct edge**)malloc(vertexCount*sizeof(struct edge*));
-    //TODO add all the edges to the edgeList and make sure they have both faces
+void ply::findNeighbors(){
+    //clear out uninitialized stuff
+    int i, j, k;
+    /*
+    for(i=0; i<vertexCount; i++){
+        vertexList[i].facesnum = 0;
+    }
+    //so vertexes know what faces they're in
+    for(i=0; i<faceCount; i++){//face i
+        for(j=0; j<3; j++){
+            int vertexnum = faceList[i].vertexList[j];
+            if(vertexList[vertexnum].facesnum < 20){
+                vertexList[vertexnum].faces[vertexList[vertexnum].facesnum] = i;
+                vertexList[vertexnum].facesnum++;
+            } else printf("Error: vertex %d is in too many faces\n", vertexnum);
+        }
+    }*/
+    //edges
+    edgeList = (struct edge**)malloc(vertexCount*sizeof(void*));
+    for(i=0; i<vertexCount; i++)edgeList[i] = NULL;
+    int v1, v2;
+    for(i=0; i<faceCount; i++){
+        for(j=0; j<3; j++){
+        v1 = faceList[i].vertexList[j];
+            for(k=0; k<3; k++){
+                v2 = faceList[i].vertexList[k];
+                if(v1 < v2){
+                    storeEdge(v1, v2, i);
+                }
+            }
+        }
+    }
 }
 
 /* Desc: Renders the silhouette
@@ -302,9 +354,21 @@ void ply::renderSilhouette(){
     for(i=0; i<faceCount; i++){
         faceList[i].dotProd = (faceList[i].normX * lookX) + (faceList[i].normZ * lookZ);
     }
-    
-    //TODO Iterate through the edgeList, and if you want to draw an edge,
-    //call glVertex3f once for each vertex in that edge.  
+    for(i=0; i<vertexCount; i++){
+        struct edge* ptr = edgeList[i];
+        while(ptr != NULL){
+            int f1 = ptr->faces[0];
+            int f2 = ptr->faces[1];
+            
+            if(f1 != -1 && ((faceList[f1].dotProd < 0.0 && faceList[f2].dotProd > 0.0) || (faceList[f1].dotProd > 0.0 && faceList[f2].dotProd < 0.0))){
+                int v1 = ptr->vertexes[0];
+                int v2 = ptr->vertexes[1];
+                glVertex3f(vertexList[v1].x,vertexList[v1].y,vertexList[v1].z);
+                glVertex3f(vertexList[v2].x,vertexList[v2].y,vertexList[v2].z);
+            }
+            ptr = ptr->next;
+        }
+    }
     glEnd();
     glPopMatrix();
 } 

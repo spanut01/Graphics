@@ -1,10 +1,9 @@
 /*  =================== File Information =================
         File Name: main.cpp
         Description:
-        Author: Michael Shah
+        Author: Michael Shah, mostly
 
         Purpose: Driver for 3D program to load .ply models 
-        Usage:  
         ===================================================== */
 
 #include <string.h>
