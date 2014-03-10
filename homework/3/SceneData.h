@@ -211,8 +211,6 @@ public:
     ScenePrimitive* primitive;
     //! singly linked list
     FlatSceneNode* next;
-    //  material 
-    SceneMaterial* material;
 };
 
 #endif

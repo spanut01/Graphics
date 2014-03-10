@@ -1,10 +1,9 @@
 /*  =================== File Information =================
         File Name: main.cpp
         Description:
-        Author: Michael Shah
+        Author: Michael Shah, mostly
 
         Purpose: Driver for 3D program to load .ply models 
-        Usage:  
         ===================================================== */
 
 #include <string.h>
@@ -69,7 +68,8 @@ void myGlutReshape(int x, int y)
         // It works by multiplying the current matrix(in this case, our matrix is the GL_PROJECTION)
         // and multiplies it.
         //glFrustum(-xy_aspect*.08, xy_aspect*.08, -.08, .08, .1, 15.0);
-        glFrustum(-xy_aspect*.125, xy_aspect*.125, -.125, .125, .1, 15.0);
+        //glFrustum(-xy_aspect*.125, xy_aspect*.125, -.125, .125, .1, 15.0);
+        glOrtho(-xy_aspect*0.6, xy_aspect*0.6, -0.6, 0.6, .01, 15.0);
         // Since we are in projection mode, here we are setting the camera to the origin (0,0,0)
         glTranslatef(0, 0, -0.5);
         // Call our display function.
