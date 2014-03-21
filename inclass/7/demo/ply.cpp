@@ -297,7 +297,7 @@ void ply::storeEdge(int v1, int v2, int face){
     }
     if(ptr == NULL){//loop hit end
         //make a new edge
-        struct edge* newedge = (struct edge*)malloc(sizeof(struct edge));
+        struct edge* newedge = new struct edge;
         newedge->vertexes[0] = v1;
         newedge->vertexes[1] = v2;
         newedge->faces[0] = face;
@@ -327,7 +327,8 @@ void ply::findNeighbors(){
         }
     }*/
     //edges
-    edgeList = (struct edge**)malloc(vertexCount*sizeof(void*));
+    //edgeList = (struct edge**)malloc(vertexCount*sizeof(void*));
+    edgeList = new struct edge*[vertexCount];
     for(i=0; i<vertexCount; i++)edgeList[i] = NULL;
     int v1, v2;
     for(i=0; i<faceCount; i++){

@@ -287,7 +287,7 @@ void ply::render(){
 //loads data structures so edges are known
 void ply::findEdges(){
     //edges, if you want to use this data structure
-    edgeList = (struct edge**)malloc(vertexCount*sizeof(struct edge*));
+    edgeList = new struct edge*[vertexCount];
     //TODO add all the edges to the edgeList and make sure they have both faces
 }
 
