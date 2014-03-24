@@ -1,0 +1,64 @@
+﻿Build started 3/20/2014 5:45:50 PM.
+     1>Project "C:\Users\Remco\Dropbox\Comp175-Graphics\Homework\Assignment4-Intersect\Assignment4-Intersect.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Assignment4.cpp
+         Assignment4.cpp
+     1>c:\program files (x86)\microsoft visual studio 12.0\vc\include\gl\glui.h(880): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cylinder.h(130): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cylinder.h(131): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cylinder.h(164): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cylinder.h(185): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cylinder.h(186): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cylinder.h(194): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cylinder.h(195): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cylinder.h(196): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cylinder.h(198): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cylinder.h(199): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cylinder.h(200): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cone.h(119): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cone.h(120): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cone.h(123): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cone.h(166): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cone.h(187): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cone.h(188): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\cone.h(191): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\sphere.h(64): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\sphere.h(66): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\sphere.h(67): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\sphere.h(114): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\sphere.h(116): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\sphere.h(117): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\sphere.h(139): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\sphere.h(140): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\sphere.h(141): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\sphere.h(143): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\sphere.h(144): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\sphere.h(145): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\assignment4.cpp(80): warning C4101: 'i' : unreferenced local variable
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\assignment4.cpp(147): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\assignment4.cpp(171): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\assignment4.cpp(183): warning C4101: 'curDirName' : unreferenced local variable
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\assignment4.cpp(273): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\assignment4.cpp(276): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\assignment4.cpp(277): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\assignment4.cpp(278): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\assignment4.cpp(279): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\assignment4.cpp(280): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\assignment4.cpp(281): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\assignment4.cpp(304): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\assignment4.cpp(325): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\assignment4.cpp(351): warning C4018: '<' : signed/unsigned mismatch
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Remco\Dropbox\Comp175-Graphics\Homework\Assignment4-Intersect\Debug\Assignment4-Intersect.exe" /INCREMENTAL /NOLOGO glui32d.lib freeglut.lib opengl32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Remco\Dropbox\Comp175-Graphics\Homework\Assignment4-Intersect\Debug\Assignment4-Intersect.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Remco\Dropbox\Comp175-Graphics\Homework\Assignment4-Intersect\Debug\Assignment4-Intersect.lib" /MACHINE:X86 Debug\Assignment4.obj
+         Debug\Camera.obj
+         Debug\SceneParser.obj
+         Debug\tinystr.obj
+         Debug\tinyxml.obj
+         Debug\tinyxmlerror.obj
+         Debug\tinyxmlparser.obj
+         Assignment4-Intersect.vcxproj -> C:\Users\Remco\Dropbox\Comp175-Graphics\Homework\Assignment4-Intersect\Debug\Assignment4-Intersect.exe
+     1>Done Building Project "C:\Users\Remco\Dropbox\Comp175-Graphics\Homework\Assignment4-Intersect\Assignment4-Intersect.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.86
