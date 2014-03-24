@@ -49,18 +49,30 @@ private:
 				float newz_next = radius * cos(angleH + angleH_delta) * sin(angle + angle_delta);
 				float newy_next = radius * sin(angleH + angleH_delta);
 
-				glNormal3f(x, y, z);
+                                Vector normV = Vector(x,y,z);
+				normalizeNormal(normV);
+                                //glNormal3f(x, y, z);
 				glVertex3f(x, y, z);
-				glNormal3f(newx, newy, newz);
+                                normV = Vector(newx,newy,newz);
+				normalizeNormal(normV);
+				//glNormal3f(newx, newy, newz);
 				glVertex3f(newx, newy, newz);
-				glNormal3f(newx_next, newy_next, newz_next);
+                                normV = Vector(newx_next,newy_next,newz_next);
+				normalizeNormal(normV);
+				//glNormal3f(newx_next, newy_next, newz_next);
 				glVertex3f(newx_next, newy_next, newz_next);
 
-				glNormal3f(newx_next, newy_next, newz_next);
+				normV = Vector(newx_next, newy_next, newz_next);
+				normalizeNormal(normV);
+				//glNormal3f(newx_next, newy_next, newz_next);
 				glVertex3f(newx_next, newy_next, newz_next);
-				glNormal3f(x_next, y_next, z_next);
+				normV = Vector(x_next, y_next, z_next);
+				normalizeNormal(normV);
+				//glNormal3f(x_next, y_next, z_next);
 				glVertex3f(x_next, y_next, z_next);
-				glNormal3f(x, y, z);
+				normV = Vector(x,y,z);
+				normalizeNormal(normV);
+				//glNormal3f(x, y, z);
 				glVertex3f(x, y, z);
 
 				angle = angle + angle_delta;
