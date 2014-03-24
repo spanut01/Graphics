@@ -189,5 +189,29 @@ public:
    std::vector<SceneNode*> children;
 };
 
+//! Structure for flattened scene nodes
+class FlatSceneNode
+{
+public:
+    //! default constructor
+    FlatSceneNode(){
+        matrix = Matrix();
+        primitive = NULL;
+        next = NULL;
+    }
+    //! actual constructor
+    FlatSceneNode(ScenePrimitive* prim, Matrix mat){
+        primitive = prim;
+        matrix = mat;
+        next = NULL;
+    }
+    //! current matrix when this is being drawn
+    Matrix matrix;
+    //! shape to be drawn
+    ScenePrimitive* primitive;
+    //! singly linked list
+    FlatSceneNode* next;
+};
+
 #endif
 

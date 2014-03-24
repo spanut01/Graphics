@@ -19,6 +19,7 @@ void SetScreenSize (int screenWidth, int screenHeight);
 
 Matrix GetProjectionMatrix();
 Matrix GetModelViewMatrix();
+Matrix GetFilmToWorldMatrix();
 
 void RotateV(double angle);
 void RotateU(double angle);
@@ -37,6 +38,29 @@ int GetScreenHeight();
 
 double GetFilmPlanDepth();
 double GetScreenWidthRatio();
+
+private:
+Matrix scaling;
+Matrix unhinging;
+Matrix projection;
+Matrix eyeTranslation;
+Matrix basisRotation;
+Matrix modelView;
+Point eyePoint;
+Vector lookVector;
+Vector upVector;
+Vector u;
+Vector v;
+Vector w;
+double thetaH;
+double near;
+double far;
+int width;
+int height;
+double rotationV;
+double rotationU;
+double rotationW;
+
 };
 #endif
 

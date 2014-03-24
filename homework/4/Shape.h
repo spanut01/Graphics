@@ -24,11 +24,13 @@ public:
 	virtual void drawNormal()=0;
 
 	virtual double Intersect(Point eyePointP, Vector rayV, Matrix transformMatrix) = 0;
-	virtual Vector findIsectNormal(Point eyePoint, Vector ray, double dist) = 0;
+    //TODO
+	//virtual Vector findIsectNormal(Point eyePoint, Vector ray, double dist) = 0;
 
 protected:
 	void normalizeNormal (float x, float y, float z) {
-		normalizeNormal (Vector(x, y, z));
+        Vector vec(x,y,x);
+		normalizeNormal (vec);
 	};
 
 	void normalizeNormal (Vector& v) {

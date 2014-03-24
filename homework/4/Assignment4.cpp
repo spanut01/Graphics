@@ -30,13 +30,14 @@ float lookZ = -2;
 
 /** These are GLUI control panel objects ***/
 int  main_window;
-string filenamePath = "data\\general\\test.xml";
+string filenamePath = "./data/general/test.xml";
 GLUI_EditText* filenameTextField = NULL;
 GLubyte* pixels = NULL;
 int pixelWidth = 0, pixelHeight = 0;
 int screenWidth = 0, screenHeight = 0;
 
 /** these are the global variables used for rendering **/
+Shape* shape = NULL;
 Cube* cube = new Cube();
 Cylinder* cylinder = new Cylinder();
 Cone* cone = new Cone();
@@ -51,6 +52,28 @@ void setPixel(GLubyte* buf, int x, int y, int r, int g, int b) {
 	buf[(y*pixelWidth + x) * 3 + 0] = (GLubyte)r;
 	buf[(y*pixelWidth + x) * 3 + 1] = (GLubyte)g;
 	buf[(y*pixelWidth + x) * 3 + 2] = (GLubyte)b;
+}
+
+void setShape(int shapeType){
+	switch (shapeType) {
+	case SHAPE_CUBE:
+		shape = cube;
+		break;
+	case SHAPE_CYLINDER:
+		shape = cylinder;
+		break;
+	case SHAPE_CONE:
+		shape = cone;
+		break;
+	case SHAPE_SPHERE:
+		shape = sphere;
+		break;
+	case SHAPE_SPECIAL1:
+		shape = cube;
+		break;
+	default:
+		shape = sphere;
+	}
 }
 
 void callback_start(int id) {
@@ -74,15 +97,28 @@ void callback_start(int id) {
 
 	cout << "(w, h): " << pixelWidth << ", " << pixelHeight << endl;
 
+    Point eyeP = camera->GetEyePoint();
+    Vector rayV;    
+    Matrix filmToWorld = camera->GetFilmToWorldMatrix();
+    double t;
+    
 	for (int i = 0; i < pixelWidth; i++) {
 		for (int j = 0; j < pixelHeight; j++) {
-			//replace the following code
-			if ((i % 5 == 0) && (j % 5 == 0)) {
-				setPixel(pixels, i, j, 255, 0, 0);
-			}
-			else {
-				setPixel(pixels, i, j, 128, 128, 128);
-			}
+			setPixel(pixels, i, j, 0, 0, 0);
+            
+            rayV = Vector(-1.0+2.0*(i/pixelWidth),1.0-2.0*(j/pixelHeight),-1.0);
+            rayV = filmToWorld * rayV;
+            FlatSceneNode* current = parser->headNode;
+            while(current != NULL){
+                if(current->primitive != NULL){
+                    setShape(current->primitive->type);
+                    t = shape->Intersect(eyeP, rayV, current->matrix);
+                    //TODO MORE CHECKS
+                    if(t > 0.0)setPixel(pixels, i, j, 255, 255, 255);
+                }
+                current = current->next;
+            }
+
 		}
 	}
 	glutPostRedisplay();
@@ -146,11 +182,15 @@ void setupCamera()
 
 	camera->Reset();
 	camera->SetViewAngle(cameraData.heightAngle);
+    Point pos = cameraData.pos;
+    Vector look = cameraData.look;
+    Point lookAt = cameraData.lookAt;
+    Vector up = cameraData.up;
 	if (cameraData.isDir == true) {
-		camera->Orient(cameraData.pos, cameraData.look, cameraData.up);
+		camera->Orient(pos, look, up);
 	}
 	else {
-		camera->Orient(cameraData.pos, cameraData.lookAt, cameraData.up);
+		camera->Orient(pos, lookAt, up);
 	}
 
 	viewAngle = camera->GetViewAngle();
@@ -173,9 +213,10 @@ void updateCamera()
 	camera->Reset();
 
 	Point guiEye (eyeX, eyeY, eyeZ);
-	Point guiLook(lookX, lookY, lookZ);
+	Point guiLook(lookX, lookY, lookZ);//NOTE SHOULD THIS BE A VECTOR???
+    Vector guiUp = camera->GetUpVector();
 	camera->SetViewAngle(viewAngle);
-	camera->Orient(guiEye, guiLook, camera->GetUpVector());
+	camera->Orient(guiEye, guiLook, guiUp);
 	camera->RotateU(camRotU);
 	camera->RotateV(camRotV);
 	camera->RotateW(camRotW);

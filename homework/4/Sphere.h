@@ -9,19 +9,30 @@ public:
 	~Sphere() {};
 
 	void draw() {
+        glPushMatrix();
+        glBegin(GL_TRIANGLES);
+        drawTriangles();
+        glEnd();
+        glPopMatrix();
 	};
 
 	void drawNormal() {
+        glPushMatrix();
+        glBegin(GL_LINES);
+        drawNormals();
+        glEnd();
+        glPopMatrix();
 	};
 
-	double Intersect(Point eyePointP, Vector rayV, Matrix transformMatrix) {
-		return 0;
-	};
+    //there's got to be a better way to make this work
+    double Intersect(Point eyePointP, Vector rayV, Matrix transformMatrix){
+        intersect(eyePointP, rayV, transformMatrix);
+    };
 
-	Vector findIsectNormal(Point eyePoint, Vector ray, double dist) {
-		Vector v;
-		return v;
-	};
+private:
+    void drawTriangles();
+    void drawNormals();
+    double intersect(Point eyePointP, Vector rayV, Matrix transformMatrix);
 };
 
 #endif
