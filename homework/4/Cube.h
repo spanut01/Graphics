@@ -26,7 +26,7 @@ public:
 	};
 
     double Intersect(Point eyePointP, Vector rayV, Matrix transformMatrix){
-        intersect(eyePointP, rayV, transformMatrix);
+        return intersect(eyePointP, rayV, transformMatrix);
     };
 
 private:

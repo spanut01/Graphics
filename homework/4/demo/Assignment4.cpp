@@ -65,9 +65,11 @@ Vector generateRay(int x, int y) {
 	//Matrix worldToCamera = camera->GetScaleMatrix() * camera->GetModelViewMatrix();
 	//Matrix cameraToWorld = invert(worldToCamera);
 	Matrix cameraToWorld = camera->getCamera2WorldMatrix();
+	//cameraToWorld.print();
 	Point worldScreenPoint = cameraToWorld * camSreenPoint;
 	Vector ray = worldScreenPoint - camera->GetEyePoint();
 	ray.normalize();
+        //cout << "rayVector (" << ray[0] << "," << ray[1] << "," << ray[2] << ")\n";
 	return ray;
 }
 
@@ -145,6 +147,7 @@ void callback_start(int id) {
 			//cout << "computing: " << i << ", " << j << endl;
 
 			Vector ray = generateRay(i, j);
+			//cout << ray[0] << " , " << ray[1] << " , " << ray[3] << " \n";
 			double minDist = MIN_ISECT_DISTANCE;
 			int closestObject = -1;
 			for (int k = 0; k < sceneObjects.size(); k++) {

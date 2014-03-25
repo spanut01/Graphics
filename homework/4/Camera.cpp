@@ -13,11 +13,11 @@ void Camera::Reset(){
     eyeTranslation.init();
     basisRotation.init();
     modelView.init();
-    eyePoint = Point(2.0,2.0,2.0);
-    lookVector = Vector(-2.0,-2.0,-2.0);
+    eyePoint = Point(0.0,0.0,1.0);
+    lookVector = Vector(0.0,0.0,-1.0);
     upVector = Vector(0,1,0);
     Orient(eyePoint, lookVector, upVector);
-    thetaH = 45.0;
+    thetaH = 60.0;
     near = 0.001;
     far = 30.0;
     width = 500;
@@ -34,8 +34,8 @@ void Camera::Orient(Point& eye, Point& focus, Vector& up) {
     lookVector = normalize(temp);
     //set change of basis
     u = cross(lookVector, up);
-    upVector = cross(u, lookVector);
-    v = upVector;
+    upVector = cross(-lookVector, u);
+    v = normalize(upVector);
     w = -lookVector;
     
 }
@@ -49,7 +49,7 @@ void Camera::Orient(Point& eye, Vector& look, Vector& up) {
     u = normalize(u);
     //fprintf(stderr,"\nu:\n");
     //u.print();
-    upVector = cross(u, lookVector);
+    upVector = cross(-lookVector, u);
     v = normalize(upVector);
     //fprintf(stderr,"\nv:\n");
     //v.print();
@@ -69,17 +69,17 @@ Matrix Camera::GetProjectionMatrix() {
     
     float c = -near / far;
     unhinging[10] = -1.0/(c+1.0);
-    unhinging[11] = c/(c+1.0);
+    unhinging[14] = c/(c+1.0);
 
     //unhinging[10] = -(far + near) / (far - near);
     //unhinging[11] = (-2 * far * near)/(far - near);
-    unhinging[14] = -1.0;
+    unhinging[11] = -1.0;
     unhinging[15] = 0.0;
     //fprintf(stderr,"\nunhinging:\n");
     //unhinging.print();
 
     projection = scaling * unhinging;
-    projection = transpose(projection); 
+    //projection = transpose(projection); 
     //fprintf(stderr,"\nprojection:\n");
     //projection.print();
     return projection;
@@ -104,7 +104,11 @@ void Camera::SetScreenSize (int screenWidth, int screenHeight) {
 }
 
 Matrix Camera::GetFilmToWorldMatrix(){
-    return invert(eyeTranslation) * invert(basisRotation) * invert(scaling);
+	GetProjectionMatrix();
+	scaling.print();
+	Matrix m = GetModelViewMatrix();
+	m.print();
+    return invert(scaling * modelView);
 }
 
 Matrix Camera::GetModelViewMatrix() {

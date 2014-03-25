@@ -1,14 +1,18 @@
 #include "Sphere.h"
+#include <iostream>
+using namespace std;
 
 double Sphere::intersect(Point eyeP, Vector rayV, Matrix transformMatrix){
     double a, b, c, det, t;
-    Point p = transformMatrix * eyeP;
-    Vector d = transformMatrix * rayV;
+    Matrix worldToObj = invert(transformMatrix);
+    Point p = worldToObj * eyeP;
+    Vector d = worldToObj * rayV;
     a = d[0]*d[0] + d[1]*d[1] + d[2]*d[2];
     b = 2.0 * (p[0]*d[0] + p[1]*d[1] + p[2]*d[2]);
     c = (p[0]*p[0] + p[1]*p[1] + p[2]*p[2]) - 0.25;
     det = b*b - 4.0*a*c;
     //TODO ACTUALLY SOLVE FOR t
+    //cout << det << "\n";
     return det;
 }
 

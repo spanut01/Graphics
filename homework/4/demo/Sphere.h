@@ -3,6 +3,8 @@
 
 #include "Shape.h"
 #define RADIUS 0.5
+#include <iostream> 
+using namespace std;
 
 class Sphere : public Shape {
 public:
@@ -32,6 +34,7 @@ public:
 		double c = eyePoint[0] * eyePoint[0] + eyePoint[1] * eyePoint[1] + eyePoint[2] * eyePoint[2] - RADIUS * RADIUS;
 
 		double det = b*b - 4 * a*c;
+                //cout << det << "\n";
 		if (det < 0) {
 			return -1;
 		}

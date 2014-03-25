@@ -6,9 +6,9 @@ double Cone::intersect(Point eyeP, Vector rayV, Matrix transformMatrix){
     b = 2.0*eyeP[0]*rayV[0] + 2.0*eyeP[2]*rayV[2] - 0.5*eyeP[1]*rayV[1] + 0.125*rayV[1];
     c = eyeP[0]*eyeP[0] + eyeP[2]*eyeP[2] - 0.25*eyeP[1]*eyeP[1] + 0.0625 + 0.125*eyeP[1];
     det = b*b - 4.0*a*c;
-    if(det<0.0)return -1.0;
+    //if(det<0.0)return -1.0;
     //TODO
-    return -1.0;
+    return -1;
 }
 
 void Cone::drawTriangles(){

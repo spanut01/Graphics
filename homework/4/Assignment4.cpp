@@ -77,51 +77,62 @@ void setShape(int shapeType){
 }
 
 void callback_start(int id) {
-	cout << "start button clicked!" << endl;
+    cout << "start button clicked!" << endl;
 
-	if (parser == NULL) {
-		cout << "no scene loaded yet" << endl;
-		return;
-	}
+    if (parser == NULL) {
+        cout << "no scene loaded yet" << endl;
+        return;
+    }
 
-	pixelWidth = screenWidth;
-	pixelHeight = screenHeight;
+    pixelWidth = screenWidth;
+    pixelHeight = screenHeight;
 
-	updateCamera();
+    updateCamera();
 
-	if (pixels != NULL) {
-		delete pixels;
-	}
-	pixels = new GLubyte[pixelWidth  * pixelHeight * 3];
-	memset(pixels, 0, pixelWidth  * pixelHeight * 3);
+    if (pixels != NULL) {
+        delete pixels;
+    }
+    pixels = new GLubyte[pixelWidth  * pixelHeight * 3];
+    memset(pixels, 0, pixelWidth  * pixelHeight * 3);
 
-	cout << "(w, h): " << pixelWidth << ", " << pixelHeight << endl;
+    cout << "(w, h): " << pixelWidth << ", " << pixelHeight << endl;
 
     Point eyeP = camera->GetEyePoint();
+    cout << "eyePoint (" << eyeP[0] << "," << eyeP[1] << "," << eyeP[2] << ")\n";
+    Point pointV;
     Vector rayV;    
     Matrix filmToWorld = camera->GetFilmToWorldMatrix();
+    cout << "Film To World\n";
+    filmToWorld.print();
     double t;
     
-	for (int i = 0; i < pixelWidth; i++) {
-		for (int j = 0; j < pixelHeight; j++) {
-			setPixel(pixels, i, j, 0, 0, 0);
+    for (int i = 0; i < pixelWidth; i++) {
+        for (int j = 0; j < pixelHeight; j++) {
+            setPixel(pixels, i, j, 0, 0, 0);
             
-            rayV = Vector(-1.0+2.0*(i/pixelWidth),1.0-2.0*(j/pixelHeight),-1.0);
-            rayV = filmToWorld * rayV;
+            pointV = Point(-1.0+2.0*((double)i/(double)pixelWidth),-1.0+2.0*((double)j/(double)pixelHeight),-1.0);
+            pointV = filmToWorld * pointV;
+            rayV = pointV - camera->GetEyePoint();
+            rayV.normalize();
+            cout << "rayVector (" << rayV[0] << "," << rayV[1] << "," << rayV[2] << ")\n";
             FlatSceneNode* current = parser->headNode;
             while(current != NULL){
                 if(current->primitive != NULL){
                     setShape(current->primitive->type);
                     t = shape->Intersect(eyeP, rayV, current->matrix);
                     //TODO MORE CHECKS
-                    if(t > 0.0)setPixel(pixels, i, j, 255, 255, 255);
+                    //cout << t << "\n";
+                    if(t > 0.0) {
+                        cout << t << " \n";
+                        setPixel(pixels, i, j, 255, 255, 255);
+                    }
                 }
                 current = current->next;
             }
 
-		}
-	}
-	glutPostRedisplay();
+        }
+    }
+    glutPostRedisplay();
 }
 
 

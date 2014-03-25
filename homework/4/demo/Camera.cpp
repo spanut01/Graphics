@@ -1,4 +1,7 @@
 #include "Camera.h"
+#include <iostream>
+
+using namespace std;
 
 Camera::Camera() {
 	Reset();
@@ -27,8 +30,8 @@ void Camera::Orient(Point& eye, Vector& look, Vector& up) {
 	Vector lookVector = normalize(look);
 	m_n = -lookVector;
 	m_u = cross(lookVector, up);
-  m_u = normalize(m_u);
-  m_v = cross(m_n, m_u);
+        m_u = normalize(m_u);
+        m_v = cross(m_n, m_u);
 
 	orient(0, 0) = m_u[0]; orient(0, 1) = m_u[1]; orient(0, 2) = m_u[2];
 	orient(1, 0) = m_v[0]; orient(1, 1) = m_v[1]; orient(1, 2) = m_v[2];
@@ -153,7 +156,11 @@ double Camera::GetScreenWidthRatio() {
 }
 
 void Camera::computeCamera2WorldMatrix() {
+        cout << "eye: " << m_invModelView(0, 3) << m_invModelView(1, 3) << m_invModelView(2, 3) << " \n";
+	(GetScaleMatrix()).print();
+	m_modelView.print();
 	m_cam2World = invert(GetScaleMatrix() * m_modelView);
+	m_cam2World.print();
 }
 
 Matrix Camera::getCamera2WorldMatrix() {
