@@ -1,14 +1,42 @@
 #include "Cone.h"
 
-double Cone::intersect(Point eyeP, Vector rayV, Matrix transformMatrix){
-    double a, b, c, t, det;
-    a = rayV[0]*rayV[0] + rayV[2]*rayV[2] - 0.25*rayV[1]*rayV[1];
-    b = 2.0*eyeP[0]*rayV[0] + 2.0*eyeP[2]*rayV[2] - 0.5*eyeP[1]*rayV[1] + 0.125*rayV[1];
-    c = eyeP[0]*eyeP[0] + eyeP[2]*eyeP[2] - 0.25*eyeP[1]*eyeP[1] + 0.0625 + 0.125*eyeP[1];
+double Cone::Intersect(Point eyeP, Vector rayV, Matrix transformMatrix){
+    double a, b, c, det, t1, t2, y1, y2;
+    double t = 1000000;
+    Matrix worldToObj = invert(transformMatrix);
+    Point p = worldToObj * eyeP;
+    Vector d = worldToObj * rayV;
+
+    a = d[0]*d[0] + d[2]*d[2] - 0.25*d[1]*d[1];
+    b = 2.0*p[0]*d[0] + 2.0*p[2]*d[2] - 0.5*p[1]*d[1] + 0.25*d[1];
+    c = p[0]*p[0] + p[2]*p[2] - 0.25*p[1]*p[1] - 0.0625 + 0.25*p[1];
     det = b*b - 4.0*a*c;
-    //if(det<0.0)return -1.0;
-    //TODO
-    return -1;
+    if(det<0.0)return -1.0;
+    
+    if(det > 0.0){
+        t1 = (- b - sqrt(det)) / (2 * a);
+        t2 = (- b + sqrt(det)) / (2 * a);
+        y1 = p[1] + t1 * d[1];
+        y2 = p[1] + t2 * d[1];
+        if(t1 > 0.0 && y1 > -0.5 && y1 < 0.5){
+            t = t1;
+        }
+        if(t2 > 0.0 && y2 > -0.5 && y2 < 0.5 && t2 < t1){
+            t = t2;
+        }
+    }
+    t1 = (-0.5 - p[1]) / d[1];
+    a = p[0] + t1 * d[0];
+    b = p[2] + t1 * d[2];
+    if(a > -0.5 && a*a + b*b < 0.25 && t1 < t){
+        t = t1;
+    }
+
+    if(t == 1000000)return -1;
+    return t;
+}
+Vector Cone::findIsectNormal(Point eyePoint, Vector ray, double dist){
+    return ray; 
 }
 
 void Cone::drawTriangles(){

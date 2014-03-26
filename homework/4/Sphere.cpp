@@ -1,9 +1,10 @@
 #include "Sphere.h"
 #include <iostream>
+#include <math.h>
 using namespace std;
 
-double Sphere::intersect(Point eyeP, Vector rayV, Matrix transformMatrix){
-    double a, b, c, det, t;
+double Sphere::Intersect(Point eyeP, Vector rayV, Matrix transformMatrix){
+    double a, b, c, det, t1, t2;
     Matrix worldToObj = invert(transformMatrix);
     Point p = worldToObj * eyeP;
     Vector d = worldToObj * rayV;
@@ -13,9 +14,22 @@ double Sphere::intersect(Point eyeP, Vector rayV, Matrix transformMatrix){
     det = b*b - 4.0*a*c;
     //TODO ACTUALLY SOLVE FOR t
     //cout << det << "\n";
-    return det;
+    if (det < 0.0) {
+        return -1;
+    }
+    t1 = (-b + sqrt(det)) / (2 * a);
+    t2 = (-b - sqrt(det)) / (2 * a);
+    if ((t1 <= 0.0) && (t2 <= 0.0)){
+        return -1;
+    }
+    if((t1 > 0.0) && ((t1 < t2) || (t2 <= 0.0))){
+        return t1;
+    }
+    return t2;
 }
-
+Vector Sphere::findIsectNormal(Point eyePoint, Vector ray, double dist){
+    return ray; 
+}
 void Sphere::drawTriangles(){
     int i,j;
     float x,y;

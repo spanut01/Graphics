@@ -104,7 +104,8 @@ void callback_start(int id) {
     Matrix filmToWorld = camera->GetFilmToWorldMatrix();
     cout << "Film To World\n";
     filmToWorld.print();
-    double t;
+    double t = 1000000;
+    double tempT;
     
     for (int i = 0; i < pixelWidth; i++) {
         for (int j = 0; j < pixelHeight; j++) {
@@ -114,17 +115,25 @@ void callback_start(int id) {
             pointV = filmToWorld * pointV;
             rayV = pointV - camera->GetEyePoint();
             rayV.normalize();
-            cout << "rayVector (" << rayV[0] << "," << rayV[1] << "," << rayV[2] << ")\n";
+            //cout << "rayVector (" << rayV[0] << "," << rayV[1] << "," << rayV[2] << ")\n";
+
             FlatSceneNode* current = parser->headNode;
             while(current != NULL){
                 if(current->primitive != NULL){
                     setShape(current->primitive->type);
-                    t = shape->Intersect(eyeP, rayV, current->matrix);
+                    tempT = shape->Intersect(eyeP, rayV, current->matrix);
+            
                     //TODO MORE CHECKS
                     //cout << t << "\n";
-                    if(t > 0.0) {
-                        cout << t << " \n";
-                        setPixel(pixels, i, j, 255, 255, 255);
+                    if((tempT >= 0.0) && (tempT < t)) {
+                        t = tempT;
+                        if (isectOnly){
+                            setPixel(pixels, i, j, 255, 255, 255);
+                        }
+                        else{
+                            Vector iNorm = shape->findIsectNormal(eyeP, rayV, t);
+                            
+                        }
                     }
                 }
                 current = current->next;

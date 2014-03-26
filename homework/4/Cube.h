@@ -25,14 +25,12 @@ public:
       glPopMatrix();
 	};
 
-    double Intersect(Point eyePointP, Vector rayV, Matrix transformMatrix){
-        return intersect(eyePointP, rayV, transformMatrix);
-    };
+    double Intersect(Point eyePointP, Vector rayV, Matrix transformMatrix);
+    Vector findIsectNormal(Point eyePoint, Vector ray, double dist);
 
 private:
     void drawTriangles();
     void drawNormals();
-    double intersect(Point eyePointP, Vector rayV, Matrix transformMatrix);
 };
 
 #endif

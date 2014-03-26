@@ -1,7 +1,78 @@
 #include "Cylinder.h"
+#include <iostream>
+#include <math.h> 
+using namespace std;
+double Cylinder::Intersect(Point eyeP, Vector rayV, Matrix transformMatrix){
+    double a, b, c, det, t1, t2, x, y1, y2, z;
+    double t = 1000000;
+    Matrix worldToObj = invert(transformMatrix);
+    Point p = worldToObj * eyeP;
+    Vector d = worldToObj * rayV;
+    /*
+    if ((p[0] == d[0]) && (p[2] == d[2])){
+        if (p[1] * p[1] < 0.25){
+            return -1; 
+        }
+        det = p[0] * p[0] + p[2] * p[2];
+        if (det < 0.25) { 
+            if (p[1] < 0.0){
+                return (p[1] + 0.5) / d[1];
+            }
+            return (p[1] - 0.5) / d[1];
+        }
+    }*/
+    a = d[0] * d[0] + d[2] * d[2];
+    b = 2.0 *p[0] * d[0] + 2.0 * p[2] * d[2];
+    c = p[0] * p[0] + p[2] * p[2] - 0.25;
+    det = b * b - 4 * a * c;    
+//    cout << det << "\n"; 
+    /*
+    if (det < 0.0) {
+        return -1.0;
+    } */
+    if(det > 0.0){
+        t1 = (- b - sqrt(det)) / (2 * a);
+        t2 = (- b + sqrt(det)) / (2 * a);
+        y1 = p[1] + t1 * d[1];
+        y2 = p[1] + t2 * d[1];
+        if(t1 > 0.0 && y1 > -0.5 && y1 < 0.5){
+            t = t1;
+        }
+        if(t2 > 0.0 && y2 > -0.5 && y2 < 0.5 && t2 < t1){
+            t = t2;
+        }
+    }
+    /*
+    if (t1 < 0.0) {
+        if (t2 < 0.0) { 
+            return -1; 
+        }
+        return t2;
+    }
+    if (t2 < 0.0) { 
+        return t1; 
+    }*/
+    //find intersection with caps
+    
+    t1 = (0.5 - p[1]) / d[1];
+    x = p[0] + t1 * d[0];
+    z = p[2] + t1 * d[2];
+    if(x > -0.5 && x*x + z*z < 0.25 && t1 < t){
+        t = t1;
+    }
 
-double Cylinder::intersect(Point eyeP, Vector rayV, Matrix transformMatrix){
-    return -1.0;
+    t1 = (-0.5 - p[1]) / d[1];
+    x = p[0] + t1 * d[0];
+    z = p[2] + t1 * d[2];
+    if(x > -0.5 && x*x + z*z < 0.25 && t1 < t){
+        t = t1;
+    }
+
+    if(t == 1000000)return -1;
+    return t;
+}
+Vector Cylinder::findIsectNormal(Point eyePoint, Vector ray, double dist){
+    return ray; 
 }
 
 void Cylinder::drawTriangles(){

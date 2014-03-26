@@ -56,6 +56,22 @@ public:
 
    // @TODO: [OPTIONAL] You can implement some operators here for color arithmetic.
 
+    SceneColor operator+ (SceneColor color1){
+        SceneColor result;
+        result.r = color1.r + r;
+        result.g = color1.g + g;
+        result.b = color1.b + b;
+        result.a = 0;
+        return result;
+    }
+    SceneColor operator* (float k){
+        SceneColor result;
+        result.r = k * r;
+        result.g = k * g;
+        result.b = k * b;
+        result.a = 0;
+        return result;
+    }
 };
 
 //! Scene global color coefficients
