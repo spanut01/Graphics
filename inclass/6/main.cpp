@@ -17,6 +17,8 @@
 #include <math.h>
 #include "object.h"
 
+using namespace std;
+
 /** These are the live variables passed into GLUI ***/
 int main_window;
 int wireframe = 0;
@@ -193,7 +195,43 @@ double Intersect(Point eyePointP, Vector rayV, Matrix transformMatrix) {
 
 
 	*/
-	return -1;
+    Matrix invTrans = invert(transformMatrix);
+    Point newEye = invTrans * eyePointP;
+    Vector newRay = invTrans * rayV;
+    
+    //A = (d * d)
+    //B = 2(Peye * d)
+    //C = (Peye * Peye) - r^2
+
+    double A = dot(newRay, newRay);
+    double B = 2 * (newEye[0] * newRay[0] + newEye[1] * newRay[1] + newEye[2] * newRay[2]);
+    double C = (newEye[0] * newEye[0] + newEye[1] * newEye[1] + newEye[2] * newEye[2]) - 1.0;
+
+    double det = B * B - 4 * A * C;
+    if (det < 0){
+        cout << "NO INTERSECT" << endl;
+	    return -1;
+    }
+    double t0 = (-B + sqrt(det)) / (2 * A);
+
+    if (det == 0){
+        return t0;
+    }
+
+    double t1 = (-B - sqrt(det)) / (2 * A);
+	std::cout << "t0: " << t0 << " t1: " << t1 << std::endl;     
+    if (t0 > 0 && t1 > 0){
+        if (t0 < t1) return t0;
+        else return t1;
+    }
+    if (t0 < 0 && 
+    else if (t && t1 > 0){
+        return t1;
+    }
+    else{
+    cout << "NO INTERSECT"<< endl;
+    return -1;
+    }
 }
 
 /*
@@ -219,7 +257,24 @@ void drawRayFunc(int x, int y){
 
 
 		*/
-	}
+        Point eyePoint(0, 0, -4);
+        Vector mouseRay(mouseX, mouseY, 40);
+        Matrix transformMat(1, 0, 0, 0, 
+                            0, 1, 0, 0,
+                            0, 0, 1, -4,
+                            0, 0, 0, 1);
+        float intersection = Intersect(eyePoint, mouseRay, transformMat);
+        if (intersection != -1) {
+            cout << "intersection!!!" << endl; 
+	    }
+        glDisable(GL_LIGHTING);
+        glBegin(GL_LINES);
+            glColor3f(0, 1, 0);
+            glVertex3f(mouseRay[0], mouseRay[1], eyePoint[2]);
+            glVertex3f(mouseRay[0], mouseRay[1], -eyePoint[2]);
+        glEnd();
+        glEnable(GL_LIGHTING);
+    }
 }
 
 /***************************************** myGlutDisplay() *****************/
