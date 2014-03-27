@@ -1,9 +1,9 @@
 #include "Cone.h"
 
-double Cone::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
+double Cone::Intersect(Point eyeP, Vector rayV, Matrix transformMatrix){
     double a, b, c, det, t1, t2, y1, y2;
     double t = 1000000;
-    //Matrix worldToObj = invert(transformMatrix);
+    Matrix worldToObj = invert(transformMatrix);
     Point p = worldToObj * eyeP;
     Vector d = worldToObj * rayV;
 

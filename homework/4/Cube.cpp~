@@ -43,7 +43,6 @@ double Cube::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
     return t;
 }
 Vector Cube::findIsectNormal(Point eyePoint, Vector ray, double dist){
-    Point hit = eyePoint + (ray * dist);
     return ray; 
 }
 

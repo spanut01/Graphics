@@ -33,7 +33,6 @@ Vector Sphere::findIsectNormal(Point eyePoint, Vector ray, double dist){
     norm[0] = hit[0];
     norm[1] = hit[1];
     norm[2] = hit[2];
-    norm.normalize();
     
     return norm; 
 }

@@ -72,14 +72,6 @@ public:
         result.a = 0;
         return result;
     }
-    SceneColor operator* (SceneColor c2){
-        SceneColor result;
-        result.r = c2.r * r;
-        result.g = c2.g * g;
-        result.b = c2.b * b;
-        result.a = 0;
-        return result;
-    }
     SceneColor(){
         r = 0.0;
         g = 0.0;

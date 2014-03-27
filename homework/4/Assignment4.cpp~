@@ -162,7 +162,7 @@ void callback_start(int id) {
                         else if(light.type == LIGHT_POINT){
                             lightDir = light.pos - (eyeP + (rayV * t));
                             lightDir.normalize();
-                        } else cout << "bad light type\n";
+                        } else cout << "bad\n";
                         float dotProd = dot(lightDir,iNorm);
                         if(dotProd > 0.0)color = color + (constant * light.color * dotProd);
                     }

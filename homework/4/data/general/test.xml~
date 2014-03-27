@@ -59,6 +59,7 @@
 		    <scale x="3" y="3" z="3"/>
 		    <object type="primitive" name="sphere" >
 			<diffuse r="0" g="1" b="1"/>
+      <ambient r="0" g="1" b="1"/>
         </object>
 		</transblock>
 		<transblock>
