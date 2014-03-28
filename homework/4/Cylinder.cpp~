@@ -2,10 +2,10 @@
 #include <iostream>
 #include <math.h> 
 using namespace std;
-double Cylinder::Intersect(Point eyeP, Vector rayV, Matrix transformMatrix){
+double Cylinder::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
     double a, b, c, det, t1, t2, x, y1, y2, z;
     double t = 1000000;
-    Matrix worldToObj = invert(transformMatrix);
+    //Matrix worldToObj = invert(transformMatrix);
     Point p = worldToObj * eyeP;
     Vector d = worldToObj * rayV;
     /*
@@ -72,6 +72,13 @@ double Cylinder::Intersect(Point eyeP, Vector rayV, Matrix transformMatrix){
     return t;
 }
 Vector Cylinder::findIsectNormal(Point eyePoint, Vector ray, double dist){
+    Point hit = eyePoint + (ray * dist);
+    //caps
+    float fudgeFactor = 0.00000005;
+    if(hit[1] + 0.5 < fudgeFactor)return Vector(0.0, -1.0, 0.0);
+    if(hit[1] - 0.5 < fudgeFactor)return Vector(0.0, 1.0, 0.0);
+    //tube
+    
     return ray; 
 }
 

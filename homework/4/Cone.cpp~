@@ -1,9 +1,9 @@
 #include "Cone.h"
 
-double Cone::Intersect(Point eyeP, Vector rayV, Matrix transformMatrix){
+double Cone::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
     double a, b, c, det, t1, t2, y1, y2;
     double t = 1000000;
-    Matrix worldToObj = invert(transformMatrix);
+    //Matrix worldToObj = invert(transformMatrix);
     Point p = worldToObj * eyeP;
     Vector d = worldToObj * rayV;
 
@@ -36,7 +36,15 @@ double Cone::Intersect(Point eyeP, Vector rayV, Matrix transformMatrix){
     return t;
 }
 Vector Cone::findIsectNormal(Point eyePoint, Vector ray, double dist){
-    return ray; 
+    Point hit = eyePoint + (ray * dist);
+    //cap
+    float fudgeFactor = 0.00000005;
+    if(hit[1] + 0.5 < fudgeFactor)return Vector(0.0, -1.0, 0.0);
+    //body
+    //unsure of this, "up" should be half as much as "out"
+    Vector ret(hit[0], 0.25, hit[2]);
+    ret.normalize();
+    return ret; 
 }
 
 void Cone::drawTriangles(){

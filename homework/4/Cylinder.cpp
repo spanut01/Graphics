@@ -72,7 +72,15 @@ double Cylinder::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
     return t;
 }
 Vector Cylinder::findIsectNormal(Point eyePoint, Vector ray, double dist){
-    return ray; 
+    Point hit = eyePoint + (ray * dist);
+    //caps
+    float fudgeFactor = 0.00000005;
+    if(hit[1] + 0.5 < fudgeFactor)return Vector(0.0, -1.0, 0.0);
+    if(hit[1] - 0.5 < fudgeFactor)return Vector(0.0, 1.0, 0.0);
+    //tube
+    Vector ret(hit[0], 0.0, hit[2]);
+    ret.normalize();
+    return ret; 
 }
 
 void Cylinder::drawTriangles(){

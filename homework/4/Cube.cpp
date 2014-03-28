@@ -44,7 +44,15 @@ double Cube::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
 }
 Vector Cube::findIsectNormal(Point eyePoint, Vector ray, double dist){
     Point hit = eyePoint + (ray * dist);
-    return ray; 
+    float fudgeFactor = 0.00000005;
+    if(hit[0] + 0.5 < fudgeFactor)return Vector(-1.0, 0.0, 0.0);
+    if(hit[0] - 0.5 < fudgeFactor)return Vector(1.0, 0.0, 0.0);
+    if(hit[1] + 0.5 < fudgeFactor)return Vector(0.0, -1.0, 0.0);
+    if(hit[1] - 0.5 < fudgeFactor)return Vector(0.0, 1.0, 0.0);
+    if(hit[2] + 0.5 < fudgeFactor)return Vector(0.0, 0.0, -1.0);
+    if(hit[2] - 0.5 < fudgeFactor)return Vector(0.0, 0.0, 1.0);
+    
+    return Vector(); 
 }
 
 void Cube::drawTriangles(){

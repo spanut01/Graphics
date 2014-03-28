@@ -148,6 +148,7 @@ void callback_start(int id) {
                     Point objEye = closest->invMat * eyeP;
                     Vector objRay = closest->invMat * rayV;
                     Vector iNorm = shape->findIsectNormal(objEye, objRay, t);
+                    iNorm = transpose(closest->invMat) * iNorm;
                     
                     SceneColor color = SceneColor();
                     color = color + (closest->primitive->material.cAmbient * globals.ka);
