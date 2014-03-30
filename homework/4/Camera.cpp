@@ -105,9 +105,9 @@ void Camera::SetScreenSize (int screenWidth, int screenHeight) {
 
 Matrix Camera::GetFilmToWorldMatrix(){
 	GetProjectionMatrix();
-	scaling.print();
+	//scaling.print();
 	Matrix m = GetModelViewMatrix();
-	m.print();
+	//m.print();
     return invert(scaling * modelView);
 }
 

@@ -95,15 +95,15 @@ void callback_start(int id) {
     pixels = new GLubyte[pixelWidth  * pixelHeight * 3];
     memset(pixels, 0, pixelWidth  * pixelHeight * 3);
 
-    cout << "(w, h): " << pixelWidth << ", " << pixelHeight << endl;
+    //cout << "(w, h): " << pixelWidth << ", " << pixelHeight << endl;
 
     Point eyeP = camera->GetEyePoint();
-    cout << "eyePoint (" << eyeP[0] << "," << eyeP[1] << "," << eyeP[2] << ")\n";
+    //cout << "eyePoint (" << eyeP[0] << "," << eyeP[1] << "," << eyeP[2] << ")\n";
     Point pointV;
     Vector rayV;    
     Matrix filmToWorld = camera->GetFilmToWorldMatrix();
-    cout << "Film To World\n";
-    filmToWorld.print();
+    //cout << "Film To World\n";
+    //filmToWorld.print();
     double t;// = 1000000;
     double tempT;
     FlatSceneNode* closest;
@@ -159,8 +159,8 @@ void callback_start(int id) {
                     SceneLightData light;
                     Vector lightDir;
                     Vector reflectiveRay;
-                    SceneColor diffConst = closest->primitive->material.cDiffuse * globals.kd;
-                    SceneColor specConst = closest->primitive->material.cSpecular * globals.ks;
+                    SceneColor diffConst = closest->primitive->material.cDiffuse;// * globals.kd;
+                    SceneColor specConst = closest->primitive->material.cSpecular;// * globals.ks;
                     float specularF = closest->primitive->material.shininess;
                     //cout << "rgb " << constant.r << "," << constant.g << "," << constant.b << "\n";
                     for(int k = 0; k < parser->getNumLights(); k++){
@@ -171,10 +171,10 @@ void callback_start(int id) {
                             lightDir.normalize();
                         } else cout << "bad light type\n";
                         //ambient
-                        color = color + (ambConst * light.color);
+                        //color = color + (ambConst * light.color);
                         //diffuse component
                         float dotProd = dot(lightDir,iNorm);
-                        if(dotProd > 0.0)color = color + (diffConst * light.color * dotProd);
+                        if(dotProd > 0.0)color = color + (diffConst * dotProd);// * light.color
                         //specular
                         reflectiveRay = 2 * dot(lightDir,iNorm) * iNorm;
                         dotProd = dot(reflectiveRay,rayV);
