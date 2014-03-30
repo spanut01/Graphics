@@ -12,8 +12,8 @@ double Sphere::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
     b = 2.0 * (p[0]*d[0] + p[1]*d[1] + p[2]*d[2]);
     c = (p[0]*p[0] + p[1]*p[1] + p[2]*p[2]) - 0.25;
     det = b*b - 4.0*a*c;
+    //cout<<"a "<<a<<" b "<<b<<" c "<<c<<" det "<<det<<"\n";
     //TODO ACTUALLY SOLVE FOR t
-    //cout << det << "\n";
     if (det < 0.0) {
         return -1;
     }
@@ -29,6 +29,7 @@ double Sphere::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
 }
 Vector Sphere::findIsectNormal(Point eyePoint, Vector ray, double dist){
     Point hit = eyePoint + (ray * dist);
+    //cout << "hit point "<<hit[0]<<" "<<hit[1]<<" "<<hit[2]<<"\n";
     Vector norm;
     norm[0] = hit[0];
     norm[1] = hit[1];

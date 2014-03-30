@@ -122,6 +122,7 @@ void callback_start(int id) {
             
             pointV = Point(-1.0+2.0*((double)i/(double)pixelWidth),-1.0+2.0*((double)j/(double)pixelHeight),-1.0);
             pointV = filmToWorld * pointV;
+            //filmToWorld.print();
             rayV = pointV - camera->GetEyePoint();
             rayV.normalize();
             //cout << "rayVector (" << rayV[0] << "," << rayV[1] << "," << rayV[2] << ")\n";
@@ -152,6 +153,9 @@ void callback_start(int id) {
                     iNorm = transpose(closest->invMat) * iNorm;
                     iNorm.normalize();
 
+					//cout<<"using normal "<<iNorm[0]<<" "<<iNorm[1]<<" "<<iNorm[2]<<"\n";
+					//cout<<"using ray "<<rayV[0]<<" "<<rayV[1]<<" "<<rayV[2]<<"\n";
+
                     SceneColor color = SceneColor();//zeroes
                     //color = color + (closest->primitive->material.cAmbient * globals.ka);
                     SceneColor ambConst = closest->primitive->material.cAmbient * globals.ka;
@@ -160,7 +164,9 @@ void callback_start(int id) {
                     Vector lightDir;
                     Vector reflectiveRay;
                     SceneColor diffConst = closest->primitive->material.cDiffuse;// * globals.kd;
+                    diffConst = diffConst * 0.2;//TODO THIS IS BAD
                     SceneColor specConst = closest->primitive->material.cSpecular;// * globals.ks;
+                    specConst = specConst * 0.2;//TODO THIS IS BAD
                     float specularF = closest->primitive->material.shininess;
                     //cout << "rgb " << constant.r << "," << constant.g << "," << constant.b << "\n";
                     for(int k = 0; k < parser->getNumLights(); k++){
@@ -174,17 +180,25 @@ void callback_start(int id) {
                         //color = color + (ambConst * light.color);
                         //diffuse component
                         float dotProd = dot(lightDir,iNorm);
-                        if(dotProd > 0.0)color = color + (diffConst * dotProd);// * light.color
+                        //cout<<"dot lightDir,iNorm "<<dotProd<<"\n";
+                        //cout<<"diffConst "<<diffConst.r<<" "<<diffConst.g<<" "<<diffConst.b<<"\n";
+                        SceneColor contrib = (diffConst * dotProd);// * light.color
+                        //cout <<"diffuse contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
+                        if(dotProd > 0.0)color = color + contrib;
                         //specular
-                        reflectiveRay = 2 * dot(lightDir,iNorm) * iNorm;
+                        reflectiveRay = lightDir + (2 * dot(lightDir,iNorm) * iNorm);
+                        cout<<"reflectiveRay "<<reflectiveRay[0]<<" "<<reflectiveRay[1]<<" "<<reflectiveRay[2]<<"\n";
                         dotProd = dot(reflectiveRay,rayV);
-                        if(dotProd > 0.0)color = color + (light.color * pow(dotProd,specularF));
+                        cout<<"dot reflectiveRay,rayV "<<dotProd<<"\n";
+                        contrib = (light.color * pow(dotProd,specularF));
+                        cout <<"specular contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
+                        if(dotProd > 0.0)color = color + contrib;
                     }
+                    cout << "rgb " << color.r << "," << color.g << "," << color.b << "\n\n";
                     color = color * 255.0;
                     if(color.r > 255)color.r = 255;
                     if(color.g > 255)color.g = 255;
                     if(color.b > 255)color.b = 255;
-                    //cout << "rgb " << color.r << "," << color.g << "," << color.b << "\n";
                     setPixel(pixels, i, j, color.r, color.g, color.b);
                 }
             }

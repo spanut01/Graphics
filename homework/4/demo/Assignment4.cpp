@@ -83,6 +83,9 @@ Point calculateColor(SceneObject closestObject, Vector normalVector, Vector ray,
 	Point color;
 	int i, j;
 
+	//cout<<"using normal "<<normalVector[0]<<" "<<normalVector[1]<<" "<<normalVector[2]<<"\n";
+	//cout<<"using ray "<<ray[0]<<" "<<ray[1]<<" "<<ray[2]<<"\n";
+
 	int numLights = parser->getNumLights();
 	for (int i = 0; i < numLights; i++) {
 		SceneLightData lightData;
@@ -92,8 +95,14 @@ Point calculateColor(SceneObject closestObject, Vector normalVector, Vector ray,
 		lightDir.normalize();
 			
 		double dot_nl = dot(normalVector, lightDir);
-		double dot_vr = dot(ray, ((2 * normalVector*dot_nl) - lightDir));
-
+		//cout<<"dot_nl "<<dot_nl<<"\n";
+		//reflectiveRay = 2 * dot(lightDir,iNorm) * iNorm;
+		//dotProd = dot(reflectiveRay,rayV);
+		Vector reflectiveRay = (2 * normalVector*dot_nl) - lightDir;
+		cout<<"reflectiveRay "<<reflectiveRay[0]<<" "<<reflectiveRay[1]<<" "<<reflectiveRay[2]<<"\n";
+        double dot_vr = dot(ray, ((2 * normalVector*dot_nl) - lightDir));
+		cout<<"dot_vr "<<dot_vr<<"\n";
+		
 		if (dot_nl<0) dot_nl = 0;
 		if (dot_vr<0) dot_vr = 0;
 
@@ -104,6 +113,7 @@ Point calculateColor(SceneObject closestObject, Vector normalVector, Vector ray,
 
 		Point diffuse(closestObject.material.cDiffuse.r, closestObject.material.cDiffuse.g, closestObject.material.cDiffuse.b); 
 		//diffuse = diffuse *255;
+		//cout<<"diffuse "<<diffuse[0]<<" "<<diffuse[1]<<" "<<diffuse[2]<<"\n";
 
 		double blend = closestObject.material.blend;
 		double r_blend = 1 - blend;
@@ -112,13 +122,20 @@ Point calculateColor(SceneObject closestObject, Vector normalVector, Vector ray,
 
 		Point lightColor(lightData.color.r, lightData.color.g, lightData.color.b);
 
+		Point specularContrib;
 		for (j = 0; j<3; j++) {
-			color[j] = color[j] + diffuse[j] * dot_nl + specular[j] * lightColor[j] * power;
+			specularContrib[j] = specular[j] * lightColor[j] * power;
+			color[j] = color[j] + diffuse[j] * dot_nl;// + specular[j] * lightColor[j] * power;
+
 			if (color[j]>1) {
 				color[j] = 1.0;
 			}
 		}
+		Point contrib = diffuse * dot_nl;
+		//cout <<"diffuse contrib: "<<contrib[0]<<" "<<contrib[1]<<" "<<contrib[2]<<"\n";
+		cout <<"specular contrib: "<<specularContrib[0]<<" "<<specularContrib[1]<<" "<<specularContrib[2]<<"\n";
 	}
+	cout << "rgb " << color[0] << "," << color[1] << "," << color[2] << "\n\n";
 	return color;
 }
 
