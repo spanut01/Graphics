@@ -148,14 +148,20 @@ void callback_start(int id) {
                     Point objEye = closest->invMat * eyeP;
                     Vector objRay = closest->invMat * rayV;
                     Vector iNorm = shape->findIsectNormal(objEye, objRay, t);
+                    //world space normal
                     iNorm = transpose(closest->invMat) * iNorm;
-                    
-                    SceneColor color = SceneColor();
-                    color = color + (closest->primitive->material.cAmbient * globals.ka);
+                    iNorm.normalize();
+
+                    SceneColor color = SceneColor();//zeroes
+                    //color = color + (closest->primitive->material.cAmbient * globals.ka);
+                    SceneColor ambConst = closest->primitive->material.cAmbient * globals.ka;
                     //cout << "rgb " << color.r << "," << color.g << "," << color.b << "\n";
                     SceneLightData light;
                     Vector lightDir;
-                    SceneColor constant = closest->primitive->material.cDiffuse * globals.kd;
+                    Vector reflectiveRay;
+                    SceneColor diffConst = closest->primitive->material.cDiffuse * globals.kd;
+                    SceneColor specConst = closest->primitive->material.cSpecular * globals.ks;
+                    float specularF = closest->primitive->material.shininess;
                     //cout << "rgb " << constant.r << "," << constant.g << "," << constant.b << "\n";
                     for(int k = 0; k < parser->getNumLights(); k++){
                         parser->getLightData(k, light);
@@ -164,8 +170,15 @@ void callback_start(int id) {
                             lightDir = light.pos - (eyeP + (rayV * t));
                             lightDir.normalize();
                         } else cout << "bad light type\n";
+                        //ambient
+                        color = color + (ambConst * light.color);
+                        //diffuse component
                         float dotProd = dot(lightDir,iNorm);
-                        if(dotProd > 0.0)color = color + (constant * light.color * dotProd);
+                        if(dotProd > 0.0)color = color + (diffConst * light.color * dotProd);
+                        //specular
+                        reflectiveRay = 2 * dot(lightDir,iNorm) * iNorm;
+                        dotProd = dot(reflectiveRay,rayV);
+                        if(dotProd > 0.0)color = color + (light.color * pow(dotProd,specularF));
                     }
                     color = color * 255.0;
                     if(color.r > 255)color.r = 255;
