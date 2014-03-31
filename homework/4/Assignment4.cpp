@@ -164,9 +164,7 @@ void callback_start(int id) {
                     Vector lightDir;
                     Vector reflectiveRay;
                     SceneColor diffConst = closest->primitive->material.cDiffuse;// * globals.kd;
-                    diffConst = diffConst * 0.2;//TODO THIS IS BAD
                     SceneColor specConst = closest->primitive->material.cSpecular;// * globals.ks;
-                    specConst = specConst * 0.2;//TODO THIS IS BAD
                     float specularF = closest->primitive->material.shininess;
                     //cout << "rgb " << constant.r << "," << constant.g << "," << constant.b << "\n";
                     for(int k = 0; k < parser->getNumLights(); k++){
@@ -187,14 +185,14 @@ void callback_start(int id) {
                         if(dotProd > 0.0)color = color + contrib;
                         //specular
                         reflectiveRay = lightDir + (2 * dot(lightDir,iNorm) * iNorm);
-                        cout<<"reflectiveRay "<<reflectiveRay[0]<<" "<<reflectiveRay[1]<<" "<<reflectiveRay[2]<<"\n";
+                        //cout<<"reflectiveRay "<<reflectiveRay[0]<<" "<<reflectiveRay[1]<<" "<<reflectiveRay[2]<<"\n";
                         dotProd = dot(reflectiveRay,rayV);
-                        cout<<"dot reflectiveRay,rayV "<<dotProd<<"\n";
+                        //cout<<"dot reflectiveRay,rayV "<<dotProd<<"\n";
                         contrib = (light.color * pow(dotProd,specularF));
-                        cout <<"specular contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
+                        //cout <<"specular contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
                         if(dotProd > 0.0)color = color + contrib;
                     }
-                    cout << "rgb " << color.r << "," << color.g << "," << color.b << "\n\n";
+                    //cout << "rgb " << color.r << "," << color.g << "," << color.b << "\n\n";
                     color = color * 255.0;
                     if(color.r > 255)color.r = 255;
                     if(color.g > 255)color.g = 255;
