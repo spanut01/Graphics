@@ -153,18 +153,19 @@ void callback_start(int id) {
                     iNorm = transpose(closest->invMat) * iNorm;
                     iNorm.normalize();
 
-					//cout<<"using normal "<<iNorm[0]<<" "<<iNorm[1]<<" "<<iNorm[2]<<"\n";
-					//cout<<"using ray "<<rayV[0]<<" "<<rayV[1]<<" "<<rayV[2]<<"\n";
+                    //cout<<"using normal "<<iNorm[0]<<" "<<iNorm[1]<<" "<<iNorm[2]<<"\n";
+                    //cout<<"using ray "<<rayV[0]<<" "<<rayV[1]<<" "<<rayV[2]<<"\n";
 
                     SceneColor color = SceneColor();//zeroes
-                    //color = color + (closest->primitive->material.cAmbient * globals.ka);
-                    SceneColor ambConst = closest->primitive->material.cAmbient * globals.ka;
+                    //ambient belongs here according to presentation
+                    color = color + (closest->primitive->material.cAmbient * globals.ka);
+                    //SceneColor ambConst = closest->primitive->material.cAmbient * globals.ka;
                     //cout << "rgb " << color.r << "," << color.g << "," << color.b << "\n";
                     SceneLightData light;
                     Vector lightDir;
                     Vector reflectiveRay;
-                    SceneColor diffConst = closest->primitive->material.cDiffuse;// * globals.kd;
-                    SceneColor specConst = closest->primitive->material.cSpecular;// * globals.ks;
+                    SceneColor diffConst = closest->primitive->material.cDiffuse * globals.kd;
+                    SceneColor specConst = closest->primitive->material.cSpecular * globals.ks;
                     float specularF = closest->primitive->material.shininess;
                     //cout << "rgb " << constant.r << "," << constant.g << "," << constant.b << "\n";
                     for(int k = 0; k < parser->getNumLights(); k++){
@@ -174,13 +175,13 @@ void callback_start(int id) {
                             lightDir = light.pos - (eyeP + (rayV * t));
                             lightDir.normalize();
                         } else cout << "bad light type\n";
-                        //ambient
+                        //ambient is not per light
                         //color = color + (ambConst * light.color);
                         //diffuse component
                         float dotProd = dot(lightDir,iNorm);
                         //cout<<"dot lightDir,iNorm "<<dotProd<<"\n";
                         //cout<<"diffConst "<<diffConst.r<<" "<<diffConst.g<<" "<<diffConst.b<<"\n";
-                        SceneColor contrib = (diffConst * dotProd);// * light.color
+                        SceneColor contrib = (diffConst * dotProd) * light.color;
                         //cout <<"diffuse contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
                         if(dotProd > 0.0)color = color + contrib;
                         //specular
