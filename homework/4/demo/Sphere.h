@@ -28,20 +28,22 @@ public:
 		Point eyePoint = inverseTransform * eyePointP;
 		Vector ray = inverseTransform * rayV;
 
+		printf("eyePoint %lf, %lf, %lf\n",eyePoint[0],eyePoint[1], eyePoint[2]);
+		printf("ray %lf, %lf, %lf\n", ray[0], ray[1], ray[2]);
 		double t = MIN_ISECT_DISTANCE;
 		double a = ray[0] * ray[0] + ray[1] * ray[1] + ray[2] * ray[2];
 		double b = 2 * (ray[0] * eyePoint[0] + ray[1] * eyePoint[1] + ray[2] * eyePoint[2]);
 		double c = eyePoint[0] * eyePoint[0] + eyePoint[1] * eyePoint[1] + eyePoint[2] * eyePoint[2] - RADIUS * RADIUS;
 
 		double det = b*b - 4 * a*c;
-                //cout << det << "\n";
+        //cout <<"det "<< det << "\n";
 		if (det < 0) {
 			return -1;
 		}
 
 		double t1 = (-b - sqrt(det)) / (2 * a);
 		double t2 = (-b + sqrt(det)) / (2 * a);
-
+		//printf("t1 = %lf  t2 = %lf \n", t1, t2);
 		if ((t1 > 0) && (t2 > 0))
 			t1 < t2 ? (t = t1) : (t = t2);
 		else if (t1 < 0)

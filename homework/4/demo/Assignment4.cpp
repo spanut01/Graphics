@@ -69,7 +69,7 @@ Vector generateRay(int x, int y) {
 	Point worldScreenPoint = cameraToWorld * camSreenPoint;
 	Vector ray = worldScreenPoint - camera->GetEyePoint();
 	ray.normalize();
-        //cout << "rayVector (" << ray[0] << "," << ray[1] << "," << ray[2] << ")\n";
+    //cout << "rayVector (" << ray[0] << "," << ray[1] << "," << ray[2] << ")\n";
 	return ray;
 }
 
@@ -84,7 +84,7 @@ Point calculateColor(SceneObject closestObject, Vector normalVector, Vector ray,
 	int i, j;
 
 	//cout<<"using normal "<<normalVector[0]<<" "<<normalVector[1]<<" "<<normalVector[2]<<"\n";
-	//cout<<"using ray "<<ray[0]<<" "<<ray[1]<<" "<<ray[2]<<"\n";
+	//cout<<"using ray "<<ray[0]<<" "<<ray[1]<<" "<<ray[2]<<"\n\n";
 
 	int numLights = parser->getNumLights();
 	for (int i = 0; i < numLights; i++) {
@@ -96,12 +96,10 @@ Point calculateColor(SceneObject closestObject, Vector normalVector, Vector ray,
 			
 		double dot_nl = dot(normalVector, lightDir);
 		//cout<<"dot_nl "<<dot_nl<<"\n";
-		//reflectiveRay = 2 * dot(lightDir,iNorm) * iNorm;
-		//dotProd = dot(reflectiveRay,rayV);
 		Vector reflectiveRay = (2 * normalVector*dot_nl) - lightDir;
-		cout<<"reflectiveRay "<<reflectiveRay[0]<<" "<<reflectiveRay[1]<<" "<<reflectiveRay[2]<<"\n";
+		//cout<<"reflectiveRay "<<reflectiveRay[0]<<" "<<reflectiveRay[1]<<" "<<reflectiveRay[2]<<"\n";
         double dot_vr = dot(ray, ((2 * normalVector*dot_nl) - lightDir));
-		cout<<"dot_vr "<<dot_vr<<"\n";
+		//cout<<"dot_vr "<<dot_vr<<"\n";
 		
 		if (dot_nl<0) dot_nl = 0;
 		if (dot_vr<0) dot_vr = 0;
@@ -115,8 +113,8 @@ Point calculateColor(SceneObject closestObject, Vector normalVector, Vector ray,
 		//diffuse = diffuse *255;
 		//cout<<"diffuse "<<diffuse[0]<<" "<<diffuse[1]<<" "<<diffuse[2]<<"\n";
 
-		double blend = closestObject.material.blend;
-		double r_blend = 1 - blend;
+		//double blend = closestObject.material.blend;
+		//double r_blend = 1 - blend;
 
 		Point specular(closestObject.material.cSpecular.r, closestObject.material.cSpecular.g, closestObject.material.cSpecular.b);
 
@@ -125,7 +123,7 @@ Point calculateColor(SceneObject closestObject, Vector normalVector, Vector ray,
 		Point specularContrib;
 		for (j = 0; j<3; j++) {
 			specularContrib[j] = specular[j] * lightColor[j] * power;
-			color[j] = color[j] + diffuse[j] * dot_nl;// + specular[j] * lightColor[j] * power;
+			color[j] = color[j] + diffuse[j] * dot_nl + specular[j] * lightColor[j] * power;
 
 			if (color[j]>1) {
 				color[j] = 1.0;
@@ -133,9 +131,9 @@ Point calculateColor(SceneObject closestObject, Vector normalVector, Vector ray,
 		}
 		Point contrib = diffuse * dot_nl;
 		//cout <<"diffuse contrib: "<<contrib[0]<<" "<<contrib[1]<<" "<<contrib[2]<<"\n";
-		cout <<"specular contrib: "<<specularContrib[0]<<" "<<specularContrib[1]<<" "<<specularContrib[2]<<"\n";
+		//cout <<"specular contrib: "<<specularContrib[0]<<" "<<specularContrib[1]<<" "<<specularContrib[2]<<"\n";
 	}
-	cout << "rgb " << color[0] << "," << color[1] << "," << color[2] << "\n\n";
+	//cout << "rgb " << color[0] << "," << color[1] << "," << color[2] << "\n\n";
 	return color;
 }
 
@@ -164,7 +162,7 @@ void callback_start(int id) {
 			//cout << "computing: " << i << ", " << j << endl;
 
 			Vector ray = generateRay(i, j);
-			//cout << ray[0] << " , " << ray[1] << " , " << ray[3] << " \n";
+			cout << ray[0] << " , " << ray[1] << " , " << ray[3] << " \n";
 			double minDist = MIN_ISECT_DISTANCE;
 			int closestObject = -1;
 			for (int k = 0; k < sceneObjects.size(); k++) {
@@ -186,6 +184,9 @@ void callback_start(int id) {
 					Point eyePointObjectSpace = inverseTransform*camera->GetEyePoint();
 					Vector rayObjectSpace = inverseTransform*ray;
 					Vector normal = sceneObjects[closestObject].shape->findIsectNormal(eyePointObjectSpace, rayObjectSpace, minDist);
+					//normal.normalize();//TODO take back out 
+					//cout<<"using normal "<<normal[0]<<" "<<normal[1]<<" "<<normal[2]<<"\n";
+                    
 					normal = transpose(inverseTransform) * normal;
 					normal.normalize();
 					Point isectWorldPoint = camera->GetEyePoint() + minDist*ray;

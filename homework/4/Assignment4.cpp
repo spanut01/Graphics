@@ -125,7 +125,7 @@ void callback_start(int id) {
             //filmToWorld.print();
             rayV = pointV - camera->GetEyePoint();
             rayV.normalize();
-            //cout << "rayVector (" << rayV[0] << "," << rayV[1] << "," << rayV[2] << ")\n";
+            cout << "rayVector (" << rayV[0] << "," << rayV[1] << "," << rayV[2] << ")\n";
             t = 1000000;
             current = parser->headNode;
             while(current != NULL){
@@ -148,24 +148,27 @@ void callback_start(int id) {
                     setShape(closest->primitive->type);
                     Point objEye = closest->invMat * eyeP;
                     Vector objRay = closest->invMat * rayV;
-                    Vector iNorm = shape->findIsectNormal(objEye, objRay, t);
+                    Vector objNorm = shape->findIsectNormal(objEye, objRay, t);
                     //world space normal
-                    iNorm = transpose(closest->invMat) * iNorm;
+                    //cout<<"using normal "<<objNorm[0]<<" "<<objNorm[1]<<" "<<objNorm[2]<<"\n";
+                    Vector iNorm = transpose(closest->invMat) * objNorm;
                     iNorm.normalize();
 
                     //cout<<"using normal "<<iNorm[0]<<" "<<iNorm[1]<<" "<<iNorm[2]<<"\n";
-                    //cout<<"using ray "<<rayV[0]<<" "<<rayV[1]<<" "<<rayV[2]<<"\n";
+                    //cout<<"using ray "<<rayV[0]<<" "<<rayV[1]<<" "<<rayV[2]<<"\n\n";
 
                     SceneColor color = SceneColor();//zeroes
                     //ambient belongs here according to presentation
-                    color = color + (closest->primitive->material.cAmbient * globals.ka);
+                    //color = color + (closest->primitive->material.cAmbient * globals.ka);
                     //SceneColor ambConst = closest->primitive->material.cAmbient * globals.ka;
                     //cout << "rgb " << color.r << "," << color.g << "," << color.b << "\n";
                     SceneLightData light;
                     Vector lightDir;
                     Vector reflectiveRay;
                     SceneColor diffConst = closest->primitive->material.cDiffuse * globals.kd;
+                    //cout<<"material diffuse "<<closest->primitive->material.cDiffuse.r<<" "<<closest->primitive->material.cDiffuse.g<<" "<<closest->primitive->material.cDiffuse.b<<"\n";
                     SceneColor specConst = closest->primitive->material.cSpecular * globals.ks;
+                    //cout<<"material specular "<<closest->primitive->material.cSpecular.r<<" "<<closest->primitive->material.cSpecular.g<<" "<<closest->primitive->material.cSpecular.b<<"\n";
                     float specularF = closest->primitive->material.shininess;
                     //cout << "rgb " << constant.r << "," << constant.g << "," << constant.b << "\n";
                     for(int k = 0; k < parser->getNumLights(); k++){
@@ -178,20 +181,25 @@ void callback_start(int id) {
                         //ambient is not per light
                         //color = color + (ambConst * light.color);
                         //diffuse component
+                        Point hitPoint = eyeP + (rayV * t);
+                        //cout<<"hitPoint "<<hitPoint[0]<<" "<<hitPoint[1]<<" "<<hitPoint[2]<<"\n";
                         float dotProd = dot(lightDir,iNorm);
                         //cout<<"dot lightDir,iNorm "<<dotProd<<"\n";
                         //cout<<"diffConst "<<diffConst.r<<" "<<diffConst.g<<" "<<diffConst.b<<"\n";
-                        SceneColor contrib = (diffConst * dotProd) * light.color;
+                        if(dotProd < 0.0f)dotProd = 0.0f;
+						SceneColor contrib = (diffConst * dotProd) * light.color;
                         //cout <<"diffuse contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
-                        if(dotProd > 0.0)color = color + contrib;
+                        color = color + contrib;
                         //specular
-                        reflectiveRay = lightDir + (2 * dot(lightDir,iNorm) * iNorm);
-                        //cout<<"reflectiveRay "<<reflectiveRay[0]<<" "<<reflectiveRay[1]<<" "<<reflectiveRay[2]<<"\n";
+                        //reflectiveRay = lightDir + (2 * dot(lightDir,iNorm) * iNorm);
+                        reflectiveRay = (2 * dotProd * iNorm) - lightDir;
+						//cout<<"reflectiveRay "<<reflectiveRay[0]<<" "<<reflectiveRay[1]<<" "<<reflectiveRay[2]<<"\n";
                         dotProd = dot(reflectiveRay,rayV);
                         //cout<<"dot reflectiveRay,rayV "<<dotProd<<"\n";
-                        contrib = (light.color * pow(dotProd,specularF));
+                        if(dotProd < 0.0f)dotProd = 0.0f;
+						contrib = specConst * (light.color * pow(dotProd,specularF));
                         //cout <<"specular contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
-                        if(dotProd > 0.0)color = color + contrib;
+                        color = color + contrib;
                     }
                     //cout << "rgb " << color.r << "," << color.g << "," << color.b << "\n\n";
                     color = color * 255.0;

@@ -158,6 +158,7 @@ public:
 	Vector findIsectNormal(Point eyePoint, Vector ray, double dist) {
 		Point tmpP = eyePoint + (dist * ray);
 		Vector normalVector(tmpP[0], tmpP[1], tmpP[2]);
+		//cout<<"Cube Hit "<<tmpP[0]<<" "<<tmpP[1]<<" "<<tmpP[2]<<"\n";
 
 		if (IN_RANGE(normalVector[0], 0.5)) {
 			normalVector[0] = 1; normalVector[1] = 0; normalVector[2] = 0;
@@ -178,10 +179,11 @@ public:
 			normalVector[0] = 0; normalVector[1] = 0; normalVector[2] = -1;
 		}
 		else {
-			//printf ("something is wrong here in cube normalVector\n");
-			//printf ("%lf, %lf, %lf\n", x_cord, y_cord, z_cord);
+			//printf ("something is wrong here in cube normalVector ");
+			//printf ("%lf, %lf, %lf\n", tmpP[0], tmpP[1], tmpP[2]);
 			//printf ("t: %lf\n", t);
 		}
+		//cout<<"Cube Normal "<<normalVector[0]<<" "<<normalVector[1]<<" "<<normalVector[2]<<"\n";
 
 		return normalVector;
 	}

@@ -8,33 +8,40 @@ double Sphere::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
     //Matrix worldToObj = invert(transformMatrix);
     Point p = worldToObj * eyeP;
     Vector d = worldToObj * rayV;
+    cout<<"worldToObj\n";
+    worldToObj.print();
     a = d[0]*d[0] + d[1]*d[1] + d[2]*d[2];
     b = 2.0 * (p[0]*d[0] + p[1]*d[1] + p[2]*d[2]);
     c = (p[0]*p[0] + p[1]*p[1] + p[2]*p[2]) - 0.25;
     det = b*b - 4.0*a*c;
     //cout<<"a "<<a<<" b "<<b<<" c "<<c<<" det "<<det<<"\n";
+    cout<<"eyepoint "<<p[0]<<" "<<p[1]<<" "<<p[2]<<"\n";
+    cout<<"ray "<<d[0]<<" "<<d[1]<<" "<<d[2]<<"\n\n";
     //TODO ACTUALLY SOLVE FOR t
     if (det < 0.0) {
         return -1;
     }
     t1 = (-b + sqrt(det)) / (2 * a);
     t2 = (-b - sqrt(det)) / (2 * a);
-    if ((t1 <= 0.0) && (t2 <= 0.0)){
-        return -1;
-    }
+    //cout << "t1 = " << t1 << "  t2 = " << t2 << "\n\n";
     if((t1 > 0.0) && ((t1 < t2) || (t2 <= 0.0))){
+        //cout << "t1 = " << t1 << "\n\n";
         return t1;
     }
-    return t2;
+    if((t2 > 0.0) && ((t2 < t1) || (t1 <= 0.0))){
+        //cout << "t2 = " << t2 << "\n\n";
+        return t2;
+    }
+
+    return -1;
 }
 Vector Sphere::findIsectNormal(Point eyePoint, Vector ray, double dist){
     Point hit = eyePoint + (ray * dist);
-    //cout << "hit point "<<hit[0]<<" "<<hit[1]<<" "<<hit[2]<<"\n";
+    //cout << "sphere hit point "<<hit[0]<<" "<<hit[1]<<" "<<hit[2]<<"\n";
     Vector norm;
     norm[0] = hit[0];
     norm[1] = hit[1];
     norm[2] = hit[2];
-    norm.normalize();
     
     return norm; 
 }

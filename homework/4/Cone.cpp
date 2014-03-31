@@ -42,7 +42,9 @@ Vector Cone::findIsectNormal(Point eyePoint, Vector ray, double dist){
     if(hit[1] + 0.5 < fudgeFactor)return Vector(0.0, -1.0, 0.0);
     //body
     //unsure of this, "up" should be half? as much as "out"
-    Vector ret(hit[0], 0.25, hit[2]);
+    Vector ret(hit[0], 0.0, hit[2]);
+    ret.normalize();
+    ret[1] = 0.5;
     ret.normalize();
     return ret; 
 }
