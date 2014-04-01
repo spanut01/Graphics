@@ -125,7 +125,7 @@ void callback_start(int id) {
             //filmToWorld.print();
             rayV = pointV - camera->GetEyePoint();
             rayV.normalize();
-            cout << "rayVector (" << rayV[0] << "," << rayV[1] << "," << rayV[2] << ")\n";
+            //cout << "rayVector (" << rayV[0] << "," << rayV[1] << "," << rayV[2] << ")\n";
             t = 1000000;
             current = parser->headNode;
             while(current != NULL){

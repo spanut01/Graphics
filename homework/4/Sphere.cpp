@@ -8,15 +8,15 @@ double Sphere::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
     //Matrix worldToObj = invert(transformMatrix);
     Point p = worldToObj * eyeP;
     Vector d = worldToObj * rayV;
-    cout<<"worldToObj\n";
-    worldToObj.print();
+    //cout<<"worldToObj\n";
+    //worldToObj.print();
     a = d[0]*d[0] + d[1]*d[1] + d[2]*d[2];
     b = 2.0 * (p[0]*d[0] + p[1]*d[1] + p[2]*d[2]);
     c = (p[0]*p[0] + p[1]*p[1] + p[2]*p[2]) - 0.25;
     det = b*b - 4.0*a*c;
     //cout<<"a "<<a<<" b "<<b<<" c "<<c<<" det "<<det<<"\n";
-    cout<<"eyepoint "<<p[0]<<" "<<p[1]<<" "<<p[2]<<"\n";
-    cout<<"ray "<<d[0]<<" "<<d[1]<<" "<<d[2]<<"\n\n";
+    //cout<<"eyepoint "<<p[0]<<" "<<p[1]<<" "<<p[2]<<"\n";
+    //cout<<"ray "<<d[0]<<" "<<d[1]<<" "<<d[2]<<"\n\n";
     //TODO ACTUALLY SOLVE FOR t
     if (det < 0.0) {
         return -1;

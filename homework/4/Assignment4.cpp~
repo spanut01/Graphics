@@ -158,7 +158,7 @@ void callback_start(int id) {
 
                     SceneColor color = SceneColor();//zeroes
                     //ambient belongs here according to presentation
-                    color = color + (closest->primitive->material.cAmbient * globals.ka);
+                    //color = color + (closest->primitive->material.cAmbient * globals.ka);
                     //SceneColor ambConst = closest->primitive->material.cAmbient * globals.ka;
                     //cout << "rgb " << color.r << "," << color.g << "," << color.b << "\n";
                     SceneLightData light;
@@ -189,7 +189,7 @@ void callback_start(int id) {
                         //cout<<"reflectiveRay "<<reflectiveRay[0]<<" "<<reflectiveRay[1]<<" "<<reflectiveRay[2]<<"\n";
                         dotProd = dot(reflectiveRay,rayV);
                         //cout<<"dot reflectiveRay,rayV "<<dotProd<<"\n";
-                        //contrib = (light.color * pow(dotProd,specularF));
+                        contrib = (light.color * pow(dotProd,specularF));
                         //cout <<"specular contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
                         if(dotProd > 0.0)color = color + contrib;
                     }
