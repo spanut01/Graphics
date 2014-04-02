@@ -120,17 +120,21 @@ void callback_start(int id) {
         for (int j = 0; j < pixelHeight; j++) {
             setPixel(pixels, i, j, 0, 0, 0);
             
-            pointV = Point(-1.0+2.0*((double)i/(double)pixelWidth),-1.0+2.0*((double)j/(double)pixelHeight),-1.0);
+            pointV = Point(-1.0+2.0*i/ (double)pixelWidth,
+                           -1.0+2.0*j/ (double)pixelHeight,-1.0);
+            //cout<<"camspace "<<pointV[0]<<" "<<pointV[1]<<" "<<pointV[2]<<"\n";
             pointV = filmToWorld * pointV;
             //filmToWorld.print();
+            //cout<<"worldspace "<<pointV[0]<<" "<<pointV[1]<<" "<<pointV[2]<<"\n";
             rayV = pointV - camera->GetEyePoint();
             rayV.normalize();
-            //cout << "rayVector (" << rayV[0] << "," << rayV[1] << "," << rayV[2] << ")\n";
+            //cout << "rayV (" << rayV[0] << "," << rayV[1] << "," << rayV[2] << ")\n";
             t = 1000000;
             current = parser->headNode;
             while(current != NULL){
                 if(current->primitive != NULL){
                     setShape(current->primitive->type);
+                    //current->invMat.print();
                     tempT = shape->Intersect(eyeP, rayV, current->invMat);
             
                     if((tempT >= 0.0) && (tempT < t)) {

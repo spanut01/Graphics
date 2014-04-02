@@ -11,24 +11,24 @@ double Sphere::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
     //cout<<"worldToObj\n";
     //worldToObj.print();
     a = d[0]*d[0] + d[1]*d[1] + d[2]*d[2];
-    b = 2.0 * (p[0]*d[0] + p[1]*d[1] + p[2]*d[2]);
+    b = 2 * (p[0]*d[0] + p[1]*d[1] + p[2]*d[2]);
     c = (p[0]*p[0] + p[1]*p[1] + p[2]*p[2]) - 0.25;
-    det = b*b - 4.0*a*c;
+    det = (b*b) - (4*a*c);
     //cout<<"a "<<a<<" b "<<b<<" c "<<c<<" det "<<det<<"\n";
     //cout<<"eyepoint "<<p[0]<<" "<<p[1]<<" "<<p[2]<<"\n";
-    //cout<<"ray "<<d[0]<<" "<<d[1]<<" "<<d[2]<<"\n\n";
+    //cout<<"ray "<<d[0]<<" "<<d[1]<<" "<<d[2]<<"\n";
     //TODO ACTUALLY SOLVE FOR t
-    if (det < 0.0) {
+    if (det < -0.000001) {
         return -1;
     }
     t1 = (-b + sqrt(det)) / (2 * a);
     t2 = (-b - sqrt(det)) / (2 * a);
     //cout << "t1 = " << t1 << "  t2 = " << t2 << "\n\n";
-    if((t1 > 0.0) && ((t1 < t2) || (t2 <= 0.0))){
+    if((t1 > -0.000001) && ((t1 < t2) || (t2 <= -0.000001))){
         //cout << "t1 = " << t1 << "\n\n";
         return t1;
     }
-    if((t2 > 0.0) && ((t2 < t1) || (t1 <= 0.0))){
+    if((t2 > -0.000001) && ((t2 < t1) || (t1 <= -0.000001))){
         //cout << "t2 = " << t2 << "\n\n";
         return t2;
     }

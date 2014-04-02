@@ -7,8 +7,8 @@ double Cube::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
     Vector d = worldToObj * rayV;
 //    cout << " rayV : " << rayV[0] << ", " << rayV[1] << ", " << rayV[2] << "\n" ;
 //    cout << " eyeP : " << eyeP[0] << ", " <<  eyeP[1] << ", " << eyeP[2] << "\n" ;
-//    cout << " d : " << d[0] << ", " <<  d[1] << ", " << d[2] << "\n" ;
-//    cout << " p : " << p[0] << ", " <<  p[1] << ", " << p[2] << "\n" ;
+    cout << " d : " << d[0] << ", " <<  d[1] << ", " << d[2] << "\n" ;
+    cout << " p : " << p[0] << ", " <<  p[1] << ", " << p[2] << "\n\n" ;
     double t = 1000000; 
     double tempT, temp1, temp2;
     int side; 
@@ -43,7 +43,20 @@ double Cube::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
     return t;
 }
 Vector Cube::findIsectNormal(Point eyePoint, Vector ray, double dist){
-    return ray; 
+    Point hit = eyePoint + (ray * dist);
+    //cout<<"Cube Hit "<<hit[0]<<" "<<hit[1]<<" "<<hit[2]<<"\n";
+
+    double fudgeFactor = 0.000000001;
+    Vector ret = Vector(0.0, 0.0, 0.0);
+    if(fabs(hit[0] + 0.5) < fudgeFactor)ret[0] = -1;
+    if(fabs(hit[0] - 0.5) < fudgeFactor)ret[0] = 1;
+    if(fabs(hit[1] + 0.5) < fudgeFactor)ret[1] = -1;
+    if(fabs(hit[1] - 0.5) < fudgeFactor)ret[1] = 1;
+    if(fabs(hit[2] + 0.5) < fudgeFactor)ret[2] = -1;
+    if(fabs(hit[2] - 0.5) < fudgeFactor)ret[2] = 1;
+    
+    //cout<<"Cube Normal "<<ret[0]<<" "<<ret[1]<<" "<<ret[2]<<"\n\n";
+    return ret;
 }
 
 void Cube::drawTriangles(){

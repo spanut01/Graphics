@@ -128,8 +128,8 @@ Matrix Camera::GetModelViewMatrix() {
     basisRotation[2] = w[0];
     basisRotation[6] = w[1];
     basisRotation[10] = w[2];
-    //printf("basisRotation\n");
-    //basisRotation.print();
+    printf("basisRotation\n");
+    basisRotation.print();
     
     Vector eyeTranslateV (-eyePoint[0], -eyePoint[1], -eyePoint[2]);
     Matrix eyeTranslate = trans_mat(eyeTranslateV);

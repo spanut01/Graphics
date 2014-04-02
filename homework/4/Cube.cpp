@@ -7,8 +7,8 @@ double Cube::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
     Vector d = worldToObj * rayV;
 //    cout << " rayV : " << rayV[0] << ", " << rayV[1] << ", " << rayV[2] << "\n" ;
 //    cout << " eyeP : " << eyeP[0] << ", " <<  eyeP[1] << ", " << eyeP[2] << "\n" ;
-//    cout << " d : " << d[0] << ", " <<  d[1] << ", " << d[2] << "\n" ;
-//    cout << " p : " << p[0] << ", " <<  p[1] << ", " << p[2] << "\n" ;
+    //cout << " d : " << d[0] << ", " <<  d[1] << ", " << d[2] << "\n" ;
+    //cout << " p : " << p[0] << ", " <<  p[1] << ", " << p[2] << "\n\n" ;
     double t = 1000000; 
     double tempT, temp1, temp2;
     int side; 

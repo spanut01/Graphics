@@ -159,10 +159,10 @@ double Camera::GetScreenWidthRatio() {
 
 void Camera::computeCamera2WorldMatrix() {
         //cout << "eye: " << m_invModelView(0, 3) << m_invModelView(1, 3) << m_invModelView(2, 3) << " \n";
-	//(GetScaleMatrix()).print();
-	//m_modelView.print();
+	(GetScaleMatrix()).print();
+	m_modelView.print();
 	m_cam2World = invert(GetScaleMatrix() * m_modelView);
-	//m_cam2World.print();
+	m_cam2World.print();
 }
 
 Matrix Camera::getCamera2WorldMatrix() {
