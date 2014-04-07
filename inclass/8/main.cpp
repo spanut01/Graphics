@@ -16,7 +16,7 @@
 #include <GL/glui.h>
 #include <math.h>
 #include "object.h"
-
+using namespace std;
 /** These are the live variables passed into GLUI ***/
 int main_window;
 
@@ -130,13 +130,8 @@ void updateMouse(int x, int y){
     nearVec = ConvertMouseToOGLCoordinate(x, y, 0);
     farVec = ConvertMouseToOGLCoordinate(x, y, 1);
 
-    //std::cout << "Screen (" << x << "," << y << ") to Object (" << mouseX << "," << mouseY << ")" << std::endl;
-
     // Figure out the direction of the Ray
     Vector RayDirection = farVec - nearVec;
-
-    //std::cout << "nearVec (" << nearVec[0] << "," << nearVec[1] << "," << nearVec[2] << ")" << std::endl;
-    //std::cout << "farVec (" << farVec[0] << "," << farVec[1] << "," << farVec[2] << ")" << std::endl;
 }
 
 
@@ -161,57 +156,6 @@ void myGlutMotion(int x, int y )
 
 
 
-
-/*	===========================================
-	Calls the intersect function and attempts to see if it collides
-	with our object
-	=========================================== */
-// bool drawRayFunc(int x, int y){
-// 		bool result = false;
-// 		if(drawRay==true){
-
-
-// 				// Retrive OpenGL Maintained viewports, modelview, and projection matrix
-// 			    GLint viewport[4];					glGetIntegerv(GL_VIEWPORT, viewport);
-// 			    GLdouble transformMatrix[16];   	glGetDoublev(GL_MODELVIEW_MATRIX, transformMatrix);
-// 			    GLdouble projectionMatrix[16];  	glGetDoublev(GL_PROJECTION_MATRIX, projectionMatrix);
-
-// 			    // We have to modify the transformMatrix so that it takes into account our objects
-// 			    // position
-// 			    //
-// 			    transformMatrix[0]+myObject->tx+simpleCamera[0]; 	transformMatrix[1]; 								transformMatrix[2]; 				transformMatrix[3];
-// 			    transformMatrix[4]; 			 					transformMatrix[5] + myObject->ty+simpleCamera[1]; 	transformMatrix[6]; 				transformMatrix[7];
-// 			    transformMatrix[8]; 								transformMatrix[9]; 								transformMatrix[10] + myObject->tz+simpleCamera[2]; transformMatrix[11];
-// 			    transformMatrix[12]; 								transformMatrix[13]; 								transformMatrix[14]; 				transformMatrix[15];
-
-// 		    	// The Eye point
-// 				Point eyePointP(simpleCamera[0],simpleCamera[1],simpleCamera[2]);
-// 				// Cast a ray
-// 				//std::cout << "mouseX: " << mouseX << " mouseY: " << mouseY << std::endl;
-// 				//std::cout << "farVec[0]" << farVec[0] << " farVec[1]" << farVec[1] << std::endl;
-// 				Vector rayV(farVec[0],farVec[1],30);
-
-// 				float z_intersection = Intersect(eyePointP, rayV, transformMatrix);
-// 				//std::cout << "test intersect:" << z_intersection << std::endl;
-
-// 				if((farVec[0]*farVec[0] + farVec[1]*farVec[1] + z_intersection*z_intersection)-1 <= myObject->radius){
-// 					std::cout << "intersection occurred!" << std::endl;
-// 					glPushMatrix();
-// 						glTranslatef(farVec[0],farVec[1],z_intersection+1);
-// 						glColor3f(1,0,0);
-// 						glutSolidSphere(0.125,10,10);
-// 					glPopMatrix();
-// 					result = true;
-// 				}
-// 				else
-// 				{
-// 					//std::cout << "No intersection occurred!" << std::endl;
-// 				}
-				
-// 		}
-// 		return result;
-// }
-
 /***************************************** myGlutMouse() ***********/
 /*	This function is called everytime the mouse is clicked
 
@@ -221,103 +165,13 @@ void myGlutMotion(int x, int y )
 void myGlutMouse(int button, int button_state, int x, int y )
 {
 	updateMouse(x,y);
-
-	// Cast a ray to the screen
-    // Setup a flag so we can see the actual ray that is being cast.
-    // if(button_state == GLUT_UP && button==GLUT_LEFT_BUTTON){
-    //     drawRay = false;
-    // }
-    // if((button_state == GLUT_DOWN && button==GLUT_LEFT_BUTTON) && drawRay==false){
-    //     drawRay = true;
-    // }
-
-}    
+}
 
 
-/*	=============================================
-		You implement this!
-
-		What it is returning is the depth at where we have intersected.
-
-	============================================= */
-// double Intersect(Point eyePointP, Vector rayV, Matrix transformMatrix) {
-// 	/*
-// 			Within this function we modify
-
-// 			myObject->tx
-// 			myObject->ty
-// 			myObject->tz
-
-// 			based on which handle we moved, and where we move the mouse
-// 	*/
-
-// 	Matrix inverseTransform = invert(transformMatrix);
-// 	Point eyePoint = inverseTransform * eyePointP;
-// 	Vector ray = inverseTransform * rayV;
-// 	// Radius of our object we are intersecting
-// 	float RADIUS = myObject->radius;
-	
-// 	double t = 30;	// Minimum intersection distance
-// 					// We set this to some large distance
-
-// 	// Here we are computing pythagoreans theorem
-// 	// We want to see if from the center of the object we 
-// 	// are within the radius of the object. 
-// 	double a = ray[0] * ray[0] + ray[1] * ray[1] + ray[2] * ray[2];
-// 	double b = 2 * (ray[0] * eyePoint[0] + ray[1] * eyePoint[1] + ray[2] * eyePoint[2]);
-// 	double c = eyePoint[0] * eyePoint[0] + eyePoint[1] * eyePoint[1] + eyePoint[2] * eyePoint[2] - RADIUS * RADIUS;
-
-// 	// If we receive -1, then there is no intersection
-// 	double det = b*b - 4 * a*c;
-// 	if (det < 0) {
-// 		return -1;
-// 	}
-
-// 	// Compute t1 and t2
-// 	// It is possible we have multiple intersections, so we will want the less
-// 	// of these two, because that indicates where we intersected with first.
-// 	double t1 = (-b - sqrt(det)) / (2 * a);
-// 	double t2 = (-b + sqrt(det)) / (2 * a);
-
-// 	if ((t1 > 0) && (t2 > 0))
-// 		 t1 < t2 ? (t = t1) : (t = t2); // ugly
-// 		/*if(t1 < t2){
-// 			t = t1;
-// 		}else{
-// 			t = t2;
-// 		}*/
-// 	else if (t1 < 0)
-// 		t = t2;
-// 	else if (t2 < 0){
-// 		t = t1;
-// 	}
-// 	else{
-// 		// No intersection was found
-// 		return -1;
-// 	}
-
-// 	//std::cout << "t1: " << t1 << " t2: " << t2 << std::endl; 
-// 	//return the distance of our intersection
-// 	return t;
-// }
 
 
 
 /* =======================================================^ Mouse and Ray Casting Blocks of Code(above) ^=============================== */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 	Transformations to perform the animation of the object
@@ -445,7 +299,20 @@ void objectSelection(){
 
 	// Read this:
 	// https://www.opengl.org/sdk/docs/man2/xhtml/glReadPixels.xml
-	glReadPixels(mouseX,viewport[3]-mouseY,1,1,GL_RGB,GL_UNSIGNED_BYTE,(void *)pixel);
+	glReadPixels(mouseX, viewport[3]-mouseY, 1, 1, GL_RGB,GL_UNSIGNED_BYTE, (void *)pixel);
+    cout << "pixel " << (int) pixel[0] << ", " << (int) pixel[1] << ", " << (int) pixel[2] << "\n";
+    cout << obj_pos[0] << ", " << obj_pos[1] << ", " << obj_pos[2] << "\n";
+    int r, g, b; 
+    
+    if ((pixel[0] == 255) && (pixel[1] != 255) && (pixel[2] != 255)){
+        
+    }
+    if ((pixel[0] != 255) && (pixel[1] == 255) && (pixel[2] != 255)){
+        
+    }
+    if ((pixel[0] != 255) && (pixel[1] != 255) && (pixel[2] == 255)){
+        
+    }
 
 	/*
 
@@ -477,38 +344,6 @@ void myGlutDisplay(void)
 	// Translate our camera
 	glTranslatef( simpleCamera[0], simpleCamera[1], simpleCamera[2] );
 
-
-	    		/*
-
-				// A little routine to debug where we are casting a ray
-				glDisable(GL_LIGHTING);
-
-				    // Draw far vector object
-				    glColor3f(1,0,0);
-				    glPushMatrix();
-				    	glTranslatef(farVec[0],farVec[1],farVec[2]);
-				    	glutSolidCube(1);
-				    glPopMatrix();
-					
-
-					glBegin(GL_LINES);
-				    	glVertex3f(farVec[0],farVec[1],farVec[2]);
-				    	glVertex3f(farVec[0]+.0000001,farVec[1],30);
-				    glEnd();
-				
-			    glEnable(GL_LIGHTING);
-
-			    */
-
-
- //    if(drawRay==true){
-	// 	// Draw a bounding box around the sphere to help debug your intersection
-	// 	glColor3f(1,0,0);
-	// 	glPushMatrix();
-	// 		glTranslatef(myObject->tx,myObject->ty,myObject->tz);
-	// 		glutWireCube((myObject->radius)*2);
-	// 	glPopMatrix();
-	// }
 
 
 	// Stop playing the animation if we have exceeded the amount of memory

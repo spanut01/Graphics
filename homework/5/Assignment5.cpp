@@ -175,6 +175,7 @@ SceneColor getColorFromRay(Point eyeP, Vector rayV, int depth){
             	//reflective ray
             	float dotProd = dot(rayV,iNorm);
             	reflectiveRay = rayV - (2 * dotProd * iNorm);
+            	hitPoint = hitPoint + iNorm * 0.00001;
             	SceneColor reflectiveColor = getColorFromRay(hitPoint, reflectiveRay, depth-1);
             	//cout <<"reflective color: "<<reflectiveColor.r<<" "<<reflectiveColor.g<<" "<<reflectiveColor.b<<"\n";
             	color = color + reflectiveColor;
