@@ -153,6 +153,17 @@ public:
 		}
 	};
 
+	float normalizeAndReturnDist() {
+		double l = sqrt((p[0] * p[0]) + (p[1] * p[1]) + (p[2] * p[2]));
+		if (l != 0) {
+			p[0] = p[0] / l;
+			p[1] = p[1] / l;
+			p[2] = p[2] / l;
+			p[3] = 0;
+		}
+		return l;
+	};
+
 	void negate() {
 		p[0] = -p[0];
 		p[1] = -p[1];

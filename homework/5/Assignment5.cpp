@@ -21,6 +21,7 @@ int	 camRotU = 0;
 int	 camRotV = 0;
 int	 camRotW = 0;
 int  viewAngle = 45;
+int  recursion = 0;
 float eyeX = 2;
 float eyeY = 2;
 float eyeZ = 2;
@@ -98,11 +99,7 @@ SceneColor getColorFromRay(Point eyeP, Vector rayV, int depth){
         current = current->next;
     }
     if(t != 1000000){
-        //if (isectOnly){
-        //    setPixel(pixels, i, j, 255, 255, 255);
-        //}
-        //else{
-    	SceneGlobalData globals;
+        SceneGlobalData globals;
     	parser->getGlobalData(globals);
             setShape(closest->primitive->type);
             Point objEye = closest->invMat * eyeP;
@@ -112,16 +109,14 @@ SceneColor getColorFromRay(Point eyeP, Vector rayV, int depth){
             //cout<<"using normal "<<objNorm[0]<<" "<<objNorm[1]<<" "<<objNorm[2]<<"\n";
             Vector iNorm = transpose(closest->invMat) * objNorm;
             iNorm.normalize();
-
             //cout<<"using normal "<<iNorm[0]<<" "<<iNorm[1]<<" "<<iNorm[2]<<"\n";
             //cout<<"using ray "<<rayV[0]<<" "<<rayV[1]<<" "<<rayV[2]<<"\n\n";
-
             //ambient belongs here according to presentation
-            //color = color + (closest->primitive->material.cAmbient * globals.ka);
-            //SceneColor ambConst = closest->primitive->material.cAmbient * globals.ka;
+            color = color + (closest->primitive->material.cAmbient * globals.ka);
             //cout << "rgb " << color.r << "," << color.g << "," << color.b << "\n";
             SceneLightData light;
             Vector lightDir;
+            float lightDist;
             Vector reflectiveRay;
             SceneColor diffConst = closest->primitive->material.cDiffuse * globals.kd;
             //cout<<"material diffuse "<<closest->primitive->material.cDiffuse.r<<" "<<closest->primitive->material.cDiffuse.g<<" "<<closest->primitive->material.cDiffuse.b<<"\n";
@@ -129,39 +124,62 @@ SceneColor getColorFromRay(Point eyeP, Vector rayV, int depth){
             //cout<<"material specular "<<closest->primitive->material.cSpecular.r<<" "<<closest->primitive->material.cSpecular.g<<" "<<closest->primitive->material.cSpecular.b<<"\n";
             float specularF = closest->primitive->material.shininess;
             //cout << "rgb " << constant.r << "," << constant.g << "," << constant.b << "\n";
+            Point hitPoint = eyeP + (rayV * t);
             for(int k = 0; k < parser->getNumLights(); k++){
                 parser->getLightData(k, light);
-                if(light.type == LIGHT_DIRECTIONAL)lightDir = light.dir;
+                if(light.type == LIGHT_DIRECTIONAL){
+                	lightDir = light.dir;
+                	lightDist = 1e9;
+                }
                 else if(light.type == LIGHT_POINT){
-                    lightDir = light.pos - (eyeP + (rayV * t));
-                    lightDir.normalize();
-                } else cout << "bad light type\n";
-                //ambient is not per light
-                //color = color + (ambConst * light.color);
-                //diffuse component
-                Point hitPoint = eyeP + (rayV * t);
-                //cout<<"hitPoint "<<hitPoint[0]<<" "<<hitPoint[1]<<" "<<hitPoint[2]<<"\n";
-                float dotProd = dot(lightDir,iNorm);
-                //cout<<"dot lightDir,iNorm "<<dotProd<<"\n";
-                //cout<<"diffConst "<<diffConst.r<<" "<<diffConst.g<<" "<<diffConst.b<<"\n";
-                if(dotProd < 0.0f)dotProd = 0.0f;
-				SceneColor contrib = (diffConst * dotProd) * light.color;
-                //cout <<"diffuse contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
-                color = color + contrib;
-                //specular
-                //reflectiveRay = lightDir + (2 * dot(lightDir,iNorm) * iNorm);
-                reflectiveRay = (2 * dotProd * iNorm) - lightDir;
-				//cout<<"reflectiveRay "<<reflectiveRay[0]<<" "<<reflectiveRay[1]<<" "<<reflectiveRay[2]<<"\n";
-                dotProd = dot(reflectiveRay,rayV);
-                //cout<<"dot reflectiveRay,rayV "<<dotProd<<"\n";
-                if(dotProd < 0.0f)dotProd = 0.0f;
-				contrib = specConst * (light.color * pow(dotProd,specularF));
-                //cout <<"specular contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
-                color = color + contrib;
+                    lightDir = light.pos - hitPoint;
+                    lightDist = lightDir.normalizeAndReturnDist();
+                } else cout << "bad light type "<< light.type <<"\n";
+                //see if this light hits
+                current = parser->headNode;
+                int blocked = 0;
+                while(current != NULL && !blocked){
+			        if(current->primitive != NULL){
+			            setShape(current->primitive->type);
+			            //current->invMat.print();
+			            tempT = shape->Intersect(hitPoint, lightDir, current->invMat);
+			            //cout<<tempT<<"\n";
+			            //this fudge factor may actually be too large
+			    		if(tempT > 0.00001 && tempT < lightDist)blocked = 1;
+			        }
+			        current = current->next;
+			    }
+			    if(!blocked){
+	                //diffuse component
+	                //cout<<"hitPoint "<<hitPoint[0]<<" "<<hitPoint[1]<<" "<<hitPoint[2]<<"\n";
+	                float dotProd = dot(lightDir,iNorm);
+	                //cout<<"dot lightDir,iNorm "<<dotProd<<"\n";
+	                //cout<<"diffConst "<<diffConst.r<<" "<<diffConst.g<<" "<<diffConst.b<<"\n";
+	                if(dotProd < 0.0f)dotProd = 0.0f;
+					SceneColor contrib = (diffConst * dotProd) * light.color;
+	                //cout <<"diffuse contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
+	                color = color + contrib;
+	                //specular
+	                reflectiveRay = (2 * dotProd * iNorm) - lightDir;
+					//cout<<"reflectiveRay "<<reflectiveRay[0]<<" "<<reflectiveRay[1]<<" "<<reflectiveRay[2]<<"\n";
+	                dotProd = dot(reflectiveRay,rayV);
+	                //cout<<"dot reflectiveRay,rayV "<<dotProd<<"\n";
+	                if(dotProd < 0.0f)dotProd = 0.0f;
+					contrib = specConst * (light.color * pow(dotProd,specularF));
+	                //cout <<"specular contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
+	                color = color + contrib;
+            	}
+            }
+            SceneColor reflectiveConst = closest->primitive->material.cReflective * globals.ks;
+            if(depth){
+            	//reflective ray
+            	float dotProd = dot(rayV,iNorm);
+            	reflectiveRay = rayV - (2 * dotProd * iNorm);
+            	SceneColor reflectiveColor = getColorFromRay(hitPoint, reflectiveRay, depth-1);
+            	//cout <<"reflective color: "<<reflectiveColor.r<<" "<<reflectiveColor.g<<" "<<reflectiveColor.b<<"\n";
+            	color = color + reflectiveColor;
             }
             //cout << "rgb " << color.r << "," << color.g << "," << color.b << "\n\n";
-            
-        //}
     }
     return color;
 }
@@ -213,7 +231,7 @@ void callback_start(int id) {
             //cout<<"worldspace "<<pointV[0]<<" "<<pointV[1]<<" "<<pointV[2]<<"\n";
             rayV = pointV - camera->GetEyePoint();
             
-            SceneColor color = getColorFromRay(eyeP, rayV, 0);
+            SceneColor color = getColorFromRay(eyeP, rayV, recursion);
             color = color * 255.0;
             if(color.r > 255)color.r = 255;
             if(color.g > 255)color.g = 255;
@@ -384,10 +402,12 @@ int main(int argc, char* argv[])
 
 	filenameTextField = new GLUI_EditText( glui, "Filename:", filenamePath);
 	filenameTextField->set_w(300);
+	GLUI_Spinner* recursionSpinner = glui->add_spinner("Recursion:",GLUI_SPINNER_INT,(void*)&recursion); 
+	recursionSpinner->set_int_limits(0,5);
 	glui->add_button("Load", 0, callback_load);
 	glui->add_button("Start!", 0, callback_start);
-	glui->add_checkbox("Isect Only", &isectOnly);
-	
+	//glui->add_checkbox("Isect Only", &isectOnly);
+
 	GLUI_Panel *camera_panel = glui->add_panel("Camera");
 	(new GLUI_Spinner(camera_panel, "RotateV:", &camRotV))
 		->set_int_limits(-179, 179);

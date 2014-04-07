@@ -47,6 +47,7 @@ Vector Cube::findIsectNormal(Point eyePoint, Vector ray, double dist){
     //cout<<"Cube Hit "<<hit[0]<<" "<<hit[1]<<" "<<hit[2]<<"\n";
 
     double fudgeFactor = 0.000001;
+    /*
     Vector ret = Vector(0.0, 0.0, 0.0);
     if(fabs(hit[0] + 0.5) < fudgeFactor)ret[0] = -1;
     if(fabs(hit[0] - 0.5) < fudgeFactor)ret[0] = 1;
@@ -54,9 +55,17 @@ Vector Cube::findIsectNormal(Point eyePoint, Vector ray, double dist){
     if(fabs(hit[1] - 0.5) < fudgeFactor)ret[1] = 1;
     if(fabs(hit[2] + 0.5) < fudgeFactor)ret[2] = -1;
     if(fabs(hit[2] - 0.5) < fudgeFactor)ret[2] = 1;
+    */
+    if(fabs(hit[0] + 0.5) < fudgeFactor)return Vector(-1.0, 0.0, 0.0);
+    if(fabs(hit[0] - 0.5) < fudgeFactor)return Vector(1.0, 0.0, 0.0);
+    if(fabs(hit[1] + 0.5) < fudgeFactor)return Vector(0.0, -1.0, 0.0);
+    if(fabs(hit[1] - 0.5) < fudgeFactor)return Vector(0.0, 1.0, 0.0);
+    if(fabs(hit[2] + 0.5) < fudgeFactor)return Vector(0.0, 0.0, -1.0);
+    if(fabs(hit[2] - 0.5) < fudgeFactor)return Vector(0.0, 0.0, 1.0);
     
     //cout<<"Cube Normal "<<ret[0]<<" "<<ret[1]<<" "<<ret[2]<<"\n\n";
-    return ret;
+    //return ret;
+    return Vector(0.0, 0.0, 0.0);
 }
 
 void Cube::drawTriangles(){
