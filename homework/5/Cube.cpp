@@ -17,7 +17,7 @@ double Cube::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
         temp1 = p[(i + 1) % 3] + tempT * d[(i + 1) % 3];
         temp2 = p[(i + 2) % 3] + tempT * d[(i + 2) % 3];
         
-        if ((tempT > 0.0) && (temp1 > -0.5) && (temp1 < 0.5) && (temp2 > -0.5) && (temp2 < 0.5))  {
+        if ((tempT > 0.0) && (temp1 > -0.50001) && (temp1 < 0.50001) && (temp2 > -0.50001) && (temp2 < 0.50001))  {
             if (tempT < t){
                 t = tempT;
                 side = i;
@@ -29,7 +29,7 @@ double Cube::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
         temp1 = p[(i + 1) % 3] + tempT * d[(i + 1) % 3];
         temp2 = p[(i + 2) % 3] + tempT * d[(i + 2) % 3];
         
-        if ((tempT > 0.0) && (temp1 > -0.5) && (temp1 < 0.5) && (temp2 > -0.5) && (temp2 < 0.5))  {
+        if ((tempT > 0.0) && (temp1 > -0.50001) && (temp1 < 0.50001) && (temp2 > -0.50001) && (temp2 < 0.50001))  {
             if (tempT < t){
                 t = tempT;
                 side = i + 3;

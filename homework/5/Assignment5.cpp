@@ -393,7 +393,7 @@ int main(int argc, char* argv[])
 	glutInitWindowPosition(50, 50);
 	glutInitWindowSize(500, 500);
 
-	main_window = glutCreateWindow("COMP 175 Assignment 4");
+	main_window = glutCreateWindow("COMP 175 Assignment 5");
 	glutDisplayFunc(myGlutDisplay);
 	glutReshapeFunc(myGlutReshape);
 
