@@ -325,6 +325,7 @@ bool parseFloat(const TiXmlElement* value, float& f)
 
 bool parseMap(const TiXmlElement* e, SceneFileMap* map)
 {
+   map->data = 0;//added PJN
    const TiXmlAttribute* attr = e->FirstAttribute();
    if (!attr)
       return false;

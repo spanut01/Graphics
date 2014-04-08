@@ -145,7 +145,7 @@ public:
    string filename;
    float repeatU;
    float repeatV;
-   ppm* data;//added PJN
+   ppm* data;
 };
 
 //! Data for scene materials

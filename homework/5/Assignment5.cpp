@@ -11,6 +11,7 @@
 #include "Sphere.h"
 #include "SceneParser.h"
 #include "Camera.h"
+#include "ppm.h"
 
 using namespace std;
 
