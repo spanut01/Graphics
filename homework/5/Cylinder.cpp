@@ -74,7 +74,7 @@ double Cylinder::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
 Vector Cylinder::findIsectNormal(Point eyePoint, Vector ray, double dist){
     Point hit = eyePoint + (ray * dist);
     //caps
-    float fudgeFactor = 0.00000005;
+    float fudgeFactor = 0.000005;
     if(fabs(hit[1] + 0.5) < fudgeFactor)return Vector(0.0, -1.0, 0.0);
     if(fabs(hit[1] - 0.5) < fudgeFactor)return Vector(0.0, 1.0, 0.0);
     //tube
