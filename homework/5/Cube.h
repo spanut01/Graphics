@@ -4,7 +4,9 @@
 #include "Shape.h"
 
 class Cube : public Shape {
+
 public:
+
 	Cube() {};
 	~Cube() {};
 
@@ -27,8 +29,10 @@ public:
 
     double Intersect(Point eyePointP, Vector rayV, Matrix transformMatrix);
     Vector findIsectNormal(Point eyePoint, Vector ray, double dist);
+    Point iPointToSquare(Point i, Vector ray, double dist); 
 
 private:
+
     void drawTriangles();
     void drawNormals();
 };

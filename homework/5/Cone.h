@@ -29,6 +29,7 @@ public:
     //there's got to be a better way to make this work
     double Intersect(Point eyePointP, Vector rayV, Matrix transformMatrix);
     Vector findIsectNormal(Point eyePoint, Vector ray, double dist);
+    Point iPointToSquare(Point i, Vector ray, double dist); 
 
 private:
     void drawTriangles();

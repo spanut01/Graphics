@@ -27,6 +27,8 @@ public:
     //TODO
 	virtual Vector findIsectNormal(Point eyePoint, Vector ray, double dist) = 0;
 
+    virtual Point iPointToSquare(Point i, Vector ray, double dist) = 0;
+
 protected:
 	void normalizeNormal (float x, float y, float z) {
         Vector vec(x,y,x);
@@ -37,8 +39,8 @@ protected:
 		v.normalize();
 		glNormal3dv(v.unpack());
 	};
-
-
+    
+    
 	int m_segmentsX, m_segmentsY;
 };
 

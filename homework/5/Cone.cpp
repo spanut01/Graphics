@@ -49,6 +49,28 @@ Vector Cone::findIsectNormal(Point eyePoint, Vector ray, double dist){
     return ret; 
 }
 
+Point Cone::iPointToSquare(Point i, Vector ray, double dist){
+    
+    Point hit = i + (ray * dist);
+    
+    //cap
+    float fudgeFactor = 0.00000005;
+    if(hit[1] + 0.5 < fudgeFactor);
+        return Point(hit[0] + 0.5, hit[2] + 0.5, 0.0);
+    
+    //body
+
+    Point coords;
+
+    coords[0] = atan(hit[2] / hit[0]) / PI + 0.5;
+    coords[1] = hit[1] + 0.5;
+    coords[2] = 0.0;
+
+    return coords;
+
+    
+}
+
 void Cone::drawTriangles(){
     int i,j;
     float x,y;

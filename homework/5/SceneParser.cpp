@@ -5,7 +5,7 @@
 #include "SceneParser.h"
 #include "SceneData.h"
 #include "Algebra.h"
-
+#include "ppm.h"
 #include <string>
 
 /*XML Parsing Headers */
@@ -331,7 +331,9 @@ bool parseMap(const TiXmlElement* e, SceneFileMap* map)
       return false;
 
    map->filename = attr->ValueStr();
-
+   
+   map->data = new ppm(map->filename); 
+    
    attr = attr->Next();
    if (attr)
    {

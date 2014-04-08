@@ -83,6 +83,25 @@ Vector Cylinder::findIsectNormal(Point eyePoint, Vector ray, double dist){
     return ret; 
 }
 
+Point Cylinder::iPointToSquare(Point i, Vector ray, double dist){
+    
+    Point hit = i + (ray * dist);
+    float fudgeFactor = 0.000005;
+
+    if(fabs(hit[1] + 0.5) < fudgeFactor) 
+        return Point(hit[0] + 0.5, hit[2] + 0.5, 0.0);
+    if(fabs(hit[1] - 0.5) < fudgeFactor)
+        return Point(hit[0] + 0.5, hit[2] + 0.5, 0.0);
+    
+    Point coords;
+
+    coords[0] = atan(hit[2] / hit[0]) / PI + 0.5;
+    coords[1] = hit[1] + 0.5;
+    coords[2] = 0.0;
+
+    return coords;
+}
+
 void Cylinder::drawTriangles(){
     int i,j;
     float x, y;

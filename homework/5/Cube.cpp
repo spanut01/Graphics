@@ -68,6 +68,21 @@ Vector Cube::findIsectNormal(Point eyePoint, Vector ray, double dist){
     return Vector(0.0, 0.0, 0.0);
 }
 
+Point Cube::iPointToSquare(Point i, Vector ray, double dist){
+    Point hit = i + (ray * dist);
+
+    double fudgeFactor = 0.000001;
+
+    if(fabs(hit[0] + 0.5) < fudgeFactor)return Point(hit[1] + 0.5, hit[2] + 0.5, 0.0);
+    if(fabs(hit[0] - 0.5) < fudgeFactor)return Point(hit[1] + 0.5, hit[2] + 0.5, 0.0);
+    if(fabs(hit[1] + 0.5) < fudgeFactor)return Point(hit[0] + 0.5, hit[2] + 0.5, 0.0);
+    if(fabs(hit[1] - 0.5) < fudgeFactor)return Point(hit[0] + 0.5, hit[2] + 0.5, 0.0);
+    if(fabs(hit[2] + 0.5) < fudgeFactor)return Point(hit[0] + 0.5, hit[1] + 0.5, 0.0);
+    if(fabs(hit[2] - 0.5) < fudgeFactor)return Point(hit[0] + 0.5, hit[1] + 0.5, 0.0);
+
+    return Point(0.0, 0.0, 0.0);
+}
+
 void Cube::drawTriangles(){
 
   int i, j;
