@@ -71,7 +71,7 @@ Vector Cube::findIsectNormal(Point eyePoint, Vector ray, double dist){
 Point Cube::iPointToSquare(Point i, Vector ray, double dist){
     Point hit = i + (ray * dist);
 
-    double fudgeFactor = 0.000001;
+    double fudgeFactor = 0.00001;
 
     if(fabs(hit[0] + 0.5) < fudgeFactor)return Point(hit[1] + 0.5, hit[2] + 0.5, 0.0);
     if(fabs(hit[0] - 0.5) < fudgeFactor)return Point(hit[1] + 0.5, hit[2] + 0.5, 0.0);

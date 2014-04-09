@@ -87,9 +87,9 @@ SceneColor getTextureColor(ScenePrimitive* prim, Point hitPoint){
 
 	char* data = map->data->getPixels();
 	SceneColor ret;
-	ret.r = ((float)(unsigned char)data[pix*3]) / 255.0f;
-	ret.g = ((float)(unsigned char)data[pix*3+1]) / 255.0f;
-	ret.b = ((float)(unsigned char)data[pix*3+2]) / 255.0f;
+	ret.r = ((float)((unsigned char)data[pix*3])) / 255.0f;
+	ret.g = ((float)((unsigned char)data[pix*3+1])) / 255.0f;
+	ret.b = ((float)((unsigned char)data[pix*3+2])) / 255.0f;
 	return ret;
 }
 
