@@ -32,7 +32,7 @@ float lookZ = -2;
 
 /** These are GLUI control panel objects ***/
 int  main_window;
-string filenamePath = "./data/tests/work.xml";
+string filenamePath = "./data/tests/all_objects.xml";
 GLUI_EditText* filenameTextField = NULL;
 GLubyte* pixels = NULL;
 int pixelWidth = 0, pixelHeight = 0;
@@ -76,6 +76,21 @@ void setShape(int shapeType){
 	default:
 		shape = sphere;
 	}
+}
+
+SceneColor getTextureColor(ScenePrimitive* prim, Point hitPoint){
+	SceneFileMap* map = prim->material.textureMap;
+	if(!map || !map->data->getWidth())return SceneColor();
+	int s = (int)(map->repeatU * hitPoint[0] * map->data->getWidth()) % map->data->getWidth();
+	int t = (int)(map->repeatV * hitPoint[1] * map->data->getHeight()) % map->data->getHeight();
+	int pix = t*map->data->getWidth() + s;
+
+	char* data = map->data->getPixels();
+	SceneColor ret;
+	ret.r = ((float)(unsigned char)data[pix*3]) / 255.0f;
+	ret.g = ((float)(unsigned char)data[pix*3+1]) / 255.0f;
+	ret.b = ((float)(unsigned char)data[pix*3+2]) / 255.0f;
+	return ret;
 }
 
 SceneColor getColorFromRay(Point eyeP, Vector rayV, int depth){
@@ -182,6 +197,12 @@ SceneColor getColorFromRay(Point eyeP, Vector rayV, int depth){
             	SceneColor reflectiveColor = reflectiveConst * getColorFromRay(hitPoint, reflectiveRay, depth-1);
             	//cout <<"reflective color: "<<reflectiveColor.r<<" "<<reflectiveColor.g<<" "<<reflectiveColor.b<<"\n";
             	color = color + reflectiveColor;
+            }
+            if(closest->primitive->material.blend > 1.0/255.0){
+            	float blend = closest->primitive->material.blend;
+            	setShape(closest->primitive->type);
+            	Point squarePoint = shape->iPointToSquare(objEye, objRay, t);
+            	color = color * (1.0-blend) + getTextureColor(closest->primitive, squarePoint) * blend;
             }
             //cout << "rgb " << color.r << "," << color.g << "," << color.b << "\n\n";
     }
@@ -407,7 +428,7 @@ int main(int argc, char* argv[])
 	filenameTextField = new GLUI_EditText( glui, "Filename:", filenamePath);
 	filenameTextField->set_w(300);
 	GLUI_Spinner* recursionSpinner = glui->add_spinner("Recursion:",GLUI_SPINNER_INT,(void*)&recursion); 
-	recursionSpinner->set_int_limits(0,5);
+	recursionSpinner->set_int_limits(0,11);
 	glui->add_button("Load", 0, callback_load);
 	glui->add_button("Start!", 0, callback_start);
 	//glui->add_checkbox("Isect Only", &isectOnly);

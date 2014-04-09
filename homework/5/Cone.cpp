@@ -1,4 +1,6 @@
 #include "Cone.h"
+//#include <iostream>
+//using namespace std;
 
 double Cone::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
     double a, b, c, det, t1, t2, y1, y2;
@@ -39,13 +41,15 @@ Vector Cone::findIsectNormal(Point eyePoint, Vector ray, double dist){
     Point hit = eyePoint + (ray * dist);
     //cap
     float fudgeFactor = 0.00000005;
-    if(hit[1] + 0.5 < fudgeFactor)return Vector(0.0, -1.0, 0.0);
+    if(fabs(hit[1] + 0.5) < fudgeFactor) return Vector(0.0, -1.0, 0.0);
     //body
     //unsure of this, "up" should be half? as much as "out"
     Vector ret(hit[0], 0.0, hit[2]);
     ret.normalize();
     ret[1] = 0.5;
     ret.normalize();
+    //cout << "Cone Normal: "<<ret[0]<<" "<<ret[1]<<" "<<ret[2]<<"\n";
+    //cout << "Out "<<sqrt(ret[0]*ret[0] + ret[2]*ret[2])<<"\n\n";
     return ret; 
 }
 
