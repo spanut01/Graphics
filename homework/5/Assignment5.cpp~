@@ -177,7 +177,7 @@ SceneColor getColorFromRay(Point eyeP, Vector rayV, int depth){
 	                //cout <<"diffuse contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
 	                color = color + contrib;
 	                //specular
-	                reflectiveRay = (2 * dotProd * iNorm) - lightDir;
+	                reflectiveRay = lightDir - (2 * dotProd * iNorm);
 					//cout<<"reflectiveRay "<<reflectiveRay[0]<<" "<<reflectiveRay[1]<<" "<<reflectiveRay[2]<<"\n";
 	                dotProd = dot(reflectiveRay,-rayV);
 	                //cout<<"dot reflectiveRay,rayV "<<dotProd<<"\n";
