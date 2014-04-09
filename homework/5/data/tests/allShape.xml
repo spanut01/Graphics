@@ -49,12 +49,13 @@
     <translate x="0" y="-5" z="-5"/>
     <scale x="5" y="5" z="5"/>
     <object type="primitive" name="cube" >
-      <diffuse r="0" g="0" b="1"/>
-      <ambient r="0" g=".5" b="1"/>
-      <reflective r="0" g="1" b="1"/>
-      <specular r="0" g="1" b="1"/>
+      <diffuse r="0.4" g=".5" b=".6"/>
+      <ambient r="0.7" g=".1" b=".1"/>
+      <reflective r="0.2" g="0.8" b="0"/>
+      <specular r="0.2" g=".8" b=".8"/>
     </object>
   </transblock>
+
   <transblock>
     <translate x="-1" y="-1.5" z="-6"/>
     <scale x="2" y="2" z="2"/>
@@ -65,6 +66,7 @@
       <specular r=".2" g=".1" b="0"/>
     </object>
   </transblock>
+  
   <transblock>
     <translate x="1" y="-1.5" z="-6"/>
     <scale x="2" y="2" z="2"/>
@@ -75,6 +77,7 @@
       <specular r=".2" g=".2" b="0"/>
     </object>
   </transblock>
+  
   <transblock>
     <translate x="1" y="-1" z="-4"/>
     <scale x="1" y="1" z="1"/>
@@ -85,8 +88,9 @@
       <specular r=".1" g=".2" b=".1"/>
     </object>
   </transblock>
+  
   <transblock>
-    <translate x="-1" y="-1" z="-4"/>
+    <translate x="-1" y="-1.5" z="-4"/>
     <scale x="1" y="1" z="1"/>
     <object type="primitive" name="cylinder" >
       <diffuse r=".2" g=".1" b=".1"/>
