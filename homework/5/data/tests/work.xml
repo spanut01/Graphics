@@ -1,8 +1,8 @@
 <scenefile>
     <globaldata>
-      <diffusecoeff v="0.0"/>
-      <specularcoeff v="1.0"/>
-      <ambientcoeff v="0.0"/>
+      <diffusecoeff v="0.5"/>
+      <specularcoeff v="0.5"/>
+      <ambientcoeff v="0.1"/>
     </globaldata>
 
     <cameradata>
