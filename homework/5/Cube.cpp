@@ -46,7 +46,7 @@ Vector Cube::findIsectNormal(Point eyePoint, Vector ray, double dist){
     Point hit = eyePoint + (ray * dist);
     //cout<<"Cube Hit "<<hit[0]<<" "<<hit[1]<<" "<<hit[2]<<"\n";
 
-    double fudgeFactor = 0.000001;
+    double fudgeFactor = 0.00001;
     /*
     Vector ret = Vector(0.0, 0.0, 0.0);
     if(fabs(hit[0] + 0.5) < fudgeFactor)ret[0] = -1;
@@ -63,7 +63,7 @@ Vector Cube::findIsectNormal(Point eyePoint, Vector ray, double dist){
     if(fabs(hit[2] + 0.5) < fudgeFactor)return Vector(0.0, 0.0, -1.0);
     if(fabs(hit[2] - 0.5) < fudgeFactor)return Vector(0.0, 0.0, 1.0);
     
-    //cout<<"Cube Normal "<<ret[0]<<" "<<ret[1]<<" "<<ret[2]<<"\n\n";
+    cout<<"Cube Normal ERROR\n";
     //return ret;
     return Vector(0.0, 0.0, 0.0);
 }
