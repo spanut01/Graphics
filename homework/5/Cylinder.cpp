@@ -95,8 +95,8 @@ Point Cylinder::iPointToSquare(Point i, Vector ray, double dist){
     
     Point coords;
 
-    coords[0] = atan(hit[2] / hit[0]) / PI + 0.5;
-    coords[1] = hit[1] + 0.5;
+    coords[0] = -atan2(hit[2], hit[0]) / (2*PI) + 0.5;
+    coords[1] = -hit[1] + 0.5;
     coords[2] = 0.0;
 
     return coords;

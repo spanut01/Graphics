@@ -1,6 +1,6 @@
 #include "Cone.h"
-//#include <iostream>
-//using namespace std;
+#include <iostream>
+using namespace std;
 
 double Cone::Intersect(Point eyeP, Vector rayV, Matrix worldToObj){
     double a, b, c, det, t1, t2, y1, y2;
@@ -59,17 +59,19 @@ Point Cone::iPointToSquare(Point i, Vector ray, double dist){
     
     //cap
     float fudgeFactor = 0.00000005;
-    if(hit[1] + 0.5 < fudgeFactor);
+    if(fabs(hit[1] + 0.5) < fudgeFactor)
         return Point(hit[0] + 0.5, hit[2] + 0.5, 0.0);
     
     //body
 
     Point coords;
 
-    coords[0] = atan(hit[2] / hit[0]) / PI + 0.5;
-    coords[1] = hit[1] + 0.5;
+    coords[0] = -atan2(hit[2], hit[0]) / (2*PI) + 0.5;
+    coords[1] = -hit[1] + 0.5;
     coords[2] = 0.0;
-
+    
+//    cout << "HIT: " << hit[0] << ", " << hit[1] << ", " <<  hit[2] << endl;
+//    cout << "coord: " << coords[0] << ", " << coords[1] << ", " << coords[2] << endl;    
     return coords;
 
     

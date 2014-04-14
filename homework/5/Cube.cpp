@@ -73,12 +73,12 @@ Point Cube::iPointToSquare(Point i, Vector ray, double dist){
 
     double fudgeFactor = 0.00001;
 
-    if(fabs(hit[0] + 0.5) < fudgeFactor)return Point(hit[1] + 0.5, hit[2] + 0.5, 0.0);
-    if(fabs(hit[0] - 0.5) < fudgeFactor)return Point(hit[1] + 0.5, hit[2] + 0.5, 0.0);
-    if(fabs(hit[1] + 0.5) < fudgeFactor)return Point(hit[0] + 0.5, hit[2] + 0.5, 0.0);
-    if(fabs(hit[1] - 0.5) < fudgeFactor)return Point(hit[0] + 0.5, hit[2] + 0.5, 0.0);
-    if(fabs(hit[2] + 0.5) < fudgeFactor)return Point(hit[0] + 0.5, hit[1] + 0.5, 0.0);
-    if(fabs(hit[2] - 0.5) < fudgeFactor)return Point(hit[0] + 0.5, hit[1] + 0.5, 0.0);
+    if(fabs(hit[0] + 0.5) < fudgeFactor)return Point(-hit[2] + 0.5, -hit[1] + 0.5, 0.0);
+    if(fabs(hit[0] - 0.5) < fudgeFactor)return Point(-hit[2] + 0.5, -hit[1] + 0.5, 0.0);
+    if(fabs(hit[1] + 0.5) < fudgeFactor)return Point(hit[0] + 0.5, -hit[2] + 0.5, 0.0);
+    if(fabs(hit[1] - 0.5) < fudgeFactor)return Point(hit[0] + 0.5, -hit[2] + 0.5, 0.0);
+    if(fabs(hit[2] + 0.5) < fudgeFactor)return Point(hit[0] + 0.5, -hit[1] + 0.5, 0.0);
+    if(fabs(hit[2] - 0.5) < fudgeFactor)return Point(hit[0] + 0.5, -hit[1] + 0.5, 0.0);
 
     return Point(0.0, 0.0, 0.0);
 }

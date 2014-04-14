@@ -50,7 +50,7 @@ Point Sphere::iPointToSquare(Point i, Vector ray, double dist){
 
     Point hit = i + (ray * dist);
     Point coords;
-    coords[0] = atan(hit[2] / hit[0]) / PI + 0.5;
+    coords[0] = atan(hit[2]/ hit[0]) / PI + 0.5;
     coords[1] = acos(hit[1] * 2) / PI;
     coords[2] = 0.0;
     return coords;
