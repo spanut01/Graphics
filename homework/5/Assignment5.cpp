@@ -32,7 +32,7 @@ float lookZ = -2;
 
 /** These are GLUI control panel objects ***/
 int  main_window;
-string filenamePath = "./data/tests/earthcube.xml";
+string filenamePath = "./data/tests/all_effects.xml";
 GLUI_EditText* filenameTextField = NULL;
 GLubyte* pixels = NULL;
 int pixelWidth = 0, pixelHeight = 0;
@@ -135,11 +135,15 @@ SceneColor getColorFromRay(Point eyeP, Vector rayV, int depth){
             float lightDist;
             Vector reflectiveRay;
             SceneColor diffConst = closest->primitive->material.cDiffuse * globals.kd;
+            SceneColor diffColor = SceneColor();
             //cout<<"material diffuse "<<closest->primitive->material.cDiffuse.r<<" "<<closest->primitive->material.cDiffuse.g<<" "<<closest->primitive->material.cDiffuse.b<<"\n";
             SceneColor specConst = closest->primitive->material.cSpecular * globals.ks;
+            SceneColor specColor = SceneColor();
             //cout<<"material specular "<<closest->primitive->material.cSpecular.r<<" "<<closest->primitive->material.cSpecular.g<<" "<<closest->primitive->material.cSpecular.b<<"\n";
             float specularF = closest->primitive->material.shininess;
             //cout << "rgb " << constant.r << "," << constant.g << "," << constant.b << "\n";
+            SceneColor reflectiveConst = closest->primitive->material.cReflective * globals.ks;
+            SceneColor reflectiveColor = SceneColor();
             Point hitPoint = eyeP + (rayV * t);
             hitPoint = hitPoint + iNorm * 0.0001;
             for(int k = 0; k < parser->getNumLights(); k++){
@@ -174,8 +178,9 @@ SceneColor getColorFromRay(Point eyeP, Vector rayV, int depth){
                     //cout<<"diffConst "<<diffConst.r<<" "<<diffConst.g<<" "<<diffConst.b<<"\n";
                     if(dotProd < 0.0f)dotProd = 0.0f;
                     SceneColor contrib = (diffConst * dotProd) * light.color;
+                    diffColor = diffColor + contrib;
                     //cout <<"diffuse contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
-                    color = color + contrib;
+                    //color = color + contrib;
                     //specular
                     reflectiveRay = (2 * dotProd * iNorm) - lightDir;
                     reflectiveRay.normalize();
@@ -185,26 +190,27 @@ SceneColor getColorFromRay(Point eyeP, Vector rayV, int depth){
                     if(dotProd < 0.0f)dotProd = 0.0f;
                     contrib = specConst * (light.color * pow(dotProd,specularF));
                     //cout <<"specular contrib: "<<contrib.r<<" "<<contrib.g<<" "<<contrib.b<<"\n";
-                    color = color + contrib;
+                    //color = color + contrib;
+                    specColor = specColor + contrib;
                 }
             }
-            SceneColor reflectiveConst = closest->primitive->material.cReflective * globals.ks;
             if(depth){
                 //reflective ray
                 float dotProd = dot(rayV,iNorm);
                 reflectiveRay = rayV - (2 * dotProd * iNorm);
                 //done higher
               //hitPoint = hitPoint + iNorm * 0.0001;
-                SceneColor reflectiveColor = reflectiveConst * getColorFromRay(hitPoint, reflectiveRay, depth-1);
+                reflectiveColor = reflectiveConst * getColorFromRay(hitPoint, reflectiveRay, depth-1);
                 //cout <<"reflective color: "<<reflectiveColor.r<<" "<<reflectiveColor.g<<" "<<reflectiveColor.b<<"\n";
-                color = color + reflectiveColor;
+                //color = color + reflectiveColor;
             }
-            if(closest->primitive->material.blend > 1.0/255.0){
+            if(closest->primitive->material.blend > 1e-10){
                 float blend = closest->primitive->material.blend;
                 setShape(closest->primitive->type);
                 Point squarePoint = shape->iPointToSquare(objEye, objRay, t);
-                color = color * (1.0-blend) + getTextureColor(closest->primitive, squarePoint) * blend;
+                diffColor = diffColor * (1.0-blend) + getTextureColor(closest->primitive, squarePoint) * (blend);
             }
+            color = color + diffColor + specColor + reflectiveColor;
             //cout << "rgb " << color.r << "," << color.g << "," << color.b << "\n\n";
     }
     return color;
