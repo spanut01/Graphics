@@ -5,6 +5,9 @@
 // Make sure they are named exactly as they are in the cpp file
 // images are of type 'uniform sampler2D' and then the texture name.
 
+uniform sampler2D brick_image;  // The brick texture
+uniform sampler2D bump_image; // The bump map
+uniform vec3 lightVector;
 
 
 void main()
@@ -12,13 +15,27 @@ void main()
 	// TODO Step 1:
 	// Extract normals from the normal map
 
+	// Extract the normal from the normal map
+	// Need to do the 2.0*-1.0 so we can get normals in range of 0.0-2.0
+	// and because normals can be back facing.
+	vec3 normal = normalize(texture2D(bump_image,gl_TexCoord[0].st).rgb * 2.0 - 1.0);
+
+	// Determine where the light is positioned
+	// You get to set this
+	vec3 light_pos = normalize(vec3(lightVector.x,lightVector.y,lightVector.z));
+
+	// Calculate the lighting diffuse value
+	float diffuse = max(dot(normal,light_pos),0.0);
+
+
 	// TODO Step 2:
 	// Multiply lighting times original texture color to figure out how much light we receive
+	vec3 final_color = diffuse * texture2D(brick_image, gl_TexCoord[0].st).rgb;
 
 
 	// TODO Step 3:
 	// Find the final color
-
+	gl_FragColor = vec4(final_color, 1.0);
 }
 
 
