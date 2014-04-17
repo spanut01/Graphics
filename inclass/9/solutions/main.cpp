@@ -10,13 +10,10 @@
 	Further Reading resources: 
 	===================================================== */
 
-
+#include <string.h>
 #include <iostream>
 #include <fstream>
-//#include "shaderManager.h"
-#include "GLee.h"
 #include <GL/glui.h>
-//#include "GLee.h"
 #include <math.h>
 #include "shaderManager.h"
 

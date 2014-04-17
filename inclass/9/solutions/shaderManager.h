@@ -13,7 +13,6 @@
 #define SHADER_MANAGER_H
 
 #include "ppm.h"
-#include "GLee.h"
 
 using namespace std;
 
