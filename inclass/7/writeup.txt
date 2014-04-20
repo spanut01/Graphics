@@ -1,1 +1,40 @@
-In computer graphics, a three-dimensional shape is represented as a collection of triangular faces.  The locations of points and the combinations of points which make up each face are specified as input, but sometimes it is necessary to operate on the edges, the places where faces meet.  The silhouette edge is made up of those edges on the boundary between faces which can be seen onscreen and faces which are hidden from view.  When displayed on its own, it appears as the "outline" of a three-dimensional shape.  This is not especially important for photorealistic rendering, but in order to render a cartoonish or cel-shaded art style, generation of the silhouette edge is an important step.  
+In computer graphics, a three-dimensional shape is represented as a collection of triangular faces.  
+The locations of points and the combinations of points which make up each face are specified as input, but sometimes it is necessary to operate on the edges, the places where faces meet.  
+The silhouette edge is made up of those edges on the boundary between faces which can be seen onscreen and faces which are hidden from view.  
+When displayed on its own, it appears as the "outline" of a three-dimensional shape.  
+This is not important for photorealistic rendering, but in order to render a cartoonish or cel-shaded art style, generation of the silhouette edge is an important step.  
+
+To find the silhouette edge, a program must find all edges for which one constituent face is facing towards the camera and the other is not.  
+This is not the only criterion for membership in the silhouette edge, since an edge can still be occluded, hidden from view by another face between the edge and the viewer.  
+However, occlusion was deemed to be too intense for a one-hour lab since the right way to calculate occlusion is per-pixel ray tracing.  
+It's relatively simple to find whether a face is facing towards the viewer or not: the vector normal to a triangle is easily calculated, as is the viewer's look vector towards any point.  
+If the dot-product of the normal vector and the look vector is a positive value, the face is facing towards the camera; otherwise it is not.  
+The difficult part of calculating the silhouette edge is to find the list of all of the edges, given the faces and vertexes.  
+
+For the data representation of an edge to be useful, each edge must contain pointers, copies, or indexes of both the vertexes contained by the edge (for drawing the edge), and of the faces containing the edge (for determining if the edge will be drawn).  
+Since in our implementation both vertexes and faces were stored in arrays, indexes were chosen, but pointers wouldn't have taken any more space.  
+Building a list of all edges is simple if there are allowed to be duplicates in the list, but the requirement that all edges must know their faces makes the problem somewhat more difficult.  
+
+The usual approch is to iterate through the list of faces, and for each pair of vertexes in a face, either add a new edge to the list of edges, or add a new face to the faces in an existing edge.  
+The aspect of this which lends itself to more than one approach is the lookup of an edge within the edge list.  
+The obvious approach is to use some sort of hash table, but the hashing scheme is less obvious, since an edge is uniquely identified by no one piece of data but by a pair of vertexes.  
+A less obvious approach is to simply iterate through the entire edge list every time an edge is searched for.  
+This is an O(n^2) algorithm, but its use here can be justified by the realization that the edge list only needs to be built once per object, during the initial load of the object file.  
+
+The approach I used in my own solution to this problem was to use an edge list made up of an array of pointers to linked lists.  
+The array was the same size as the vertex list and indexed by the lower of the two vertex indices for a given edge.  The linked lists were used because a vertex could have several edges for which it was the lower-numbered vertex.  
+This provides a O(n) algorithm (with a constant factor for the number of faces per vertex).  
+The students were not required to use the same data structure, but the declaration for it was included and most groups chose to use it.  
+
+The lab was completed by students in groups of two or three.  
+There were about ten groups, with one professor and three teaching assistants present.  
+This allowed the students to work collaboratively and to get help whenever both members of any team got stuck.  
+The parser for the mesh files containing faces and vertexes was provided to the students, along with a user interface and basic program to load them and display the solid shapes.  
+
+The students needed to build the edge list, calculate the silhouette edge, and display the silhouette edge.  
+They were supplied with instructions on how to calculate and draw the silhouette edge given the edge list, but not for how to build the edge list.  
+Most students figured out the algorithm for calculating the edge list within the first half hour of the hour long lab session.  
+However, the data structure proved to be a point of confusion for several teams (and a point of contention for one team who spent fifteen minutes arguing about hashing schemes).  
+
+When the lab session ended, half of the teams in the room had completed the assignment, and most of the others had either the algorithm or the data structure.  
+When the results were demoed for grading the following week, most groups had completed the assignment successfully, and the one group which had not completely rendered the silhouette edge was able to render most segments of it.  
