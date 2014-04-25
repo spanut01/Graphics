@@ -1,5 +1,25 @@
-\BOOKMARK [1][-]{section.1}{Background}{}
-\BOOKMARK [1][-]{section.2}{Motivation}{}
-\BOOKMARK [1][-]{section.3}{Problems}{}
-\BOOKMARK [1][-]{section.4}{Solutions}{}
-\BOOKMARK [1][-]{section.5}{Results}{}
+\BOOKMARK [1][-]{section.1}{Abstract}{}
+\BOOKMARK [1][-]{section.2}{Background}{}
+\BOOKMARK [1][-]{section.3}{Motivation}{}
+\BOOKMARK [2][-]{subsection.3.1}{Creation of the Assignment}{section.3}
+\BOOKMARK [2][-]{subsection.3.2}{Caveats}{section.3}
+\BOOKMARK [2][-]{subsection.3.3}{Simplifications}{section.3}
+\BOOKMARK [1][-]{section.4}{Problems}{}
+\BOOKMARK [2][-]{subsection.4.1}{Edge List Generation}{section.4}
+\BOOKMARK [2][-]{subsection.4.2}{Geometric Subproblem}{section.4}
+\BOOKMARK [2][-]{subsection.4.3}{Optimizations}{section.4}
+\BOOKMARK [1][-]{section.5}{Solutions}{}
+\BOOKMARK [2][-]{subsection.5.1}{Requirements}{section.5}
+\BOOKMARK [2][-]{subsection.5.2}{Hash Table}{section.5}
+\BOOKMARK [2][-]{subsection.5.3}{No Lookup}{section.5}
+\BOOKMARK [2][-]{subsection.5.4}{Hybrid Structure}{section.5}
+\BOOKMARK [1][-]{section.6}{Results}{}
+\BOOKMARK [2][-]{subsection.6.1}{Format}{section.6}
+\BOOKMARK [2][-]{subsection.6.2}{Progress}{section.6}
+\BOOKMARK [2][-]{subsection.6.3}{Final Submissions}{section.6}
+\BOOKMARK [2][-]{subsection.6.4}{Hybrid}{section.6}
+\BOOKMARK [2][-]{subsection.6.5}{Arrays}{section.6}
+\BOOKMARK [2][-]{subsection.6.6}{Matrix}{section.6}
+\BOOKMARK [2][-]{subsection.6.7}{Ordering}{section.6}
+\BOOKMARK [2][-]{subsection.6.8}{Geometry}{section.6}
+\BOOKMARK [1][-]{section.7}{Conclusion}{}
