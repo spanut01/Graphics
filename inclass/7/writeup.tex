@@ -101,6 +101,18 @@ In contrast to the overall edge list, the silhouette edge changes every time the
 \subsection{Optimizations}
 Some of the values the students were required to calculate could be computed once for each run of the program and stored, instead of calculating them once for every frame.  Since the normal vector for a face does not change, it makes sense to precompute and store this for all faces.  A less obvious optimization is to compute the angle for each face prior to checking the two faces in each edge, since each face is almost certain to be a member of multiple edges.  
 
+\section{Results}
+\subsection{Format}
+The lab was completed by students in groups of one, two, or three.  There were about ten groups, with one professor and three teaching assistants present.  This allowed the students to work collaboratively and to get help whenever both members of any team got stuck.  
+
+\subsection{Progress}
+Most students figured out the algorithm for calculating the edge list within the first half hour of the hour long lab session.  However, the data structure proved to be a point of confusion for several teams.  
+
+When the lab session ended, half of the teams in the room had completed the assignment, and most of the others had either the algorithm or the data structure.  
+
+\subsection{Final Submissions}
+When the results were demoed for grading the following week, most groups had completed the assignment successfully, and the one group which had not completely rendered the silhouette edge was able to render most segments of it.  Eight groups sent me their code afterwards (frustratingly, the team with an incomplete silhouette edge was not among them).  
+
 \section{Solutions}
 \subsection{Requirements}
 Building the edge list was the more difficult part of the problem for most students.  For the data representation of an edge to be useful, each edge must contain some representation of both the vertices contained by the edge (for drawing the edge), and of both the faces containing the edge (for determining if the edge will be drawn).  
@@ -108,10 +120,12 @@ Building the edge list was the more difficult part of the problem for most stude
 The usual approach is to iterate through the list of faces, and for each pair of vertices in a face, either add a new edge to the list of edges, or add a new face to the faces in an existing edge.  The aspect of this which lends itself to more than one approach is the lookup of an edge within the edge list.  
 
 \subsection{Hash Table}
-The obvious approach is to use some sort of hash table, but the hashing scheme is less obvious, since an edge is uniquely identified by no one piece of data but by a pair of vertices.  
+The obvious approach is to use some sort of hash table, but the hashing scheme is less obvious, since an edge is uniquely identified by no one piece of data but by a pair of vertices.  One team debated hashing schemes for a good portion of the lab session, but did not end up using any sort of hash.  
 
-\subsection{No Lookup}
+\subsection{Arrays}
 A less obvious approach is to simply iterate through the entire edge list every time an edge is searched for.  This is an O($n^2$) algorithm, but its use here can be justified by the realization that the edge list only needs to be built once per object, during the initial load of the object file.  If this approach is chosen, the edge list can be made up of a singly-linked list, giving the advantages of an easily expandable and quickly-iterable data structure.  
+
+However, no teams chose to use linked lists.  Two teams used a standard library vector, and one team built their own expanding array.  These teams had severely increased runtimes for edge list generation, probably due to the cost of allocating a larger array and copying from the old one when the array ran out of space.  However, the silhouette edge was still produced correctly and in approximately the same amount of time.  
 
 \subsection{Hybrid Structure}
 My own solution to the data structure problem was to use an edge list made up of an array of linked lists.  The array was the same size as the vertex list and indexed by the lower of the two vertex indices for a given edge.  The linked lists were used because a vertex could have several edges for which it was the lower-numbered vertex.  
@@ -122,26 +136,12 @@ The students were not required to use the same data structure, but the declarati
 
 In retrospect, this was a mistake.  The use of a hybrid data structure was confusing to the students, produced more trouble spots in code, and made even my own solution more difficult to write.  These disadvantages were not outweighed by the advantage of faster edge list creation, and a simple singly-linked list would have been a more sensible solution.  
 
-\section{Results}
-\subsection{Format}
-The lab was completed by students in groups of one, two, or three.  There were about ten groups, with one professor and three teaching assistants present.  This allowed the students to work collaboratively and to get help whenever both members of any team got stuck.  
-
-\subsection{Progress}
-Most students figured out the algorithm for calculating the edge list within the first half hour of the hour long lab session.  However, the data structure proved to be a point of confusion for several teams (and a point of contention for one team who spent fifteen minutes arguing about hashing schemes).  
-
-When the lab session ended, half of the teams in the room had completed the assignment, and most of the others had either the algorithm or the data structure.  
-
-\subsection{Final Submissions}
-When the results were demoed for grading the following week, most groups had completed the assignment successfully, and the one group which had not completely rendered the silhouette edge was able to render most segments of it.  Eight groups sent me their code afterwards (frustratingly, the team with an incomplete silhouette edge was not among them).  
-
-\subsection{Hybrid}
 Among the code I saw, three teams used my hybrid data structure for the edge list.  The final code did not show any signs of the struggles they may have had in using it.  
 
-\subsection{Arrays}
-Two teams used a standard library vector, and one team built their own expanding array.  These teams had severely increased runtimes for edge list generation, probably due to the cost of allocating a larger array and copying from the old one when the array ran out of space.  However, the silhouette edge was still produced correctly and in approximately the same amount of time.  
-
 \subsection{Matrix}
-One team had the interesting idea to use a matrix for edge list generation, with each dimension of the array equal to the number of vertices.  Each combination of two different vertices would correspond to two different elements of this matrix, so for each edge appearing in the shape, the two triangles containing the edge could be indicated within the cells of the matrix.  After iterating through the faces to fill in the matrix, the edge list could be built from one pass through the matrix and the matrix discarded.  This data structure made lookup during edge list generation easy, but at the cost of a vast space requirement.  It worked well for smaller sizes of input but not for larger shapes.  
+One team had the interesting idea to use a matrix for edge list generation, with each dimension of the array equal to the number of vertices.  Each combination of two different vertices would correspond to two different elements of this matrix, so for each edge appearing in the shape, the two triangles containing the edge could be indicated within the cells of the matrix.  
+
+After iterating through the faces to fill in the matrix, the edge list could be built from one pass through the matrix and the matrix discarded.  This data structure made lookup during edge list generation easy, but at the cost of a vast space requirement.  It worked well for smaller sizes of input but not for larger shapes.  
 
 \subsection{Ordering}
 One data structure difference within the individual edges was the choice of whether to maintain an ordering condition of the faces within the edge, or to check each combination when searching for an edge within the edge list.  This was a requirement when using the hybrid data structure as the array was indexed by the lower-numbered edge, but neither the team using the standard library vector nor the team who built their own expandable array decided to maintain this condition.  The result of this was that the extra traversal steps for the hybrid data structure had approximately the same code size as the extra checks for the non-hybrid data structures.  
