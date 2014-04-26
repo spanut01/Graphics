@@ -58,9 +58,7 @@ When displayed on its own, it appears as the "outline" of a three-dimensional sh
 \subsection{Creation of the Assignment}
 The generation of the silhouette edge was chosen for an inclass lab for several reasons.  
 
-First, to expose students to the techniques involved in non-photorealistic rendering.  Second, to have the students work with the geometric principles involved in generation of the silhouette edge.  
-
-\red{Third,  the data structures involved.  }
+First, to expose students to the techniques involved in non-photorealistic rendering.  Second, to have the students work with the geometric principles involved in generation of the silhouette edge.  Third, to give the students an opportunity to experiment with the necessary data structures.  
 
 However, the generation of the silhouette edge was not suitable for inclusion in the out-of-class assignments, because each of those assignments built off the previous one, and focused together on creation of successive techniques in traditional photorealistic rendering.  
 
@@ -71,9 +69,9 @@ To simulate this phenomenon, called occlusion, correctly, each pixel which might
 
 \subsection{Simplifications}
 To simplify the geometric calculations, an orthographic projection was used.  
-To calculate whether a face is facing towards the viewer, it's necessary to know the direction that the viewer is looking into the screen to see that face.  An orthographic projection has the same look vector towards any part of the screen, whereas a perspective projection has different look vectors for each pixel on the screen.  So, to use a perspective projection would have required more geometric calculation.  
+To calculate whether a face is facing towards the viewer, it's necessary to know the direction that the viewer is looking into the screen to see that face.  An orthographic projection has the same look vector towards any part of the screen, whereas a perspective projection has different look vectors for each pixel on the screen.  So, to use a perspective projection would have required more geometric calculation, slowing down both the students' coding progress and their programs' runtimes.  
 
-To keep the amount of work to a feasible level for students to complete in one hour, some peripheral parts of the program to find and display the silhouette edge were provided to the students.  This included the parser for the mesh files containing faces and vertices, along with a user interface and basic program to load them and display the solid shapes.  This also included the data structures for vertices and faces.  Parsing was considered an important skill, however, and the same parser had in fact been the assignment for a previous lab assignment.  
+To keep the amount of work to a feasible level for students to complete in one hour, some parts of the program to find and display the silhouette edge were provided to the students.  This included the data structures for faces and vertices.  It also included the parser for the mesh files containing the faces and vertices, along with a user interface and basic program to load them and display the solid shapes.  Parsing was considered an important skill, however, and the same parser had in fact been the assignment for a previous lab assignment.  
 
 \section{Problems}
 Generation of the silhouette edge can be considered as two related problems: generation of the edge list and the selection of silhouette edge segments.  Of the two, generation of the edge list is more complex.  
@@ -81,7 +79,7 @@ Generation of the silhouette edge can be considered as two related problems: gen
 \subsection{Edge List Generation}
 The list of all edges must be found before the silhouette edge (a subset of the total edge list) can be calculated.  This is a data structure problem involving reading from two structures and creating a third.  
 
-Shapes are specified only as vertices and faces, so generation of the edge list requires iterating through the list of faces and finding all the places where two faces meet (that is, where two points are shared between a pair of faces).  To do this requires understanding of the relation between data and geometry, so that new knowledge can be extracted from the existing data.  It also requires knowledge of the computational representation of data, for there is more than one data structure which can be used to fulfill the requirements of the edge list from which the silhouette edge can be synthesized.  
+Shapes are specified only as vertices and faces, so generation of the edge list requires iterating through the list of faces and finding all the places where two faces meet (that is, where two points are shared between a pair of faces).  To do this requires understanding the relation between data and geometry, so that new knowledge can be extracted from the existing data.  It also requires knowledge of the computational representation of data, for there is more than one data structure which can be used to fulfill the requirements of the edge list from which the silhouette edge can be synthesized.  
 
 The vertices, which were read in first from the mesh file, were stored as triples of floating point numbers, as an array by the program in the same order as they were listed in the file.  The triangular faces those vertices were arranged into were read from the file afterwards, stored both in the file and in the program as triples of indices into the vertex list.  
 
