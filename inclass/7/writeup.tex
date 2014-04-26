@@ -58,28 +58,30 @@ When displayed on its own, it appears as the "outline" of a three-dimensional sh
 \subsection{Creation of the Assignment}
 The generation of the silhouette edge was chosen for an inclass lab for several reasons.  
 
-It was important to expose students to the techniques involved in non-photorealistic rendering.  It was important to have the students work with the geometric principles involved in generation of the silhouette edge, and also the data structures involved.  
+First, to expose students to the techniques involved in non-photorealistic rendering.  Second, to have the students work with the geometric principles involved in generation of the silhouette edge.  
+
+\red{Third,  the data structures involved.  }
 
 However, the generation of the silhouette edge was not suitable for inclusion in the out-of-class assignments, because each of those assignments built off the previous one, and focused together on creation of successive techniques in traditional photorealistic rendering.  
 
-\subsection{Caveats}
+\subsection{Occlusion}
 There are more steps involved in cel-shading an object from its silhouette edge, but they were deemed infeasible.  A silhouette edge will include edges which on their own have all the properties of the silhouette edge, but would be hidden from view in reality by other parts of the object in between the edge and the viewer.  
 
 To simulate this phenomenon, called occlusion, correctly, each pixel which might be colored as part of the silhouette edge must be checked against each face to see if the face is in the way preventing the pixel from being seen.  To do this in real time is possible, but it requires more advanced techniques than the students had learned at this point in the course.  
 
 \subsection{Simplifications}
 To simplify the geometric calculations, an orthographic projection was used.  
-To calculate whether a face is facing towards the viewer, it's necessary to know the direction that the viewer is looking into the screen to see that face.  An orthographic projection has the same look vector towards any part of the screen, whereas a perspective projection has different look vectors for each pixel on the screen.  So, to use a perspective projection would have required an extra step.  
+To calculate whether a face is facing towards the viewer, it's necessary to know the direction that the viewer is looking into the screen to see that face.  An orthographic projection has the same look vector towards any part of the screen, whereas a perspective projection has different look vectors for each pixel on the screen.  So, to use a perspective projection would have required more geometric calculation.  
 
-To keep the amount of work to a feasible level for students to complete in one hour, some peripheral parts of the program to find and display the silhouette edge were provided to the students.  This included the parser for the mesh files containing faces and vertices, along with a user interface and basic program to load them and display the solid shapes.  Parsing was considered an important skill, however, and the same parser had in fact been the assignment for a previous lab assignment.  
+To keep the amount of work to a feasible level for students to complete in one hour, some peripheral parts of the program to find and display the silhouette edge were provided to the students.  This included the parser for the mesh files containing faces and vertices, along with a user interface and basic program to load them and display the solid shapes.  This also included the data structures for vertices and faces.  Parsing was considered an important skill, however, and the same parser had in fact been the assignment for a previous lab assignment.  
 
 \section{Problems}
-Generation of the silhouette edge has two subproblems: generation of the edge list and the selection of silhouette edge segments.  Of the two, generation of the edge list is more complex.  
+Generation of the silhouette edge can be considered as two related problems: generation of the edge list and the selection of silhouette edge segments.  Of the two, generation of the edge list is more complex.  
 
 \subsection{Edge List Generation}
 The list of all edges must be found before the silhouette edge (a subset of the total edge list) can be calculated.  This is a data structure problem involving reading from two structures and creating a third.  
 
-Shapes are specified only as vertices and faces, so generation of the edge list requires iterating through the list of faces and finding all the places where two faces meet (that is, where two points are shared between a pair of faces).  To do this requires knowledge of the relation between data and geometry, to find a new statistic of the existing data.  But it also requires knowledge of the computational representation of data, for there is more than one data structure which can be used to fulfill the requirements of the edge list from which the silhouette edge can be synthesized.  
+Shapes are specified only as vertices and faces, so generation of the edge list requires iterating through the list of faces and finding all the places where two faces meet (that is, where two points are shared between a pair of faces).  To do this requires understanding of the relation between data and geometry, so that new knowledge can be extracted from the existing data.  It also requires knowledge of the computational representation of data, for there is more than one data structure which can be used to fulfill the requirements of the edge list from which the silhouette edge can be synthesized.  
 
 The vertices, which were read in first from the mesh file, were stored as triples of floating point numbers, as an array by the program in the same order as they were listed in the file.  The triangular faces those vertices were arranged into were read from the file afterwards, stored both in the file and in the program as triples of indices into the vertex list.  
 
@@ -90,7 +92,7 @@ However, the number of edges isn't necessarily known before the edge list is don
 The set of edges comprising the silhouette edge can change based on the angle at which the shape is being viewed, so the list of all edges must be traversed every time the viewing angle is changed.  The need for speed is a theme in computer graphics programming, and the reason this is an interesting data structures problem is the difference in speed between an adequate data structure and a more optimized one.  
 
 \subsection{Geometric Subproblem}
-The more heavily geometric aspect of the problem comes afterwards, when the edge list has been created and the silhouette edge is to be found from within it.  This requires calculations for each face based on the face's orientation with respect to the viewer.  Instead of these calculations being used simply to shade each face as in most computer graphics algorithms, they are used for a more drastic choice of whether or not to display an edge at all.  
+The geometric aspect of the problem comes afterwards, when the edge list has been created and the silhouette edge is to be found from within it.  This requires calculations for each face based on the face's orientation with respect to the viewer.  Instead of these calculations being used simply to shade each face as in most computer graphics algorithms, they are used for a more drastic choice of whether or not to display an edge at all.  
 
 It is at this stage that the edge list is traversed, checking each pair of adjacent faces to see if the edge between them is a part of the silhouette edge.  
 
@@ -99,7 +101,7 @@ The necessary condition is that one face is facing towards the viewer and the ot
 In contrast to the overall edge list, the silhouette edge changes every time the viewing angle is changed, hence it is important that it can be calculated quickly.  Conversely, it is not important to store the actual silhouette edge; it can be sent to the graphics hardware and then discarded.  
 
 \subsection{Optimizations}
-Some of the values the students were required to calculate could be computed once for each run of the program and stored, instead of calculating them once for every frame.  Since the normal vector for a face does not change, it makes sense to precompute and store this for all faces.  A less obvious optimization is to compute the angle for each face prior to checking the two faces in each edge, since each face is almost certain to be a member of multiple edges.  
+Some of the values the students were required to calculate could be computed once for each run of the program and stored, instead of calculating them once for every frame.  Since the normal vector for a face does not change, it makes sense to precompute and store this for all faces.  A less obvious optimization is to compute the angle for each face prior to checking the two faces in each edge, since each face is a member of multiple edges.  
 
 \section{Results}
 \subsection{Format}
@@ -130,7 +132,7 @@ However, no teams chose to use linked lists.  Two teams used a standard library 
 \subsection{Hybrid Structure}
 My own solution to the data structure problem was to use an edge list made up of an array of linked lists.  The array was the same size as the vertex list and indexed by the lower of the two vertex indices for a given edge.  The linked lists were used because a vertex could have several edges for which it was the lower-numbered vertex.  
 
-This provides a O($n$) algorithm (with a constant factor for the number of faces per vertex).  
+This provides a O($k \times n$) algorithm, where $k$ is the maximum number of faces per vertex.  In the worst case, all faces meeting at one point, this is O($n^2$).  
 
 The students were not required to use the same data structure, but the declaration for it was included and some groups chose to use it.  
 
