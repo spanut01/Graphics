@@ -1,0 +1,81 @@
+﻿Build started 4/28/2014 1:58:38 PM.
+     1>Project "C:\Users\Asus\Source\Repos\Graphics\homework\5\Project1\Project1\Project1.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\..\inclass\7\demo\main.cpp ..\..\..\..\inclass\7\demo\ply.cpp
+         ply.cpp
+     1>c:\program files (x86)\microsoft visual studio 12.0\vc\include\gl\glui.h(868): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\inclass\7\demo\ply.cpp(155): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\inclass\7\demo\ply.cpp(158): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\inclass\7\demo\ply.cpp(161): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\inclass\7\demo\ply.cpp(164): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\inclass\7\demo\ply.cpp(167): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\inclass\7\demo\ply.cpp(170): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\inclass\7\demo\ply.cpp(173): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\inclass\7\demo\ply.cpp(176): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+         main.cpp
+     1>c:\program files (x86)\microsoft visual studio 12.0\vc\include\gl\glui.h(868): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\inclass\7\demo\main.cpp(93): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\inclass\7\demo\main.cpp(94): warning C4244: 'argument' : conversion from 'int' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\inclass\7\demo\main.cpp(95): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\inclass\7\demo\main.cpp(114): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+     1>c:\users\asus\source\repos\graphics\inclass\7\demo\main.cpp(190): warning C4305: 'argument' : truncation from 'double' to 'GLclampf'
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Asus\Source\Repos\Graphics\homework\5\Project1\Debug\Project1.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Asus\Source\Repos\Graphics\homework\5\Project1\Debug\Project1.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Asus\Source\Repos\Graphics\homework\5\Project1\Debug\Project1.lib" /MACHINE:X86 Debug\entity.obj
+         Debug\main.obj
+         Debug\ply.obj
+     1>glui32.lib(glui.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_control.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_control.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_checkbox.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_checkbox.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_add_controls.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_add_controls.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_edittext.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_edittext.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_spinner.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_spinner.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_string.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_string.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_node.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_node.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_bitmaps.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_bitmaps.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_window.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_window.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_panel.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_panel.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_button.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_button.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_column.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_column.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_rollout.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_rollout.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_radio.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_radio.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_separator.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_separator.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_statictext.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_statictext.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_listbox.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_listbox.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_rotation.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_rotation.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_translation.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_translation.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(glui_mouse_iaction.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(glui_mouse_iaction.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(algebra3.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(algebra3.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(arcball.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(arcball.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>glui32.lib(quaternion.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in main.obj
+     1>glui32.lib(quaternion.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in main.obj
+     1>MSVCRTD.lib(cinitexe.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>C:\Users\Asus\Source\Repos\Graphics\homework\5\Project1\Debug\Project1.exe : fatal error LNK1319: 48 mismatches detected
+     1>Done Building Project "C:\Users\Asus\Source\Repos\Graphics\homework\5\Project1\Project1\Project1.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:02.25

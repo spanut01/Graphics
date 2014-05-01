@@ -13,6 +13,8 @@
 #include <math.h>
 #include "ply.h"
 #include "Algebra.h"
+#include <Windows.h>
+#include <mmsystem.h>
 
 /** These are the live variables passed into GLUI ***/
 int main_window;
@@ -124,6 +126,8 @@ void myGlutMouse(int button, int button_state, int x, int y)
 	if (button == 0 && button_state == 1){
 		//printf("button:%d, buttonstate:%d, x:%d, y:%d\n", button, button_state, x, y);
 		if (!ball) {
+			
+			PlaySound((".\\data\\pew-pew.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			ball = 1;
 			ball_location = Point(0, 0, -0.75);//the camera
 			ball_trajectory = Vector(1.5 * (-(float)x / windowx + 0.5), 1.5 * ((float)y / windowy - 0.5), 0.5);//not destination
@@ -195,6 +199,7 @@ void myGlutDisplay(void)
 				Vector line = x2 - x1;
 				Point x0;
 				if (radioInt == 0){
+
 					for (int i = 0; i < myPLY->vertexCount; i++){
 						x0[0] = myPLY->vertexList[i].x;
 						x0[1] = myPLY->vertexList[i].y;
@@ -221,6 +226,7 @@ void myGlutDisplay(void)
 
 						}
 						else if (d < 0.15) {
+
 							Vector numerator = cross(x2 - x1, x1 - x0);
 							Vector denominator = x2 - x1;
 							double d = numerator.length() / denominator.length();
@@ -239,31 +245,33 @@ void myGlutDisplay(void)
 							myPLY->vertexList[i].z = x0[2];
 						}
 					}
+					PlaySound(TEXT(".\\data\\clay.wav"), NULL, SND_FILENAME | SND_ASYNC);
 				}
 				if (radioInt == 1){
 					for (int i = 0; i < myPLY->vertexCount; i++){
-						x0[0] = myPLY->vertexList[i].x;
-						x0[1] = myPLY->vertexList[i].y;
-						x0[2] = myPLY->vertexList[i].z;
+					x0[0] = myPLY->vertexList[i].x;
+					x0[1] = myPLY->vertexList[i].y;
+					x0[2] = myPLY->vertexList[i].z;
 
-						Vector ballToPt = ballLoc - x0;
-						double d = ballToPt.length();
-						if (d < 0.2){
-							//myPLY->vertexList[i].z = 0.0;
-							Vector tVec = x0 - x1;
-							Vector numerator = cross(x2 - x1, x1 - x0);
-							Vector denominator = x2 - x1;
-							double d = numerator.length() / denominator.length(); 
-							double t = sqrt(pow(tVec.length(), 2) - pow(d, 2)) - closeT;
-							//Point x0_t = x0 - ((t / line.length()) * line);
-							double dist;
-							dist = (0.05 - d/2.0);
-							if (dist > 0) x0 = x0 + ((dist / line.length()) * line);
-							myPLY->vertexList[i].x = x0[0];
-							myPLY->vertexList[i].y = x0[1];
-							myPLY->vertexList[i].z = x0[2];
+					Vector ballToPt = ballLoc - x0;
+					double d = ballToPt.length();
+					if (d < 0.2){
+						//myPLY->vertexList[i].z = 0.0;
+						Vector tVec = x0 - x1;
+						Vector numerator = cross(x2 - x1, x1 - x0);
+						Vector denominator = x2 - x1;
+						double d = numerator.length() / denominator.length(); 
+						double t = sqrt(pow(tVec.length(), 2) - pow(d, 2)) - closeT;
+						//Point x0_t = x0 - ((t / line.length()) * line);
+						double dist;
+						dist = (0.05 - d/2.0);
+						if (dist > 0) x0 = x0 + ((dist / line.length()) * line);
+						myPLY->vertexList[i].x = x0[0];
+						myPLY->vertexList[i].y = x0[1];
+						myPLY->vertexList[i].z = x0[2];
 						}
 					}
+					PlaySound(TEXT(".\\data\\metal.wav"), NULL, SND_FILENAME | SND_ASYNC);
 
 				}
 				
