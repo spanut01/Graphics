@@ -18,8 +18,8 @@ void Camera::Reset(){
     upVector = Vector(0,1,0);
     Orient(eyePoint, lookVector, upVector);
     thetaH = 60.0;
-    near = 0.001;
-    far = 30.0;
+    m_near = 0.001;
+    m_far = 30.0;
     width = 500;
     height = 500;
     rotationV = 0.0;
@@ -62,19 +62,19 @@ Matrix Camera::GetProjectionMatrix() {
     //fprintf(stderr,"theta_h: %f\n",PI*thetaH/360.0);//same
     double thetaW = ((double)width/(double)height)*thetaH;
     //double ratio = (double)width/(double)height;
-    scaling[0] = 1.0/(tan(PI * thetaW/360.0)*far);
-    //scaling[0] = 1.0/(tan(PI * thetaH/360.0)*far*ratio);
-    scaling[5] = 1.0/(tan(PI * thetaH/360.0)*far);
-    scaling[10] = 1.0/far;
+    scaling[0] = 1.0/(tan(PI * thetaW/360.0)*m_far);
+    //scaling[0] = 1.0/(tan(PI * thetaH/360.0)*m_m_far*ratio);
+    scaling[5] = 1.0/(tan(PI * thetaH/360.0)*m_far);
+    scaling[10] = 1.0/m_far;
     //fprintf(stderr,"\nscaling:\n");
     //scaling.print();
     
-    float c = -near / far;
+    float c = -m_near / m_far;
     unhinging[10] = -1.0/(c+1.0);
     unhinging[14] = c/(c+1.0);
 
-    //unhinging[10] = -(far + near) / (far - near);
-    //unhinging[11] = (-2 * far * near)/(far - near);
+    //unhinging[10] = -(m_far + m_near) / (m_far - m_near);
+    //unhinging[11] = (-2 * m_far * m_near)/(m_far - m_near);
     unhinging[11] = -1.0;
     unhinging[15] = 0.0;
     //fprintf(stderr,"\nunhinging:\n");
@@ -93,11 +93,11 @@ void Camera::SetViewAngle (double viewAngle) {
 }
 
 void Camera::SetNearPlane (double nearPlane) {
-    near = nearPlane;
+    m_near = nearPlane;
 }
 
 void Camera::SetFarPlane (double farPlane) {
-    far = farPlane;
+    m_far = farPlane;
 }
 
 void Camera::SetScreenSize (int screenWidth, int screenHeight) {
@@ -202,11 +202,11 @@ double Camera::GetViewAngle() {
 }
 
 double Camera::GetNearPlane() {
-	return near;
+	return m_near;
 }
 
 double Camera::GetFarPlane() {
-	return far;
+	return m_far;
 }
 
 int Camera::GetScreenWidth() {

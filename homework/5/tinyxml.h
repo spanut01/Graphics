@@ -1,3 +1,4 @@
+
 /*
 www.sourceforge.net/projects/tinyxml
 Original code (2.0 and earlier )copyright (c) 2000-2006 Lee Thomason (www.grinninglizard.com)
@@ -27,7 +28,7 @@ distribution.
 #define TINYXML_INCLUDED
 
 #define TIXML_USE_STL 1
-
+#define _CRT_SECURE_NO_WARNINGS
 #ifdef _MSC_VER
 #pragma warning( push )
 #pragma warning( disable : 4530 )

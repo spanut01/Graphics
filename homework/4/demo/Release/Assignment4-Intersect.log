@@ -1,56 +1,55 @@
-﻿Build started 3/20/2014 6:03:29 PM.
-     1>Project "C:\Users\Remco\Dropbox\Comp175-Graphics\Homework\Assignment4-Intersect\Assignment4-Intersect.vcxproj" on node 2 (Build target(s)).
+﻿Build started 4/23/2014 6:11:18 PM.
+     1>Project "C:\Users\Asus\Source\Repos\Graphics\homework\4\demo\Assignment4-Intersect.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Assignment4.cpp Camera.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Assignment4.cpp
          Assignment4.cpp
-     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\GL/glui.h(880): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cylinder.h(130): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cylinder.h(131): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cylinder.h(164): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cylinder.h(185): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cylinder.h(186): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cylinder.h(194): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cylinder.h(195): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cylinder.h(196): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cylinder.h(198): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cylinder.h(199): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cylinder.h(200): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cone.h(119): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cone.h(120): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cone.h(123): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cone.h(166): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cone.h(187): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cone.h(188): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Cone.h(191): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Sphere.h(64): warning C4305: 'initializing' : truncation from 'double' to 'float'
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Sphere.h(66): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Sphere.h(67): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Sphere.h(114): warning C4305: 'initializing' : truncation from 'double' to 'float'
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Sphere.h(116): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Sphere.h(117): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Sphere.h(139): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Sphere.h(140): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Sphere.h(141): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Sphere.h(143): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Sphere.h(144): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>c:\users\remco\dropbox\comp175-graphics\homework\assignment4-intersect\Sphere.h(145): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>Assignment4.cpp(82): warning C4101: 'i' : unreferenced local variable
-     1>Assignment4.cpp(150): warning C4018: '<' : signed/unsigned mismatch
-     1>Assignment4.cpp(174): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>Assignment4.cpp(186): warning C4101: 'curDirName' : unreferenced local variable
-     1>Assignment4.cpp(276): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>Assignment4.cpp(279): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Assignment4.cpp(280): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Assignment4.cpp(281): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Assignment4.cpp(282): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Assignment4.cpp(283): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Assignment4.cpp(284): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Assignment4.cpp(309): warning C4018: '<' : signed/unsigned mismatch
-     1>Assignment4.cpp(330): warning C4018: '<' : signed/unsigned mismatch
-     1>Assignment4.cpp(357): warning C4018: '<' : signed/unsigned mismatch
-         Camera.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\GL/glui.h(868): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cylinder.h(130): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cylinder.h(131): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cylinder.h(164): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cylinder.h(185): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cylinder.h(186): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cylinder.h(194): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cylinder.h(195): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cylinder.h(196): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cylinder.h(198): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cylinder.h(199): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cylinder.h(200): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cone.h(119): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cone.h(120): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cone.h(123): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cone.h(166): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cone.h(187): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cone.h(188): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Cone.h(191): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Sphere.h(69): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Sphere.h(71): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Sphere.h(72): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Sphere.h(119): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Sphere.h(121): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Sphere.h(122): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Sphere.h(144): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Sphere.h(145): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Sphere.h(146): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Sphere.h(148): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Sphere.h(149): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\asus\source\repos\graphics\homework\4\demo\Sphere.h(150): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>Assignment4.cpp(86): warning C4101: 'i' : unreferenced local variable
+     1>Assignment4.cpp(170): warning C4018: '<' : signed/unsigned mismatch
+     1>Assignment4.cpp(197): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>Assignment4.cpp(209): warning C4101: 'curDirName' : unreferenced local variable
+     1>Assignment4.cpp(299): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>Assignment4.cpp(302): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Assignment4.cpp(303): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Assignment4.cpp(304): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Assignment4.cpp(305): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Assignment4.cpp(306): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Assignment4.cpp(307): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Assignment4.cpp(332): warning C4018: '<' : signed/unsigned mismatch
+     1>Assignment4.cpp(353): warning C4018: '<' : signed/unsigned mismatch
+     1>Assignment4.cpp(380): warning C4018: '<' : signed/unsigned mismatch
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Remco\Dropbox\Comp175-Graphics\Homework\Assignment4-Intersect\Release\Assignment4-Intersect.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Remco\Dropbox\Comp175-Graphics\Homework\Assignment4-Intersect\Release\Assignment4-Intersect.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Remco\Dropbox\Comp175-Graphics\Homework\Assignment4-Intersect\Release\Assignment4-Intersect.lib" /MACHINE:X86 /SAFESEH Release\Assignment4.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Asus\Source\Repos\Graphics\homework\4\demo\Release\Assignment4-Intersect.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Asus\Source\Repos\Graphics\homework\4\demo\Release\Assignment4-Intersect.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Asus\Source\Repos\Graphics\homework\4\demo\Release\Assignment4-Intersect.lib" /MACHINE:X86 /SAFESEH Release\Assignment4.obj
          Release\Camera.obj
          Release\SceneParser.obj
          Release\tinystr.obj
@@ -59,9 +58,9 @@
          Release\tinyxmlparser.obj
          Generating code
          Finished generating code
-         Assignment4-Intersect.vcxproj -> C:\Users\Remco\Dropbox\Comp175-Graphics\Homework\Assignment4-Intersect\Release\Assignment4-Intersect.exe
-     1>Done Building Project "C:\Users\Remco\Dropbox\Comp175-Graphics\Homework\Assignment4-Intersect\Assignment4-Intersect.vcxproj" (Build target(s)).
+         Assignment4-Intersect.vcxproj -> C:\Users\Asus\Source\Repos\Graphics\homework\4\demo\Release\Assignment4-Intersect.exe
+     1>Done Building Project "C:\Users\Asus\Source\Repos\Graphics\homework\4\demo\Assignment4-Intersect.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:03.65
+Time Elapsed 00:00:04.00

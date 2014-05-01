@@ -111,6 +111,7 @@ bool SceneParser::flatten(){
     SceneNode* currentNode = m_objects["root"];
     Matrix mat = Matrix();
     visit(currentNode, mat);
+	return true;
 }
 
 bool SceneParser :: getGlobalData(SceneGlobalData& data) 

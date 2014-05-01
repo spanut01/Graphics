@@ -1,6 +1,6 @@
 #ifndef ALGEBRA_H
 #define ALGEBRA_H
-
+#define _CRT_SECURE_NO_WARNINGS
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>

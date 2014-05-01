@@ -21,19 +21,19 @@ public:
 	float getYPosition();
 	float getZPosition();
 
-	float setPosition(float x, float y, float z);
-	float setXPosition(float _x);
-	float setYPosition(float _y);
-	float setZPosition(float _z);
+	void setPosition(float x, float y, float z);
+	void setXPosition(float _x);
+	void setYPosition(float _y);
+	void setZPosition(float _z);
 
 	float getXScale();
 	float getYScale();
 	float getZScale();
 
-	float setScale(float _sx, float _sy, float _sz);
-	float setXScale(float _sx);
-	float setYScale(float _sx);
-	float setZScale(float _sx);
+	void setScale(float _sx, float _sy, float _sz);
+	void setXScale(float _sx);
+	void setYScale(float _sx);
+	void setZScale(float _sx);
 	
 
 private:

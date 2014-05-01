@@ -71,7 +71,7 @@ class ply : public entity{
                 float lookX;//0.0 when Y-rotation = 0
                 float lookZ;//1.0 when Y-rotation = 0
 
-        private:
+        //private:
                 /*      ===============================================
                         Desc: Helper function used in the constructor
                         =============================================== */ 

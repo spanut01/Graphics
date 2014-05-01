@@ -1,8 +1,7 @@
-
+#define _CRT_SECURE_NO_WARNINGS
 
 #ifndef CAMERA_H
 #define CAMERA_H
-
 #include "Algebra.h"
 
 class Camera {
@@ -53,8 +52,8 @@ Vector u;
 Vector v;
 Vector w;
 double thetaH;
-double near;
-double far;
+double m_near;
+double m_far;
 int width;
 int height;
 double rotationV;

@@ -4,6 +4,8 @@
         New to this version: also renders the silhouette!
   Author: Paul Nixon
   ===================================================== */
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -111,7 +113,7 @@ void ply::loadGeometry(){
 
             // get the first token in the line, this will determine which
             // action to take. 
-            strcpy(lineCopy, line.c_str());
+            strncpy(lineCopy, line.c_str(), 80);
             token_pointer = strtok(lineCopy, " ");
             // case when the element label is spotted:
             if (strcmp(token_pointer, "element") == 0){
@@ -173,7 +175,13 @@ void ply::loadGeometry(){
             if (properties >= 7) {
                 vertexList[i].b = atof(strtok(NULL, " "));
             }
+
+			vertexList[i].r = 0.6;
+			vertexList[i].g = 0.6;
+			vertexList[i].b = 0.6;
         } 
+
+		
         
         // Read in the faces (exactly faceCount number of lines) and set the 
         // appropriate face in the faceList
@@ -196,7 +204,7 @@ void ply::loadGeometry(){
     }
     // if the path is invalid, report then exit.
     else {
-        cout << "cannot open file " << myfile << "\n";
+        cout << "cannot open file " << filePath << "\n";
         exit(1);
     }
     myfile.close();
@@ -276,6 +284,7 @@ void ply::render(){
             for(int j = 0; j < faceList[i].vertexCount; j++){
                                 // Get each vertices x,y,z and draw them
                 int index = faceList[i].vertexList[j];
+				glColor3f(vertexList[index].r, vertexList[index].g, vertexList[index].b);
                 glVertex3f(vertexList[index].x,vertexList[index].y,vertexList[index].z);
             }
         }

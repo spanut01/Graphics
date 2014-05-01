@@ -1,3 +1,4 @@
+
 /*  =================== File Information =================
 	File Name: ppm.h
 	Description:
@@ -14,7 +15,7 @@
 
 #ifndef PPM_H
 #define PPM_H
-
+#define _CRT_SECURE_NO_WARNINGS 
 #include <string>
 
 /*

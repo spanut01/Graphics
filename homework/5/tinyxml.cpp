@@ -1,3 +1,4 @@
+
 /*
    cout<<"loading file.. "<<endl;
    www.sourceforge.net/projects/tinyxml
@@ -22,7 +23,7 @@
    3. This notice may not be removed or altered from any source
    distribution.
    */
-
+#define _CRT_SECURE_NO_WARNINGS
 #include <ctype.h>
 
 #include <iostream>

@@ -1,5 +1,5 @@
 #define NUM_OPENGL_LIGHTS 8
-
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -32,7 +32,7 @@ float lookZ = -2;
 
 /** These are GLUI control panel objects ***/
 int  main_window;
-string filenamePath = "./data/tests/all_effects.xml";
+string filenamePath = ".\\data\\tests\\all_effects.xml";
 GLUI_EditText* filenameTextField = NULL;
 GLubyte* pixels = NULL;
 int pixelWidth = 0, pixelHeight = 0;
@@ -100,7 +100,7 @@ SceneColor getColorFromRay(Point eyeP, Vector rayV, int depth){
     float tempT;
     SceneColor color = SceneColor();//zeroes
     FlatSceneNode* current = parser->headNode;
-    FlatSceneNode* closest;
+    FlatSceneNode* closest = NULL;
     while(current != NULL){
         if(current->primitive != NULL){
             setShape(current->primitive->type);
