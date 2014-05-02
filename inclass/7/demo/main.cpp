@@ -127,7 +127,7 @@ void myGlutMouse(int button, int button_state, int x, int y)
 		//printf("button:%d, buttonstate:%d, x:%d, y:%d\n", button, button_state, x, y);
 		if (!ball) {
 			
-			PlaySound((".\\data\\pew-pew.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			//PlaySound((".\\data\\pew-pew.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			ball = 1;
 			ball_location = Point(0, 0, -0.75);//the camera
 			ball_trajectory = Vector(1.5 * (-(float)x / windowx + 0.5), 1.5 * ((float)y / windowy - 0.5), 0.5);//not destination
@@ -195,7 +195,7 @@ void myGlutDisplay(void)
 			current[1] = -current[1];
 			Vector fromDest = (current)-ballLoc;
 
-			if (fromDest.length() < .1){
+			if (fromDest.length() < .2){
 				Vector line = x2 - x1;
 				Point x0;
 				if (radioInt == 0){
@@ -237,8 +237,8 @@ void myGlutDisplay(void)
 							double dist;
 
 							double x = (d - 0.08)*5;
-							dist = ((log(-x) + 4)*exp(-x)) / 300;
-							if(dist>0.0)x0 = x0 - ((dist / line.length()) * line);
+							dist = ((log(-x) + 4)*exp(-x)) / 350;
+							if(dist>0.0) x0 = x0 - ((dist / line.length()) * line);
 							
 							myPLY->vertexList[i].x = x0[0];
 							myPLY->vertexList[i].y = x0[1];
@@ -288,7 +288,7 @@ void myGlutDisplay(void)
 			glTranslated(-location[0], -location[1], -location[2]);
 			glColor3f(1.0, 0, 0);
 			glutSolidSphere(0.05, 10, 10);
-			ball_location = ball_location + 0.01 * ball_trajectory;
+			ball_location = ball_location + 0.1 * ball_trajectory;
 			glPopMatrix();
 		}
 

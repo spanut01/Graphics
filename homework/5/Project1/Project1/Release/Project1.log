@@ -1,4 +1,4 @@
-﻿Build started 5/1/2014 7:12:43 PM.
+﻿Build started 5/1/2014 8:27:14 PM.
      1>Project "C:\Users\Asus\Source\Repos\Graphics\homework\5\Project1\Project1\Project1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\..\inclass\7\demo\main.cpp
@@ -31,4 +31,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.13
+Time Elapsed 00:00:02.20
